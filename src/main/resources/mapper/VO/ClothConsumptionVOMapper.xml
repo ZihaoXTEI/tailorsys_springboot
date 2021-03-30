@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xtei.tailorsys.mapper.VO.ClothConsumptionVOMapper">
+    <resultMap id="BaseResultMap" type="com.xtei.tailorsys.model.VO.ClothConsumptionVO">
+        <result column="consum_id" jdbcType="INTEGER" property="consumId"/>
+        <result column="clothtype_name" jdbcType="VARCHAR" property="clothtypeName"/>
+        <result column="consum_width" jdbcType="DOUBLE" property="consumWidth"/>
+        <result column="shirt_length" jdbcType="DOUBLE" property="shirtLength"/>
+        <result column="bust" jdbcType="DOUBLE" property="bust"/>
+        <result column="shoulder_width" jdbcType="DOUBLE" property="shoulderWidth"/>
+        <result column="sleeve_length" jdbcType="DOUBLE" property="sleeveLength"/>
+        <result column="wrist_circum" jdbcType="DOUBLE" property="wristCircum"/>
+        <result column="neck_circum" jdbcType="DOUBLE" property="neckCircum"/>
+        <result column="pants_length" jdbcType="DOUBLE" property="pantsLength"/>
+        <result column="chest_height" jdbcType="DOUBLE" property="chestHeight"/>
+        <result column="skirt_length" jdbcType="DOUBLE" property="skirtLength"/>
+        <result column="waist_circum" jdbcType="DOUBLE" property="waistCircum"/>
+        <result column="hipline" jdbcType="DOUBLE" property="hipline"/>
+        <result column="knee_circum" jdbcType="DOUBLE" property="kneeCircum"/>
+        <result column="ankle_circum" jdbcType="DOUBLE" property="ankleCircum"/>
+        <result column="total_length" jdbcType="DOUBLE" property="totalLength"/>
+        <result column="FWL" jdbcType="DOUBLE" property="fwl"/>
+        <result column="back_length" jdbcType="DOUBLE" property="backLength"/>
+        <result column="hip_height" jdbcType="DOUBLE" property="hipHeight"/>
+        <result column="consum_note" jdbcType="DOUBLE" property="consumNote"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.xtei.tailorsys.model.VO.ClothConsumptionVO">
+        insert into cloth_consumption_view (consum_id, clothtype_name, consum_width,
+                                            shirt_length, bust, shoulder_width,
+                                            sleeve_length, wrist_circum, neck_circum,
+                                            pants_length, chest_height, skirt_length,
+                                            waist_circum, hipline, knee_circum,
+                                            ankle_circum, total_length, FWL,
+                                            back_length, hip_height, consum_note)
+        values (#{consumId,jdbcType=INTEGER}, #{clothtypeName,jdbcType=VARCHAR}, #{consumWidth,jdbcType=DOUBLE},
+                #{shirtLength,jdbcType=DOUBLE}, #{bust,jdbcType=DOUBLE}, #{shoulderWidth,jdbcType=DOUBLE},
+                #{sleeveLength,jdbcType=DOUBLE}, #{wristCircum,jdbcType=DOUBLE}, #{neckCircum,jdbcType=DOUBLE},
+                #{pantsLength,jdbcType=DOUBLE}, #{chestHeight,jdbcType=DOUBLE}, #{skirtLength,jdbcType=DOUBLE},
+                #{waistCircum,jdbcType=DOUBLE}, #{hipline,jdbcType=DOUBLE}, #{kneeCircum,jdbcType=DOUBLE},
+                #{ankleCircum,jdbcType=DOUBLE}, #{totalLength,jdbcType=DOUBLE}, #{fwl,jdbcType=DOUBLE},
+                #{backLength,jdbcType=DOUBLE}, #{hipHeight,jdbcType=DOUBLE}, #{consumNote,jdbcType=DOUBLE})
+    </insert>
+
+    <select id="selectAll" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select consum_id, clothtype_name, consum_width, shirt_length, bust, shoulder_width,
+        sleeve_length, wrist_circum, neck_circum, pants_length, chest_height, skirt_length,
+        waist_circum, hipline, knee_circum, ankle_circum, total_length, FWL, back_length,
+        hip_height, consum_note
+        from cloth_consumption_view
+        <where>
+            <if test="query != null and query != ''">
+                clothtype_name LIKE concat('%',#{query},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectByConsumId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select consum_id,
+               clothtype_name,
+               consum_width,
+               shirt_length,
+               bust,
+               shoulder_width,
+               sleeve_length,
+               wrist_circum,
+               neck_circum,
+               pants_length,
+               chest_height,
+               skirt_length,
+               waist_circum,
+               hipline,
+               knee_circum,
+               ankle_circum,
+               total_length,
+               FWL,
+               back_length,
+               hip_height,
+               consum_note
+        from cloth_consumption_view
+        where consum_id = #{consumId}
+    </select>
+
+</mapper>

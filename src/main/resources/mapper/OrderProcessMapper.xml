@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xtei.tailorsys.mapper.OrderProcessMapper">
+  <resultMap id="BaseResultMap" type="com.xtei.tailorsys.model.OrderProcess">
+    <id column="opr_id" jdbcType="INTEGER" property="oprId" />
+    <result column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="tailoring" jdbcType="VARCHAR" property="tailoring" />
+    <result column="tailoring_date" jdbcType="TIMESTAMP" property="tailoringDate" />
+    <result column="sewing" jdbcType="VARCHAR" property="sewing" />
+    <result column="sewing_date" jdbcType="TIMESTAMP" property="sewingDate" />
+    <result column="ironing" jdbcType="VARCHAR" property="ironing" />
+    <result column="ironing_date" jdbcType="TIMESTAMP" property="ironingDate" />
+    <result column="finish" jdbcType="VARCHAR" property="finish" />
+    <result column="finish_date" jdbcType="TIMESTAMP" property="finishDate" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from order_process_tb
+    where opr_id = #{oprId,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.xtei.tailorsys.model.OrderProcess">
+    insert into order_process_tb (opr_id, order_id, tailoring, 
+      tailoring_date, sewing, sewing_date, 
+      ironing, ironing_date, finish, 
+      finish_date)
+    values (#{oprId,jdbcType=INTEGER}, #{orderId,jdbcType=VARCHAR}, #{tailoring,jdbcType=VARCHAR}, 
+      #{tailoringDate,jdbcType=TIMESTAMP}, #{sewing,jdbcType=VARCHAR}, #{sewingDate,jdbcType=TIMESTAMP}, 
+      #{ironing,jdbcType=VARCHAR}, #{ironingDate,jdbcType=TIMESTAMP}, #{finish,jdbcType=VARCHAR}, 
+      #{finishDate,jdbcType=TIMESTAMP})
+  </insert>
+
+  <update id="updateByOrderId" parameterType="com.xtei.tailorsys.model.OrderProcess">
+    update order_process_tb
+    set order_id = #{orderId,jdbcType=VARCHAR},
+      tailoring = #{tailoring,jdbcType=VARCHAR},
+      tailoring_date = #{tailoringDate,jdbcType=TIMESTAMP},
+      sewing = #{sewing,jdbcType=VARCHAR},
+      sewing_date = #{sewingDate,jdbcType=TIMESTAMP},
+      ironing = #{ironing,jdbcType=VARCHAR},
+      ironing_date = #{ironingDate,jdbcType=TIMESTAMP},
+      finish = #{finish,jdbcType=VARCHAR},
+      finish_date = #{finishDate,jdbcType=TIMESTAMP}
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select opr_id, order_id, tailoring, tailoring_date, sewing, sewing_date, ironing, 
+    ironing_date, finish, finish_date
+    from order_process_tb
+    where opr_id = #{oprId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByOrderId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select opr_id, order_id, tailoring, tailoring_date, sewing, sewing_date, ironing,
+           ironing_date, finish, finish_date
+    from order_process_tb
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select opr_id, order_id, tailoring, tailoring_date, sewing, sewing_date, ironing, 
+    ironing_date, finish, finish_date
+    from order_process_tb
+  </select>
+
+</mapper>

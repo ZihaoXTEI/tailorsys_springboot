@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xtei.tailorsys.mapper.FabricStockInfoMapper">
+  <resultMap id="BaseResultMap" type="com.xtei.tailorsys.model.FabricStockInfo">
+    <id column="fas_id" jdbcType="INTEGER" property="fasId" />
+    <id column="fabric_id" jdbcType="INTEGER" property="fabricId" />
+    <result column="fas_stock" jdbcType="DOUBLE" property="fasStock" />
+    <result column="fas_position" jdbcType="VARCHAR" property="fasPosition" />
+    <result column="fas_prede" jdbcType="DOUBLE" property="fasPrede" />
+    <result column="unit_price" jdbcType="DOUBLE" property="unitPrice" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    delete from fabric_stock_tb
+    where fas_id = #{fasId,jdbcType=INTEGER}
+      and fabric_id = #{fabricId,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.xtei.tailorsys.model.FabricStockInfo">
+    insert into fabric_stock_tb (fas_id, fabric_id, fas_stock, 
+      fas_position, fas_prede, unit_price)
+    values (#{fasId,jdbcType=INTEGER}, #{fabricId,jdbcType=INTEGER}, #{fasStock,jdbcType=DOUBLE}, 
+      #{fasPosition,jdbcType=VARCHAR}, #{fasPrede,jdbcType=DOUBLE}, #{unitPrice,jdbcType=DOUBLE})
+  </insert>
+
+  <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.model.FabricStockInfo">
+    update fabric_stock_tb
+    set fas_stock = #{fasStock,jdbcType=DOUBLE},
+      fas_position = #{fasPosition,jdbcType=VARCHAR},
+      fas_prede = #{fasPrede,jdbcType=DOUBLE},
+      unit_price = #{unitPrice,jdbcType=DOUBLE}
+    where fas_id = #{fasId,jdbcType=INTEGER}
+      and fabric_id = #{fabricId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+    select fas_id, fabric_id, fas_stock, fas_position, fas_prede, unit_price
+    from fabric_stock_tb
+    where fas_id = #{fasId,jdbcType=INTEGER}
+      and fabric_id = #{fabricId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select fas_id, fabric_id, fas_stock, fas_position, fas_prede, unit_price
+    from fabric_stock_tb
+  </select>
+
+  <select id="getFasStockByFabricId" parameterType="java.lang.Integer" resultType="java.lang.Double">
+    select fas_stock
+    from fabric_stock_tb
+    where fabric_id = #{fabricId,jdbcType=INTEGER}
+  </select>
+
+  <select id="getFasPredeByFabricId" parameterType="java.lang.Integer" resultType="java.lang.Double">
+    select fas_prede
+    from fabric_stock_tb
+    where fabric_id = #{fabricId,jdbcType=INTEGER}
+  </select>
+
+  <select id="getUnitPriceByFabricId" parameterType="java.lang.Integer" resultType="java.lang.Double">
+    select unit_price
+    from fabric_stock_tb
+    where fabric_id = #{fabricId,jdbcType=INTEGER}
+  </select>
+
+  <!-- 更新现有库存信息 -->
+  <update id="updateStockByFabricId" >
+    update fabric_stock_tb
+    <set>
+      <if test="fasStock != null and fasStock != 0.0">
+        fas_stock = #{fasStock,jdbcType=DOUBLE},
+      </if>
+      <if test="fasPrede != null and fasPrede != 0.0">
+        fas_prede = #{fasPrede,jdbcType=DOUBLE},
+      </if>
+      <if test="unitPrice != null and unitPrice != 0.0">
+        unit_price = #{unitPrice,jdbcType=DOUBLE},
+      </if>fabric_id = #{fabricId,jdbcType=INTEGER}
+    </set>
+
+    where fabric_id = #{fabricId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByFaricId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select fas_id, fabric_id, fas_stock, fas_position, fas_prede, unit_price
+    from fabric_stock_tb
+    where fabric_id = #{fabricId,jdbcType=INTEGER}
+  </select>
+
+  <select id="getFabricInfoLower" resultType="java.util.LinkedHashMap">
+    select fabric_id, fas_stock
+    from fabric_stock_tb
+    where fas_stock &lt;= 600 or fas_prede &gt;= fas_stock
+  </select>
+
+</mapper>

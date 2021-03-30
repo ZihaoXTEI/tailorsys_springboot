@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xtei.tailorsys.mapper.VO.FabricStockInfoVOMapper">
+    <resultMap id="BaseResultMap" type="com.xtei.tailorsys.model.VO.FabricStockInfoVO">
+        <result column="fas_id" jdbcType="INTEGER" property="fasId"/>
+        <result column="fabric_id" jdbcType="INTEGER" property="fabricId"/>
+        <result column="fabric_name" jdbcType="VARCHAR" property="fabricName"/>
+        <result column="fas_prede" jdbcType="DOUBLE" property="fasPrede"/>
+        <result column="fas_position" jdbcType="VARCHAR" property="fasPosition"/>
+        <result column="fas_stock" jdbcType="DOUBLE" property="fasStock"/>
+        <result column="unit_price" jdbcType="DOUBLE" property="unitPrice"/>
+        <result column="fabric_type" jdbcType="INTEGER" property="fabricType"/>
+        <result column="fabrictype_name" jdbcType="VARCHAR" property="fabrictypeName"/>
+        <result column="fabric_width" jdbcType="DOUBLE" property="fabricWidth"/>
+        <result column="fabric_url" jdbcType="VARCHAR" property="fabricUrl"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.xtei.tailorsys.model.VO.FabricStockInfoVO">
+        insert into fabric_stock_view (fas_id, fabric_id, fabric_name,
+                                       fas_prede, fas_position, fas_stock,
+                                       unit_price, fabric_type, fabrictype_name,
+                                       fabric_width, fabric_url)
+        values (#{fasId,jdbcType=INTEGER}, #{fabricId,jdbcType=INTEGER}, #{fabricName,jdbcType=VARCHAR},
+                #{fasPrede,jdbcType=DOUBLE}, #{fasPosition,jdbcType=VARCHAR}, #{fasStock,jdbcType=DOUBLE},
+                #{unitPrice,jdbcType=DOUBLE}, #{fabricType,jdbcType=INTEGER}, #{fabrictypeName,jdbcType=VARCHAR},
+                #{fabricWidth,jdbcType=DOUBLE}, #{fabricUrl,jdbcType=VARCHAR})
+    </insert>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select fas_id, fabric_id, fabric_name, fas_prede, fas_position, fas_stock, unit_price,
+        fabric_type, fabrictype_name, fabric_width, fabric_url
+        from fabric_stock_view
+        <where>
+            <if test="fabricname != null and fabricname !=''">
+                fabric_name LIKE concat('%',#{fabricname},'%')
+            </if>
+            <if test="fabrictype != null and fabrictype !=0">
+                and fabric_type = ${fabrictype}
+            </if>
+            <if test="orderfield !=null and orderfield != '' and min !=null and min !=0 ">
+                and ${orderfield} between ${min} and ${max}
+            </if>
+        </where>
+        <if test="orderfield !=null and orderfield != '' ">
+            order by ${orderfield}  ${ordertype}
+        </if>
+    </select>
+
+    <select id="selectByFasId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select fas_id,
+               fabric_id,
+               fabric_name,
+               fas_prede,
+               fas_position,
+               fas_stock,
+               unit_price,
+               fabric_type,
+               fabrictype_name,
+               fabric_width,
+               fabric_url
+        from fabric_stock_view
+        where fas_id = #{fasId}
+    </select>
+
+    <select id="getFasStockGroupByFabricType" resultType="java.util.LinkedHashMap">
+        SELECT fabrictype_name AS fabrictypeName,SUM(fas_stock) AS totalStock FROM fabric_stock_view
+        GROUP BY fabrictype_name
+    </select>
+
+    <select id="getQuantityGroupedByFabricType" resultType="java.util.LinkedHashMap">
+        SELECT fabrictype_name AS fabrictypeName,COUNT(*) AS totalStock FROM fabric_stock_view
+        GROUP BY fabrictype_name
+    </select>
+</mapper>

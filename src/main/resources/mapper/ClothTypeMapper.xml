@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xtei.tailorsys.mapper.ClothTypeMapper">
+    <resultMap id="BaseResultMap" type="com.xtei.tailorsys.model.ClothType">
+        <id column="clothtype_id" jdbcType="INTEGER" property="clothtypeId"/>
+        <result column="clothtype_name" jdbcType="VARCHAR" property="clothtypeName"/>
+        <result column="shirt_length" jdbcType="BIT" property="shirtLength"/>
+        <result column="bust" jdbcType="BIT" property="bust"/>
+        <result column="shoulder_width" jdbcType="BIT" property="shoulderWidth"/>
+        <result column="sleeve_length" jdbcType="BIT" property="sleeveLength"/>
+        <result column="wrist_circum" jdbcType="BIT" property="wristCircum"/>
+        <result column="neck_circum" jdbcType="BIT" property="neckCircum"/>
+        <result column="pants_length" jdbcType="BIT" property="pantsLength"/>
+        <result column="chest_height" jdbcType="BIT" property="chestHeight"/>
+        <result column="skirt_length" jdbcType="BIT" property="skirtLength"/>
+        <result column="waist_circum" jdbcType="BIT" property="waistCircum"/>
+        <result column="hipline" jdbcType="BIT" property="hipline"/>
+        <result column="knee_circum" jdbcType="BIT" property="kneeCircum"/>
+        <result column="ankle_circum" jdbcType="BIT" property="ankleCircum"/>
+        <result column="total_length" jdbcType="BIT" property="totalLength"/>
+        <result column="FWL" jdbcType="BIT" property="fwl"/>
+        <result column="back_length" jdbcType="BIT" property="backLength"/>
+        <result column="hip_height" jdbcType="BIT" property="hipHeight"/>
+        <result column="clothtype_note" jdbcType="VARCHAR" property="clothtypeNote"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from clothtype_datainfo
+        where clothtype_id = #{clothtypeId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.xtei.tailorsys.model.ClothType">
+        insert into clothtype_datainfo (clothtype_id, clothtype_name, shirt_length,
+                                        bust, shoulder_width, sleeve_length,
+                                        wrist_circum, neck_circum, pants_length,
+                                        chest_height, skirt_length, waist_circum,
+                                        hipline, knee_circum, ankle_circum,
+                                        total_length, FWL, back_length, hip_height,
+                                        clothtype_note)
+        values (#{clothtypeId,jdbcType=INTEGER}, #{clothtypeName,jdbcType=VARCHAR}, #{shirtLength,jdbcType=BIT},
+                #{bust,jdbcType=BIT}, #{shoulderWidth,jdbcType=BIT}, #{sleeveLength,jdbcType=BIT},
+                #{wristCircum,jdbcType=BIT}, #{neckCircum,jdbcType=BIT}, #{pantsLength,jdbcType=BIT},
+                #{chestHeight,jdbcType=BIT}, #{skirtLength,jdbcType=BIT}, #{waistCircum,jdbcType=BIT},
+                #{hipline,jdbcType=BIT}, #{kneeCircum,jdbcType=BIT}, #{ankleCircum,jdbcType=BIT},
+                #{totalLength,jdbcType=BIT}, #{fwl,jdbcType=BIT}, #{backLength,jdbcType=BIT}, #{hipHeight,jdbcType=BIT},
+                #{clothtypeNote,jdbcType=VARCHAR})
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.model.ClothType">
+        update clothtype_datainfo
+        set clothtype_name = #{clothtypeName,jdbcType=VARCHAR},
+            shirt_length   = #{shirtLength,jdbcType=BIT},
+            bust           = #{bust,jdbcType=BIT},
+            shoulder_width = #{shoulderWidth,jdbcType=BIT},
+            sleeve_length  = #{sleeveLength,jdbcType=BIT},
+            wrist_circum   = #{wristCircum,jdbcType=BIT},
+            neck_circum    = #{neckCircum,jdbcType=BIT},
+            pants_length   = #{pantsLength,jdbcType=BIT},
+            chest_height   = #{chestHeight,jdbcType=BIT},
+            skirt_length   = #{skirtLength,jdbcType=BIT},
+            waist_circum   = #{waistCircum,jdbcType=BIT},
+            hipline        = #{hipline,jdbcType=BIT},
+            knee_circum    = #{kneeCircum,jdbcType=BIT},
+            ankle_circum   = #{ankleCircum,jdbcType=BIT},
+            total_length   = #{totalLength,jdbcType=BIT},
+            FWL            = #{fwl,jdbcType=BIT},
+            back_length    = #{backLength,jdbcType=BIT},
+            hip_height     = #{hipHeight,jdbcType=BIT},
+            clothtype_note = #{clothtypeNote,jdbcType=VARCHAR}
+        where clothtype_id = #{clothtypeId,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select clothtype_id,
+               clothtype_name,
+               shirt_length,
+               bust,
+               shoulder_width,
+               sleeve_length,
+               wrist_circum,
+               neck_circum,
+               pants_length,
+               chest_height,
+               skirt_length,
+               waist_circum,
+               hipline,
+               knee_circum,
+               ankle_circum,
+               total_length,
+               FWL,
+               back_length,
+               hip_height,
+               clothtype_note
+        from clothtype_datainfo
+        where clothtype_id = #{clothtypeId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectAll" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select clothtype_id, clothtype_name, shirt_length, bust, shoulder_width, sleeve_length,
+        wrist_circum, neck_circum, pants_length, chest_height, skirt_length, waist_circum,
+        hipline, knee_circum, ankle_circum, total_length, FWL, back_length, hip_height, clothtype_note
+        from clothtype_datainfo
+        <where>
+            <if test="query != null and query !=''">
+                clothtype_name LIKE concat('%',#{query},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectClothTypeMap" resultType="java.util.HashMap">
+        select clothtype_id, clothtype_name
+        from clothtype_datainfo
+    </select>
+
+    <select id="selectColumnInfo" resultType="java.util.HashMap">
+        SELECT column_name,
+               column_comment
+        FROM information_schema.columns
+        WHERE table_schema = 'tailorsysdb_demo'
+          AND table_name = 'clothtype_datainfo'
+    </select>
+
+
+</mapper>

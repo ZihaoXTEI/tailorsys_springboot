@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xtei.tailorsys.mapper.AnthropometryMapper">
+  <resultMap id="BaseResultMap" type="com.xtei.tailorsys.model.Anthropometry">
+    <id column="anthr_id" jdbcType="INTEGER" property="anthrId" />
+    <result column="customer_id" jdbcType="INTEGER" property="customerId" />
+    <result column="anthr_note" jdbcType="VARCHAR" property="anthrNote" />
+    <result column="overall_height" jdbcType="DOUBLE" property="overallHeight" />
+    <result column="total_length" jdbcType="DOUBLE" property="totalLength" />
+    <result column="head_circum" jdbcType="DOUBLE" property="headCircum" />
+    <result column="neck_circum" jdbcType="DOUBLE" property="neckCircum" />
+    <result column="shoulder_width" jdbcType="DOUBLE" property="shoulderWidth" />
+    <result column="chest_width" jdbcType="DOUBLE" property="chestWidth" />
+    <result column="bust" jdbcType="DOUBLE" property="bust" />
+    <result column="back_width" jdbcType="DOUBLE" property="backWidth" />
+    <result column="back_length" jdbcType="DOUBLE" property="backLength" />
+    <result column="waist_length" jdbcType="DOUBLE" property="waistLength" />
+    <result column="FWL" jdbcType="DOUBLE" property="fwl" />
+    <result column="chest_height" jdbcType="DOUBLE" property="chestHeight" />
+    <result column="skirt_length" jdbcType="DOUBLE" property="skirtLength" />
+    <result column="breast_width" jdbcType="DOUBLE" property="breastWidth" />
+    <result column="sleeve_length" jdbcType="DOUBLE" property="sleeveLength" />
+    <result column="inner_length" jdbcType="DOUBLE" property="innerLength" />
+    <result column="pants_length" jdbcType="DOUBLE" property="pantsLength" />
+    <result column="shirt_length" jdbcType="DOUBLE" property="shirtLength" />
+    <result column="waist_circum" jdbcType="DOUBLE" property="waistCircum" />
+    <result column="abdominal_circum" jdbcType="DOUBLE" property="abdominalCircum" />
+    <result column="hipline" jdbcType="DOUBLE" property="hipline" />
+    <result column="hip_height" jdbcType="DOUBLE" property="hipHeight" />
+    <result column="crotch_length" jdbcType="DOUBLE" property="crotchLength" />
+    <result column="arm_circum" jdbcType="DOUBLE" property="armCircum" />
+    <result column="armroot_circum" jdbcType="DOUBLE" property="armrootCircum" />
+    <result column="elbow_length" jdbcType="DOUBLE" property="elbowLength" />
+    <result column="arm_length" jdbcType="DOUBLE" property="armLength" />
+    <result column="wrist_circum" jdbcType="DOUBLE" property="wristCircum" />
+    <result column="palm_circum" jdbcType="DOUBLE" property="palmCircum" />
+    <result column="thigh_circum" jdbcType="DOUBLE" property="thighCircum" />
+    <result column="knee_circum" jdbcType="DOUBLE" property="kneeCircum" />
+    <result column="ankle_circum" jdbcType="DOUBLE" property="ankleCircum" />
+    <result column="knee_length" jdbcType="DOUBLE" property="kneeLength" />
+    <result column="lowerbody_length" jdbcType="DOUBLE" property="lowerbodyLength" />
+    <result column="measure_time" jdbcType="DATE" property="measureTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from anthropometry_tb
+    where anthr_id = #{anthrId,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" keyColumn="anthr_id" keyProperty="anthrId" parameterType="com.xtei.tailorsys.model.Anthropometry" useGeneratedKeys="true">
+    insert into anthropometry_tb (customer_id, anthr_note,
+      overall_height, total_length, head_circum, 
+      neck_circum, shoulder_width, chest_width, 
+      bust, back_width, back_length, 
+      waist_length, FWL, chest_height, 
+      skirt_length, breast_width, sleeve_length, 
+      inner_length, pants_length, shirt_length, 
+      waist_circum, abdominal_circum, hipline, 
+      hip_height, crotch_length, arm_circum, 
+      armroot_circum, elbow_length, arm_length, 
+      wrist_circum, palm_circum, thigh_circum, 
+      knee_circum, ankle_circum, knee_length, 
+      lowerbody_length, measure_time)
+    values (#{customerId,jdbcType=INTEGER}, #{anthrNote,jdbcType=VARCHAR},
+      #{overallHeight,jdbcType=DOUBLE}, #{totalLength,jdbcType=DOUBLE}, #{headCircum,jdbcType=DOUBLE}, 
+      #{neckCircum,jdbcType=DOUBLE}, #{shoulderWidth,jdbcType=DOUBLE}, #{chestWidth,jdbcType=DOUBLE}, 
+      #{bust,jdbcType=DOUBLE}, #{backWidth,jdbcType=DOUBLE}, #{backLength,jdbcType=DOUBLE}, 
+      #{waistLength,jdbcType=DOUBLE}, #{fwl,jdbcType=DOUBLE}, #{chestHeight,jdbcType=DOUBLE}, 
+      #{skirtLength,jdbcType=DOUBLE}, #{breastWidth,jdbcType=DOUBLE}, #{sleeveLength,jdbcType=DOUBLE}, 
+      #{innerLength,jdbcType=DOUBLE}, #{pantsLength,jdbcType=DOUBLE}, #{shirtLength,jdbcType=DOUBLE}, 
+      #{waistCircum,jdbcType=DOUBLE}, #{abdominalCircum,jdbcType=DOUBLE}, #{hipline,jdbcType=DOUBLE}, 
+      #{hipHeight,jdbcType=DOUBLE}, #{crotchLength,jdbcType=DOUBLE}, #{armCircum,jdbcType=DOUBLE}, 
+      #{armrootCircum,jdbcType=DOUBLE}, #{elbowLength,jdbcType=DOUBLE}, #{armLength,jdbcType=DOUBLE}, 
+      #{wristCircum,jdbcType=DOUBLE}, #{palmCircum,jdbcType=DOUBLE}, #{thighCircum,jdbcType=DOUBLE}, 
+      #{kneeCircum,jdbcType=DOUBLE}, #{ankleCircum,jdbcType=DOUBLE}, #{kneeLength,jdbcType=DOUBLE}, 
+      #{lowerbodyLength,jdbcType=DOUBLE}, #{measureTime,jdbcType=DATE})
+  </insert>
+
+  <insert id="insertByCusIdAndAnthrNote" keyProperty="anthrId" useGeneratedKeys="true">
+    insert into anthropometry_tb (customer_id, anthr_note,measure_time)
+    values (#{customerId,jdbcType=INTEGER}, #{anthrNote,jdbcType=VARCHAR}, #{measureTime,jdbcType=DATE})
+  </insert>
+
+  <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.model.Anthropometry">
+    update anthropometry_tb
+    set customer_id = #{customerId,jdbcType=INTEGER},
+      anthr_note = #{anthrNote,jdbcType=VARCHAR},
+      overall_height = #{overallHeight,jdbcType=DOUBLE},
+      total_length = #{totalLength,jdbcType=DOUBLE},
+      head_circum = #{headCircum,jdbcType=DOUBLE},
+      neck_circum = #{neckCircum,jdbcType=DOUBLE},
+      shoulder_width = #{shoulderWidth,jdbcType=DOUBLE},
+      chest_width = #{chestWidth,jdbcType=DOUBLE},
+      bust = #{bust,jdbcType=DOUBLE},
+      back_width = #{backWidth,jdbcType=DOUBLE},
+      back_length = #{backLength,jdbcType=DOUBLE},
+      waist_length = #{waistLength,jdbcType=DOUBLE},
+      FWL = #{fwl,jdbcType=DOUBLE},
+      chest_height = #{chestHeight,jdbcType=DOUBLE},
+      skirt_length = #{skirtLength,jdbcType=DOUBLE},
+      breast_width = #{breastWidth,jdbcType=DOUBLE},
+      sleeve_length = #{sleeveLength,jdbcType=DOUBLE},
+      inner_length = #{innerLength,jdbcType=DOUBLE},
+      pants_length = #{pantsLength,jdbcType=DOUBLE},
+      shirt_length = #{shirtLength,jdbcType=DOUBLE},
+      waist_circum = #{waistCircum,jdbcType=DOUBLE},
+      abdominal_circum = #{abdominalCircum,jdbcType=DOUBLE},
+      hipline = #{hipline,jdbcType=DOUBLE},
+      hip_height = #{hipHeight,jdbcType=DOUBLE},
+      crotch_length = #{crotchLength,jdbcType=DOUBLE},
+      arm_circum = #{armCircum,jdbcType=DOUBLE},
+      armroot_circum = #{armrootCircum,jdbcType=DOUBLE},
+      elbow_length = #{elbowLength,jdbcType=DOUBLE},
+      arm_length = #{armLength,jdbcType=DOUBLE},
+      wrist_circum = #{wristCircum,jdbcType=DOUBLE},
+      palm_circum = #{palmCircum,jdbcType=DOUBLE},
+      thigh_circum = #{thighCircum,jdbcType=DOUBLE},
+      knee_circum = #{kneeCircum,jdbcType=DOUBLE},
+      ankle_circum = #{ankleCircum,jdbcType=DOUBLE},
+      knee_length = #{kneeLength,jdbcType=DOUBLE},
+      lowerbody_length = #{lowerbodyLength,jdbcType=DOUBLE},
+      measure_time = #{measureTime,jdbcType=DATE}
+    where anthr_id = #{anthrId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select anthr_id, customer_id, anthr_note, overall_height, total_length, head_circum, 
+    neck_circum, shoulder_width, chest_width, bust, back_width, back_length, waist_length, 
+    FWL, chest_height, skirt_length, breast_width, sleeve_length, inner_length, pants_length, 
+    shirt_length, waist_circum, abdominal_circum, hipline, hip_height, crotch_length, 
+    arm_circum, armroot_circum, elbow_length, arm_length, wrist_circum, palm_circum, 
+    thigh_circum, knee_circum, ankle_circum, knee_length, lowerbody_length, measure_time
+    from anthropometry_tb
+    where anthr_id = #{anthrId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select anthr_id, customer_id, anthr_note, overall_height, total_length, head_circum, 
+    neck_circum, shoulder_width, chest_width, bust, back_width, back_length, waist_length, 
+    FWL, chest_height, skirt_length, breast_width, sleeve_length, inner_length, pants_length, 
+    shirt_length, waist_circum, abdominal_circum, hipline, hip_height, crotch_length, 
+    arm_circum, armroot_circum, elbow_length, arm_length, wrist_circum, palm_circum, 
+    thigh_circum, knee_circum, ankle_circum, knee_length, lowerbody_length, measure_time
+    from anthropometry_tb
+  </select>
+
+  <select id="selectAnthropometryMap" parameterType="java.lang.Integer" resultType="java.util.HashMap">
+    select anthr_id, anthr_note
+    from anthropometry_tb
+    where customer_id = #{customerId}
+  </select>
+
+  <select id="selectColumnInfo" resultType="java.util.HashMap">
+    SELECT column_name,
+           column_comment
+    FROM information_schema.columns
+    WHERE table_schema = 'tailorsysdb_demo'
+      AND table_name = 'anthropometry_tb'
+  </select>
+
+
+</mapper>

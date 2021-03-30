@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xtei.tailorsys.mapper.FabricTypeMapper">
+    <resultMap id="BaseResultMap" type="com.xtei.tailorsys.model.FabricType">
+        <id column="fabrictype_id" jdbcType="INTEGER" property="fabrictypeId"/>
+        <result column="fabrictype_name" jdbcType="VARCHAR" property="fabrictypeName"/>
+        <result column="fabrictype_category" jdbcType="VARCHAR" property="fabrictypeCategory"/>
+        <result column="fabrictype_note" jdbcType="VARCHAR" property="fabrictypeNote"/>
+    </resultMap>
+
+    <resultMap id="VOMap" type="com.xtei.tailorsys.model.VO.FabricTypeVO">
+        <id column="fabrictype_id" jdbcType="INTEGER" property="fabrictype_id"/>
+        <result column="fabrictype_name" jdbcType="VARCHAR" property="fabrictype_name"/>
+        <result column="fabrictype_category" jdbcType="VARCHAR" property="fabrictype_category"/>
+    </resultMap>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from fabrictype_datainfo
+        where fabrictype_id = #{fabrictypeId,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.xtei.tailorsys.model.FabricType">
+        insert into fabrictype_datainfo (fabrictype_id, fabrictype_name, fabrictype_category, fabrictype_note)
+        values (#{fabrictypeId,jdbcType=INTEGER}, #{fabrictypeName,jdbcType=VARCHAR},
+                #{fabrictypeCategory,jdbcType=VARCHAR}, #{fabrictypeNote,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.model.FabricType">
+        update fabrictype_datainfo
+        set fabrictype_name    = #{fabrictypeName,jdbcType=VARCHAR},
+            fabrictype_category=#{fabrictypeCategory,jdbcType=VARCHAR},
+            fabrictype_note    = #{fabrictypeNote,jdbcType=VARCHAR}
+        where fabrictype_id = #{fabrictypeId,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select fabrictype_id, fabrictype_name, fabrictype_category, fabrictype_note
+        from fabrictype_datainfo
+        where fabrictype_id = #{fabrictypeId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectAll" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select fabrictype_id, fabrictype_name,fabrictype_category, fabrictype_note
+        from fabrictype_datainfo
+        <where>
+            <if test="fabrictypeName != null and fabrictypeName !=''">
+                and fabrictype_name LIKE concat('%',#{fabrictypeName},'%')
+            </if>
+            <if test="fabrictypeCategory != null and fabrictypeCategory !=''">
+                and fabrictype_category = #{fabrictypeCategory}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectFabricTypeMap" resultMap="VOMap">
+        select fabrictype_id, fabrictype_name, fabrictype_category
+        from fabrictype_datainfo
+    </select>
+    <!--    <select id="selectFabricTypeMap" resultType="java.util.HashMap">
+        select fabrictype_id, fabrictype_name
+        from fabrictype_datainfo
+        </select>-->
+
+</mapper>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xtei.tailorsys.mapper.CustomerMapper">
+
+    <resultMap id="BaseResultMap" type="com.xtei.tailorsys.model.Customer">
+        <id column="customer_id" jdbcType="INTEGER" property="customerId"/>
+        <result column="customer_name" jdbcType="VARCHAR" property="customerName"/>
+        <result column="customer_sex" jdbcType="VARCHAR" property="customerSex"/>
+        <result column="customer_phone1" jdbcType="VARCHAR" property="customerPhone1"/>
+        <result column="customer_phone2" jdbcType="VARCHAR" property="customerPhone2"/>
+        <result column="customer_address" jdbcType="VARCHAR" property="customerAddress"/>
+        <result column="customer_status" jdbcType="BIT" property="customerStatus"/>
+    </resultMap>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from customers_tb
+        where customer_id = #{customerId,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.xtei.tailorsys.model.Customer">
+        insert into customers_tb (customer_id, customer_name, customer_sex,
+                                  customer_phone1, customer_phone2, customer_address,
+                                  customer_status)
+        values (#{customerId,jdbcType=INTEGER}, #{customerName,jdbcType=VARCHAR}, #{customerSex,jdbcType=VARCHAR},
+                #{customerPhone1,jdbcType=VARCHAR}, #{customerPhone2,jdbcType=VARCHAR},
+                #{customerAddress,jdbcType=VARCHAR},
+                #{customerStatus,jdbcType=BIT})
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.model.Customer">
+        update customers_tb
+        set customer_name    = #{customerName,jdbcType=VARCHAR},
+            customer_sex     = #{customerSex,jdbcType=VARCHAR},
+            customer_phone1  = #{customerPhone1,jdbcType=VARCHAR},
+            customer_phone2  = #{customerPhone2,jdbcType=VARCHAR},
+            customer_address = #{customerAddress,jdbcType=VARCHAR},
+            customer_status  = #{customerStatus,jdbcType=BIT}
+        where customer_id = #{customerId,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select customer_id,
+               customer_name,
+               customer_sex,
+               customer_phone1,
+               customer_phone2,
+               customer_address,
+               customer_status
+        from customers_tb
+        where customer_id = #{customerId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select customer_id, customer_name, customer_sex, customer_phone1, customer_phone2,
+        customer_address, customer_status
+        from customers_tb
+        <where>
+            <if test="customername != null and customername !=''">
+                and customer_name LIKE concat('%',#{customername},'%')
+            </if>
+            <if test="customersex != null and customersex != ''">
+                and customer_sex = #{customersex}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectCustomerMap" resultType="java.util.HashMap">
+        select customer_id, customer_name
+        from customers_tb
+    </select>
+
+    <select id="getNumberOfCustomer" resultType="java.lang.Integer">
+        select count(*) as customerNumber
+        from customers_tb
+    </select>
+
+    <select id="getCustomerSexRatio" resultType="java.util.LinkedHashMap">
+        select customer_sex, count(*) as total
+        from customers_tb
+        group by customer_sex
+    </select>
+
+</mapper>

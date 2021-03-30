@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xtei.tailorsys.mapper.FabricInfoMapper">
+    <resultMap id="BaseResultMap" type="com.xtei.tailorsys.model.FabricInfo">
+        <id column="fabric_id" jdbcType="INTEGER" property="fabricId"/>
+        <result column="fabric_name" jdbcType="VARCHAR" property="fabricName"/>
+        <result column="fabric_type" jdbcType="INTEGER" property="fabricType"/>
+        <result column="fabric_width" jdbcType="DOUBLE" property="fabricWidth"/>
+        <result column="fabric_url" jdbcType="VARCHAR" property="fabricUrl"/>
+    </resultMap>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from fabric_tb
+        where fabric_id = #{fabricId,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" keyColumn="fabric_id" keyProperty="fabricId" parameterType="com.xtei.tailorsys.model.FabricInfo"
+            useGeneratedKeys="true">
+        insert into fabric_tb (fabric_id, fabric_name, fabric_type,
+                               fabric_width, fabric_url)
+        values (#{fabricId,jdbcType=INTEGER}, #{fabricName,jdbcType=VARCHAR}, #{fabricType,jdbcType=INTEGER},
+                #{fabricWidth,jdbcType=DOUBLE}, #{fabricUrl,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.model.FabricInfo">
+        update fabric_tb
+        set fabric_name  = #{fabricName,jdbcType=VARCHAR},
+            fabric_type  = #{fabricType,jdbcType=INTEGER},
+            fabric_width = #{fabricWidth,jdbcType=DOUBLE},
+            fabric_url   = #{fabricUrl,jdbcType=VARCHAR}
+        where fabric_id = #{fabricId,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select fabric_id, fabric_name, fabric_type, fabric_width, fabric_url
+        from fabric_tb
+        where fabric_id = #{fabricId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select fabric_id, fabric_name, fabric_type, fabric_width, fabric_url
+        from fabric_tb
+    </select>
+
+    <select id="selectByName" parameterType="java.lang.String" resultType="java.util.HashMap">
+        select fabric_id, fabric_name
+        from fabric_tb
+        where fabric_name like concat('%', #{name}, '%')
+    </select>
+
+    <select id="selectFabricInfoMap" parameterType="java.lang.String" resultType="java.util.HashMap">
+        select fabric_id, fabric_name
+        from fabric_tb
+        <where>
+            <if test="query != null and query !=''">
+                fabric_name like concat('%',#{query},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getNumberOfFabricInfo" resultType="java.lang.Integer">
+        select count(*) as fabricinfoNumber
+        from fabric_tb
+    </select>
+
+</mapper>

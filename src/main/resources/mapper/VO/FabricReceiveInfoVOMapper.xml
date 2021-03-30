@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xtei.tailorsys.mapper.VO.FabricReceiveInfoVOMapper">
+  <resultMap id="BaseResultMap" type="com.xtei.tailorsys.model.VO.FabricReceiveInfoVO">
+    <result column="far_id" jdbcType="INTEGER" property="farId" />
+    <result column="fabric_name" jdbcType="VARCHAR" property="fabricName" />
+    <result column="sup_name" jdbcType="VARCHAR" property="supName" />
+    <result column="far_length" jdbcType="DOUBLE" property="farLength" />
+    <result column="far_weight" jdbcType="DOUBLE" property="farWeight" />
+    <result column="far_price" jdbcType="DOUBLE" property="farPrice" />
+    <result column="far_date" jdbcType="DATE" property="farDate" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+  </resultMap>
+
+  <select id="selectAll" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select far_id, fabric_name, sup_name, far_length, far_weight, far_price, far_date, 
+    username
+    from fabric_receive_view
+    <where>
+      <if test="query != null and query !=''">
+         sup_name = #{query}
+      </if>
+    </where>
+  </select>
+
+</mapper>

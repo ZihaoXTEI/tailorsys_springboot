@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xtei.tailorsys.mapper.UserMapper">
+  <resultMap id="cResultMap" type="com.xtei.tailorsys.model.User">
+    <id column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="user_email" jdbcType="VARCHAR" property="userEmail" />
+    <result column="user_phone" jdbcType="VARCHAR" property="userPhone" />
+    <result column="user_status" jdbcType="BIT" property="userStatus" />
+    <result column="user_role" jdbcType="VARCHAR" property="userRole" />
+    <result column="registime" jdbcType="TIMESTAMP" property="registime" />
+  </resultMap>
+
+  <!--<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from users_tb
+    where userid = #{userid,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.xtei.tailorsys.model.User">
+    insert into users_tb (userid, username, password,
+      user_email, user_phone, user_status,
+      user_role, registime)
+    values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+      #{userEmail,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, #{userStatus,jdbcType=BIT},
+      #{userRole,jdbcType=VARCHAR}, #{registime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.model.User">
+    update users_tb
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      user_email = #{userEmail,jdbcType=VARCHAR},
+      user_phone = #{userPhone,jdbcType=VARCHAR},
+      user_status = #{userStatus,jdbcType=BIT},
+      user_role = #{userRole,jdbcType=VARCHAR},
+      registime = #{registime,jdbcType=TIMESTAMP}
+    where userid = #{userid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select userid, username, password, user_email, user_phone, user_status, user_role,
+    registime
+    from users_tb
+    where userid = #{userid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select userid, username, password, user_email, user_phone, user_status, user_role,
+    registime
+    from users_tb
+  </select>-->
+
+    <!-- 根据用户名和密码查询 -->
+    <select id="findByUsernameAndPassword" resultMap="cResultMap">
+        SELECT *
+        FROM users_tb
+        WHERE username = #{username}
+          AND password = #{password}
+    </select>
+
+    <!-- 根据用户名查询 -->
+    <select id="findByUsername" parameterType="String" resultMap="cResultMap">
+        SELECT *
+        FROM users_tb
+        WHERE username = #{username}
+    </select>
+
+    <!-- 插入新用户的数据 -->
+    <insert id="insertUser" keyProperty="userid" parameterType="com.xtei.tailorsys.model.User" useGeneratedKeys="true">
+        insert into users_tb(username, password, user_email, user_phone, user_status, user_role, registime)
+            value (#{username},#{password},#{userEmail},#{userPhone},#{userStatus},#{userRole},#{registime})
+    </insert>
+
+    <!-- 更新用户的状态 -->
+    <update id="updateStatus" parameterType="com.xtei.tailorsys.model.User">
+        Update users_tb
+        SET user_status = #{userstatus}
+        WHERE userid = #{userid}
+    </update>
+
+    <!-- 更新用户的信息 -->
+    <update id="updateUser" parameterType="com.xtei.tailorsys.model.User">
+        Update users_tb
+        SET user_email = #{useremail},
+            user_phone = #{userphone}
+        WHERE userid = #{userid}
+    </update>
+
+    <!-- 根据用户编号查找用户信息 -->
+    <select id="findUserById" parameterType="int" resultMap="cResultMap">
+        SELECT *
+        FROM users_tb
+        WHERE userid = #{userId}
+    </select>
+
+    <!-- 获取用户列表 -->
+    <select id="findUserList" parameterType="String" resultMap="cResultMap">
+        SELECT * FROM users_tb WHERE 1 = 1
+        <if test="query != null and query !=''">
+            AND username = #{query}
+        </if>
+    </select>
+
+    <select id="selectUserMap" resultType="java.util.HashMap">
+        select userid, username
+        from users_tb
+    </select>
+
+</mapper>

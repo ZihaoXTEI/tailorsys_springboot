@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xtei.tailorsys.mapper.FabricReceiveInfoMapper">
+  <resultMap id="BaseResultMap" type="com.xtei.tailorsys.model.FabricReceiveInfo">
+    <id column="far_id" jdbcType="INTEGER" property="farId" />
+    <result column="fabric_id" jdbcType="INTEGER" property="fabricId" />
+    <result column="sup_id" jdbcType="INTEGER" property="supId" />
+    <result column="far_length" jdbcType="DOUBLE" property="farLength" />
+    <result column="far_weight" jdbcType="DOUBLE" property="farWeight" />
+    <result column="far_price" jdbcType="DOUBLE" property="farPrice" />
+    <result column="far_date" jdbcType="DATE" property="farDate" />
+    <result column="far_storekeeper" jdbcType="INTEGER" property="farStorekeeper" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from fabric_receive_tb
+    where far_id = #{farId,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.xtei.tailorsys.model.FabricReceiveInfo">
+    insert into fabric_receive_tb (far_id, fabric_id, sup_id, 
+      far_length, far_weight, far_price, 
+      far_date, far_storekeeper)
+    values (#{farId,jdbcType=INTEGER}, #{fabricId,jdbcType=INTEGER}, #{supId,jdbcType=INTEGER}, 
+      #{farLength,jdbcType=DOUBLE}, #{farWeight,jdbcType=DOUBLE}, #{farPrice,jdbcType=DOUBLE}, 
+      #{farDate,jdbcType=DATE}, #{farStorekeeper,jdbcType=INTEGER})
+  </insert>
+
+  <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.model.FabricReceiveInfo">
+    update fabric_receive_tb
+    set fabric_id = #{fabricId,jdbcType=INTEGER},
+      sup_id = #{supId,jdbcType=INTEGER},
+      far_length = #{farLength,jdbcType=DOUBLE},
+      far_weight = #{farWeight,jdbcType=DOUBLE},
+      far_price = #{farPrice,jdbcType=DOUBLE},
+      far_date = #{farDate,jdbcType=DATE},
+      far_storekeeper = #{farStorekeeper,jdbcType=INTEGER}
+    where far_id = #{farId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select far_id, fabric_id, sup_id, far_length, far_weight, far_price, far_date, far_storekeeper
+    from fabric_receive_tb
+    where far_id = #{farId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select far_id, fabric_id, sup_id, far_length, far_weight, far_price, far_date, far_storekeeper
+    from fabric_receive_tb
+    <where>
+    <if test="query != null and query !=''">
+      and far_length &lt;= #{query}
+    </if>
+    </where>
+  </select>
+
+</mapper>

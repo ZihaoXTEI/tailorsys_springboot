@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xtei.tailorsys.mapper.PermissionMapper">
+    <resultMap id="BaseResultMap" type="com.xtei.tailorsys.model.Permission">
+        <id column="per_id" jdbcType="INTEGER" property="perId"/>
+        <result column="per_name" jdbcType="VARCHAR" property="perName"/>
+        <result column="per_pid" jdbcType="INTEGER" property="perPid"/>
+        <result column="per_path" jdbcType="VARCHAR" property="perPath"/>
+        <result column="per_level" jdbcType="INTEGER" property="perLevel"/>
+        <collection property="child" ofType="com.xtei.tailorsys.model.Permission" column="per_id" select="getChildMenu">
+        </collection>
+    </resultMap>
+
+  <!--  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from permission_tb
+        where per_id = #{perId,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.xtei.tailorsys.model.Permission">
+        insert into permission_tb (per_id, per_name, per_pid,
+                                   per_path, per_level)
+        values (#{perId,jdbcType=INTEGER}, #{perName,jdbcType=VARCHAR}, #{perPid,jdbcType=INTEGER},
+                #{perPath,jdbcType=VARCHAR}, #{perLevel,jdbcType=INTEGER})
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.model.Permission">
+        update permission_tb
+        set per_name  = #{perName,jdbcType=VARCHAR},
+            per_pid   = #{perPid,jdbcType=INTEGER},
+            per_path  = #{perPath,jdbcType=VARCHAR},
+            per_level = #{perLevel,jdbcType=INTEGER}
+        where per_id = #{perId,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select per_id, per_name, per_pid, per_path, per_level
+        from permission_tb
+        where per_id = #{perId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select per_id, per_name, per_pid, per_path, per_level
+        from permission_tb
+    </select>-->
+
+    <sql id="Base_Column_List">
+        per_id, per_name, per_pid, per_path, per_level
+    </sql>
+
+    <select id="getMenu" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from permission_tb
+        where per_pid = 0
+    </select>
+    
+    <select id="getChildMenu" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from permission_tb
+        where permission_tb.per_pid = #{per_id}
+    </select>
+
+</mapper>

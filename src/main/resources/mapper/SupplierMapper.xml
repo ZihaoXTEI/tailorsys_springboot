@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xtei.tailorsys.mapper.SupplierMapper">
+  <resultMap id="bResultMap" type="com.xtei.tailorsys.model.Supplier">
+    <id column="sup_id" jdbcType="INTEGER" property="supId" />
+    <result column="sup_name" jdbcType="VARCHAR" property="supName" />
+    <result column="sup_address" jdbcType="VARCHAR" property="supAddress" />
+    <result column="sup_phone1" jdbcType="VARCHAR" property="supPhone1" />
+    <result column="sup_phone2" jdbcType="VARCHAR" property="supPhone2" />
+    <result column="sup_status" jdbcType="BIT" property="supStatus" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from suppliers_tb
+    where sup_id = #{supId,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.xtei.tailorsys.model.Supplier">
+    insert into suppliers_tb (sup_id, sup_name, sup_address, 
+      sup_phone1, sup_phone2, sup_status
+      )
+    values (#{supId,jdbcType=INTEGER}, #{supName,jdbcType=VARCHAR}, #{supAddress,jdbcType=VARCHAR}, 
+      #{supPhone1,jdbcType=VARCHAR}, #{supPhone2,jdbcType=VARCHAR}, #{supStatus,jdbcType=BIT}
+      )
+  </insert>
+
+  <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.model.Supplier">
+    update suppliers_tb
+    set sup_name = #{supName,jdbcType=VARCHAR},
+      sup_address = #{supAddress,jdbcType=VARCHAR},
+      sup_phone1 = #{supPhone1,jdbcType=VARCHAR},
+      sup_phone2 = #{supPhone2,jdbcType=VARCHAR},
+      sup_status = #{supStatus,jdbcType=BIT}
+    where sup_id = #{supId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="bResultMap">
+    select sup_id, sup_name, sup_address, sup_phone1, sup_phone2, sup_status
+    from suppliers_tb
+    where sup_id = #{supId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAll" parameterType="String" resultMap="bResultMap">
+    select sup_id, sup_name, sup_address, sup_phone1, sup_phone2, sup_status
+    from suppliers_tb
+    WHERE 1 = 1
+    <if test="query != null and query !=''">
+      AND sup_name LIKE concat('%',#{query},'%')
+    </if>
+  </select>
+
+  <select id="selectSupplierMap" resultType="java.util.HashMap">
+    select sup_id, sup_name
+    from suppliers_tb
+  </select>
+
+  <update id="updateSupplierStatus" parameterType="com.xtei.tailorsys.model.Supplier">
+    update suppliers_tb
+    set
+        sup_status = #{supStatus,jdbcType=BIT}
+    where sup_id = #{supId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xtei.tailorsys.mapper.OrderFabricDetailMapper">
+    <resultMap id="BaseResultMap" type="com.xtei.tailorsys.model.OrderFabricDetail">
+        <id column="ofd_no" jdbcType="INTEGER" property="ofdNo"/>
+        <result column="order_id" jdbcType="VARCHAR" property="orderId"/>
+        <result column="fabric_id" jdbcType="INTEGER" property="fabricId"/>
+        <result column="ofd_prede" jdbcType="DOUBLE" property="ofdPrede"/>
+        <result column="ofd_usage" jdbcType="DOUBLE" property="ofdUsage"/>
+    </resultMap>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from order_fabdet_tb
+        where ofd_no = #{ofdNo,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.xtei.tailorsys.model.OrderFabricDetail">
+        insert into order_fabdet_tb (ofd_no, order_id, fabric_id,
+                                     ofd_prede, ofd_usage)
+        values (#{ofdNo,jdbcType=INTEGER}, #{orderId,jdbcType=VARCHAR}, #{fabricId,jdbcType=INTEGER},
+                #{ofdPrede,jdbcType=DOUBLE}, #{ofdUsage,jdbcType=DOUBLE})
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.model.OrderFabricDetail">
+        update order_fabdet_tb
+        set order_id  = #{orderId,jdbcType=VARCHAR},
+            fabric_id = #{fabricId,jdbcType=INTEGER},
+            ofd_prede = #{ofdPrede,jdbcType=DOUBLE},
+            ofd_usage = #{ofdUsage,jdbcType=DOUBLE}
+        where ofd_no = #{ofdNo,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select ofd_no, order_id, fabric_id, ofd_prede, ofd_usage
+        from order_fabdet_tb
+        where ofd_no = #{ofdNo,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select ofd_no, order_id, fabric_id, ofd_prede, ofd_usage
+        from order_fabdet_tb
+    </select>
+
+    <resultMap id="Map" type="com.xtei.tailorsys.model.VO.OrderFabricDetailVO">
+        <id column="ofd_no" jdbcType="INTEGER" property="ofdNo"/>
+        <result column="order_id" jdbcType="VARCHAR" property="orderId"/>
+        <result column="fabric_id" jdbcType="INTEGER" property="fabricId"/>
+        <result column="ofd_prede" jdbcType="DOUBLE" property="ofdPrede"/>
+        <result column="ofd_usage" jdbcType="DOUBLE" property="ofdUsage"/>
+        <association property="fabricInfo" javaType="com.xtei.tailorsys.model.FabricInfo">
+            <!-- 关联条件Employee的dept_id对应着Department的id -->
+            <id column="fabric_id" jdbcType="INTEGER" property="fabricId"/>
+            <result column="fabric_name" jdbcType="VARCHAR" property="fabricName"/>
+            <result column="fabric_type" jdbcType="INTEGER" property="fabricType"/>
+            <result column="fabric_width" jdbcType="DOUBLE" property="fabricWidth"/>
+            <result column="fabric_url" jdbcType="VARCHAR" property="fabricUrl"/>
+        </association>
+    </resultMap>
+
+    <select id="selectOrderDetailAndFabricInfo" resultMap="Map">
+        select o.ofd_no,
+               o.order_id,
+               o.fabric_id,
+               o.ofd_prede,
+               o.ofd_usage,
+               f.fabric_id,
+               f.fabric_name,
+               f.fabric_type,
+               f.fabric_width,
+               f.fabric_url
+        from order_fabdet_tb o,
+             fabric_tb f
+        where o.fabric_id = f.fabric_id and o.order_id = #{orderId,jdbcType=VARCHAR}
+
+    </select>
+
+</mapper>

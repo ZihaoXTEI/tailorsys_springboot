@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+    <context id="MySQLContext" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+
+        <plugin type="com.xtei.tailorsys.generator.MyPluginAdapter" /> 
+
+        <!-- 配置如何生成注释信息 -->
+        <commentGenerator type="com.xtei.tailorsys.generator.MyCommentGenerator">
+            <!-- <property name="suppressAllComments" value="true" /> -->
+            <property name="suppressDate" value="true"/>
+            <property name="addRemarkComments" value="true"/>
+        </commentGenerator>
+
+        <!-- 配置数据库连接 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/tailorsysdb_demo" userId="root"
+                        password="20201998">
+            <property name="useUnicode" value="true"/>
+            <property name="characterEncoding" value="utf-8"/>
+            <property name="serverTimezone" value="UTC"/>
+            <property name="useSSL" value="false"/>
+        </jdbcConnection>
+
+<!--        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>-->
+
+        <!-- 控制生成实体类的位置 -->
+        <javaModelGenerator targetPackage="com.xtei.tailorsys.model"
+                            targetProject=".\src\main\java">
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!-- 控制生成Mapper接口文件的位置-->
+        <sqlMapGenerator targetPackage="mapper"
+                         targetProject="src\main\resources">
+        </sqlMapGenerator>
+
+
+        <!-- 配置Mapper接口的属性 -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.xtei.tailorsys.mapper"
+                             targetProject="src\main\java"/>
+
+        <!-- table指定每个表的生成策略 -->
+<!--        <table tableName="customers_tb" domainObjectName="Customer"/>
+        <table tableName="suppliers_tb" domainObjectName="Supplier"/>
+        <table tableName="clothtype_datainfo" domainObjectName="ClothType"/>
+        <table tableName="fabrictype_datainfo" domainObjectName="FabricType"/>-->
+        <!--<table tableName="anthropometry_tb" domainObjectName="Anthropometry"/>-->
+
+       <!-- <table tableName="fabric_tb" domainObjectName="FabricInfo"/>
+        <table tableName="fabric_receive_tb" domainObjectName="FabricReceiveInfo"/>
+        <table tableName="fabric_stock_tb" domainObjectName="FabricStockInfo"/>
+        <table tableName="fabric_used_tb" domainObjectName="FabricUsedInfo"/>
+
+        <table tableName="order_tb" domainObjectName="Order"/>
+        <table tableName="order_fabdet_tb" domainObjectName="OrderFabricDetail"/>
+        <table tableName="users_tb" domainObjectName="User"/>
+        <table tableName="permission_tb" domainObjectName="Permission"/>
+        <table tableName="fabric_receive_view" domainObjectName="FabricReceiveInfoVO"/>
+        <table tableName="cloth_consumption_datainfo" domainObjectName="ClothConsumption"/>-->
+     <!--   <table tableName="cloth_consumption_view" domainObjectName="ClothConsumptionVO"/>-->
+       <!-- <table tableName="fabric_stock_view" domainObjectName="FabricStockInfoVO"/>-->
+        <!--<table tableName="order_process_tb" domainObjectName="OrderProcess"/>-->
+        <table tableName="order_view" domainObjectName="OrderViewVO"/>
+
+
+    </context>
+</generatorConfiguration>

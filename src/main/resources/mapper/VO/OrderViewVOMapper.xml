@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xtei.tailorsys.mapper.VO.OrderViewVOMapper">
+  <resultMap id="BaseResultMap" type="com.xtei.tailorsys.model.VO.OrderViewVO">
+    <result column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="customer_id" jdbcType="INTEGER" property="customerId" />
+    <result column="anthr_id" jdbcType="INTEGER" property="anthrId" />
+    <result column="clothtype_id" jdbcType="INTEGER" property="clothtypeId" />
+    <result column="total_amount" jdbcType="DOUBLE" property="totalAmount" />
+    <result column="order_number" jdbcType="INTEGER" property="orderNumber" />
+    <result column="deadline" jdbcType="DATE" property="deadline" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="order_status" jdbcType="INTEGER" property="orderStatus" />
+    <result column="booked_amount" jdbcType="DOUBLE" property="bookedAmount" />
+    <result column="payment_method" jdbcType="INTEGER" property="paymentMethod" />
+    <result column="order_note" jdbcType="VARCHAR" property="orderNote" />
+    <result column="order_name" jdbcType="VARCHAR" property="orderName" />
+    <result column="clothtype_name" jdbcType="VARCHAR" property="clothtypeName" />
+    <result column="customer_name" jdbcType="VARCHAR" property="customerName" />
+  </resultMap>
+
+  <insert id="insert" parameterType="com.xtei.tailorsys.model.VO.OrderViewVO">
+    insert into order_view (order_id, customer_id, anthr_id, 
+      clothtype_id, total_amount, order_number, 
+      deadline, created_time, order_status, 
+      booked_amount, payment_method, order_note, 
+      order_name, clothtype_name, customer_name
+      )
+    values (#{orderId,jdbcType=VARCHAR}, #{customerId,jdbcType=INTEGER}, #{anthrId,jdbcType=INTEGER}, 
+      #{clothtypeId,jdbcType=INTEGER}, #{totalAmount,jdbcType=DOUBLE}, #{orderNumber,jdbcType=INTEGER}, 
+      #{deadline,jdbcType=DATE}, #{createdTime,jdbcType=TIMESTAMP}, #{orderStatus,jdbcType=INTEGER}, 
+      #{bookedAmount,jdbcType=DOUBLE}, #{paymentMethod,jdbcType=INTEGER}, #{orderNote,jdbcType=VARCHAR}, 
+      #{orderName,jdbcType=VARCHAR}, #{clothtypeName,jdbcType=VARCHAR}, #{customerName,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select order_id, customer_id, anthr_id, clothtype_id, total_amount, order_number, 
+    deadline, created_time, order_status, booked_amount, payment_method, order_note, 
+    order_name, clothtype_name, customer_name
+    from order_view
+    <where>
+      <if test="orderid != null and orderid !=''">
+        order_id LIKE concat('%', #{orderid},'%')
+      </if>
+      <if test="customername != null and customername !=''">
+        and customer_name LIKE concat('%',#{customername},'%')
+      </if>
+      <if test="clothtypeid != null and clothtypeid !=0">
+        and clothtype_id = ${clothtypeid}
+      </if>
+      <if test="paymentmethod != null and paymentmethod !=0">
+        and payment_method = ${paymentmethod}
+      </if>
+      <if test="orderstatus != null and orderstatus !=0">
+        and order_status = ${orderstatus}
+      </if>
+
+      <if test="screenfield !=null and screenfield != '' and latestdate !=null">
+        and ${orderfield} between ${earlydate} and ${latestdate}
+      </if>
+    </where>
+    <if test="screenfield !=null and screenfield != '' ">
+      order by ${screenfield}  ${ordertype}
+    </if>
+  </select>
+
+  <select id="getOrderQuantityGroupedByClothType" resultType="java.util.LinkedHashMap">
+    SELECT clothtype_name AS clothtypeName,COUNT(*) AS totalQuantity FROM order_view
+    GROUP BY clothtype_name
+  </select>
+
+  <select id="getOrderQuantityGroupedByCreateTime" parameterType="java.lang.String" resultType="java.util.LinkedHashMap">
+    SELECT DATE_FORMAT(created_time,${type})  AS node,COUNT(*) AS totalQuantity FROM order_view
+    <where>
+      <if test="type == '%Y年%m月'">
+        DATE_FORMAT(created_time,'%Y') = DATE_FORMAT(CURDATE(),'%Y')
+      </if>
+    </where>
+    GROUP BY node
+  </select>
+  
+  <select id="getOrderQuantityGroupedByCreateTimeWithQuarter" resultType="java.util.LinkedHashMap">
+    SELECT concat(date_format(created_time, '%Y'),'第',FLOOR((date_format(created_time, '%m')+2)/3),'季度') AS node, COUNT(*) AS totalQuantity FROM order_view
+    WHERE DATE_FORMAT(created_time,'%Y') = DATE_FORMAT(CURDATE(),'%Y')
+    GROUP BY node;
+  </select>
+
+  <select id="getTurnoverGroupedByCreateTime" resultType="java.util.LinkedHashMap">
+    SELECT DATE_FORMAT(created_time,${type}) AS node,SUM(total_amount) AS Turnover FROM order_view
+    <where>
+      <if test="type == '%Y年%m月'">
+        DATE_FORMAT(created_time,'%Y') = DATE_FORMAT(CURDATE(),'%Y')
+      </if>
+    </where>
+    GROUP BY node
+  </select>
+
+  <select id="getTurnoverGroupedByCreateTimeWithQuarter" resultType="java.util.LinkedHashMap">
+    SELECT concat(date_format(created_time, '%Y'),'第',FLOOR((date_format(created_time, '%m')+2)/3),'季度') AS node, SUM(total_amount) AS Turnover FROM order_view
+    WHERE DATE_FORMAT(created_time,'%Y') = DATE_FORMAT(CURDATE(),'%Y')
+    GROUP BY node;
+  </select>
+
+</mapper>
