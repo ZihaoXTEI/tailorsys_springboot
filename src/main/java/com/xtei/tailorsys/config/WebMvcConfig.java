@@ -17,7 +17,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @CrossOrigin(origins = "*",maxAge = 3600)
 @Configuration
-public class WebMvcConfig implements WebMvcConfigurer {
+public class  WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry){

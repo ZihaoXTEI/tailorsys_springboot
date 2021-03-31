@@ -1,7 +1,9 @@
 package com.xtei.tailorsys.service.Impl;
 
+import com.xtei.tailorsys.mapper.EventMapper;
 import com.xtei.tailorsys.mapper.OrderMapper;
 import com.xtei.tailorsys.mapper.OrderProcessMapper;
+import com.xtei.tailorsys.model.Event;
 import com.xtei.tailorsys.model.OrderProcess;
 import com.xtei.tailorsys.service.PlanService;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,8 @@ public class PlanServiceImpl implements PlanService {
     private OrderProcessMapper orderProcessMapper;
     @Resource
     private OrderMapper orderMapper;
+    @Resource
+    private EventMapper eventMapper;
 
     @Override
     public List<OrderProcess> getOrderProcessList() {
@@ -66,5 +70,29 @@ public class PlanServiceImpl implements PlanService {
         int res1 = orderProcessMapper.updateByOrderId(orderProcess);
         int res2 = orderMapper.updateOrderStatus(orderId,oldOrderStatus +1);
         return res1 +res2;
+    }
+
+    @Override
+    public int addEvent(Event event){
+        int res = eventMapper.insert(event);
+        return res;
+    }
+
+    @Override
+    public int updateEvent(Event event){
+        int res = eventMapper.updateByPrimaryKey(event);
+        return res;
+    }
+
+    @Override
+    public int deleteEvent(Integer id){
+        int res = eventMapper.deleteByPrimaryKey(id);
+        return res;
+    }
+
+    @Override
+    public List<Event> getAllEvent(){
+        List<Event> eventList = eventMapper.selectAll();
+        return eventList;
     }
 }

@@ -1,5 +1,6 @@
 package com.xtei.tailorsys.service;
 
+import com.xtei.tailorsys.model.Event;
 import com.xtei.tailorsys.model.OrderProcess;
 
 import javax.annotation.Resource;
@@ -15,8 +16,15 @@ import java.util.List;
 
 public interface PlanService {
 
-
     List<OrderProcess> getOrderProcessList();
 
     int updateOrderStatus(String orderId, String userName, Date dateTime);
+
+    int addEvent(Event event);
+
+    int updateEvent(Event event);
+
+    int deleteEvent(Integer id);
+
+    List<Event> getAllEvent();
 }
