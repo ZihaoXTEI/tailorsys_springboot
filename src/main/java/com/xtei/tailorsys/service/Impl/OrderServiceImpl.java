@@ -210,8 +210,14 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderProcess> getAllOrderProcess(){
-        List<OrderProcess> orderProcessList = orderProcessMapper.selectAll();
+        List<OrderProcess> orderProcessList = orderProcessMapper.selectAll(null);
         return orderProcessList;
+    }
+
+    @Override
+    public List<Order> getAllOrderList() {
+        List<Order> orderList = orderMapper.selectAll();
+        return orderList;
     }
 
 }

@@ -60,4 +60,7 @@ public interface OrderService {
     List<OrderViewVO> getAllOrder();
 
     List<OrderProcess> getAllOrderProcess();
+
+    List<Order> getAllOrderList();
+
 }

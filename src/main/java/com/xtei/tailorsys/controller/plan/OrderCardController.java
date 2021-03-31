@@ -26,8 +26,8 @@ public class OrderCardController {
      * 获取订单流程信息列表
      */
     @GetMapping("orderprocess")
-    public ResponseBean getOrderProcessList(){
-        List<OrderProcess> orderProcessList = planService.getOrderProcessList();
+    public ResponseBean getOrderProcessList(@RequestParam(value = "orderid", defaultValue = "")String orderId){
+        List<OrderProcess> orderProcessList = planService.getOrderProcessList(orderId);
         if(orderProcessList  != null){
             return ResponseBean.success("获取订单流程信息成功",orderProcessList);
         }

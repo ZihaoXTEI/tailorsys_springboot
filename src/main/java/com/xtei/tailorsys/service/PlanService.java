@@ -16,7 +16,7 @@ import java.util.List;
 
 public interface PlanService {
 
-    List<OrderProcess> getOrderProcessList();
+    List<OrderProcess> getOrderProcessList(String orderId);
 
     int updateOrderStatus(String orderId, String userName, Date dateTime);
 

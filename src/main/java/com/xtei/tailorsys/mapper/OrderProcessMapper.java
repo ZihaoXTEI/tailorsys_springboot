@@ -16,7 +16,7 @@ public interface OrderProcessMapper {
 
     OrderProcess selectByOrderId(String orderId);
 
-    List<OrderProcess> selectAll();
+    List<OrderProcess> selectAll(String orderId);
 
     int updateByOrderId(OrderProcess record);
 

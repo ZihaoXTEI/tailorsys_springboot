@@ -31,8 +31,8 @@ public class PlanServiceImpl implements PlanService {
     private EventMapper eventMapper;
 
     @Override
-    public List<OrderProcess> getOrderProcessList() {
-        List<OrderProcess> orderProcessList = orderProcessMapper.selectAll();
+    public List<OrderProcess> getOrderProcessList(String orderId) {
+        List<OrderProcess> orderProcessList = orderProcessMapper.selectAll(orderId);
         return orderProcessList;
     }
 
