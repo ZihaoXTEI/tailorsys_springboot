@@ -6,6 +6,7 @@ import com.xtei.tailorsys.model.response.ResponseBean;
 import com.xtei.tailorsys.service.ClothTypeService;
 import com.xtei.tailorsys.service.DataService;
 import com.xtei.tailorsys.util.pagehelper.PageResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -20,7 +21,7 @@ import javax.annotation.Resource;
 @RequestMapping("data/clothtype")
 public class ClothTypeController {
 
-    @Resource
+    @Autowired
     private DataService dataService;
 
     /**

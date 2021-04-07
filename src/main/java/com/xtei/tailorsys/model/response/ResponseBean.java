@@ -1,5 +1,6 @@
 package com.xtei.tailorsys.model.response;
 
+import com.xtei.tailorsys.util.pagehelper.PageResult;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 
@@ -79,4 +80,13 @@ public class ResponseBean<T> {
         responseBean.setMessage(message);
         return responseBean;
     }
+
+    public static <T> ResponseBean<T> error(String message,int status,T data){
+        ResponseBean<T> responseBean = new ResponseBean<>();
+        responseBean.setStatus(status);
+        responseBean.setMessage(message);
+        responseBean.setData(data);
+        return responseBean;
+    }
+
 }

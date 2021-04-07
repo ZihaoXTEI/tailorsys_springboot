@@ -1,5 +1,6 @@
 package com.xtei.tailorsys.config.jwt;
 
+import com.xtei.tailorsys.util.HttpStatus;
 import com.xtei.tailorsys.util.JwtTokenUtils;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
@@ -30,16 +31,16 @@ public class JwtAuthenticationFailHander extends SimpleUrlAuthenticationFailureH
         String username = httpServletRequest.getParameter("username");
         String password = httpServletRequest.getParameter("password");
 
-        System.out.println(username+password);
+        System.out.println(username + password);
 
         httpServletResponse.setContentType("application/json;charset=utf-8");
         PrintWriter out = httpServletResponse.getWriter();
         //out.write("{\"status\":400,\"message\":\"用户名或密码错误\"}");
-        out.write("{\"meta\": {" +
+        out.write("{" +
                 "\"message\": \"用户名或密码错误\"," +
-                " \"status\": 400" +
-                "}" +
-                "}");
+                " \"status\":" + HttpStatus.LOGIN_FAILED +
+                "}"
+        );
         out.flush();
         out.close();
 

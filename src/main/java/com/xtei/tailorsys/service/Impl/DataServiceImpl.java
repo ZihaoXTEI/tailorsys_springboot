@@ -13,6 +13,7 @@ import com.xtei.tailorsys.model.VO.ClothConsumptionVO;
 import com.xtei.tailorsys.service.DataService;
 import com.xtei.tailorsys.util.PageHelperUtils;
 import com.xtei.tailorsys.util.pagehelper.PageResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,15 +30,13 @@ import java.util.List;
 @Transactional(rollbackFor = Exception.class)
 public class DataServiceImpl implements DataService {
 
-    @Resource
+    @Autowired
     private ClothTypeMapper clothTypeMapper;
-
-    @Resource
+    @Autowired
     private FabricTypeMapper fabricTypeMapper;
-
-    @Resource
+    @Autowired
     private ClothConsumptionMapper clothConsumptionMapper;
-    @Resource
+    @Autowired
     private ClothConsumptionVOMapper clothConsumptionVOMapper;
 
     /**

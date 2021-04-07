@@ -4,9 +4,11 @@ import com.xtei.tailorsys.model.Customer;
 import com.xtei.tailorsys.model.response.ResponseBean;
 import com.xtei.tailorsys.service.CustomerService;
 import com.xtei.tailorsys.util.pagehelper.PageResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * FileName: CustomerController
@@ -19,7 +21,7 @@ import javax.annotation.Resource;
 @RequestMapping("customer")
 public class CustomerController {
 
-    @Resource
+    @Autowired
     private CustomerService customerService;
 
     /*
@@ -27,15 +29,10 @@ public class CustomerController {
      */
     @PostMapping(value = "/")
     public ResponseBean addCustomer(@RequestBody Customer customer) {
-        System.out.println(customer);
-        if (customer.getCustomerName() == null || customer.getCustomerName().trim() == "") {
-            return ResponseBean.error("顾客名称不能为空");
-        }
-
         if (customerService.addCustomer(customer) == 1) {
-            return ResponseBean.success("新增顾客信息成功");
+            return ResponseBean.success("新增顾客信息成功", HttpServletResponse.SC_CREATED);
         } else {
-            return ResponseBean.error("新增顾客信息失败");
+            return ResponseBean.error("新增顾客信息失败", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -47,9 +44,9 @@ public class CustomerController {
         Customer customerV = customer;
         customerV.setCustomerId(cusId);
         if (customerService.updateCustomerInfo(customerV) == 1) {
-            return ResponseBean.success("修改顾客信息成功");
+            return ResponseBean.success("修改顾客信息成功", HttpServletResponse.SC_CREATED);
         } else {
-            return ResponseBean.error("修改顾客信息失败");
+            return ResponseBean.error("修改顾客信息失败", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -60,9 +57,9 @@ public class CustomerController {
     public ResponseBean getCustomerById(@PathVariable("cusid") Integer cusId) {
         Customer customer = customerService.findCustomerById(cusId);
         if (customer != null) {
-            return ResponseBean.success("获取顾客信息成功", customer);
+            return ResponseBean.success("获取顾客信息成功", HttpServletResponse.SC_OK, customer);
         } else {
-            return ResponseBean.error("获取顾客信息失败");
+            return ResponseBean.error("获取顾客信息失败", HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
@@ -76,13 +73,9 @@ public class CustomerController {
                                                     @RequestParam(value = "pagesize", defaultValue = "10") Integer pagesize) {
         PageResult pageResult = customerService.findCustomerList(customername, customersex, pagenum, pagesize);
         if (pageResult != null) {
-            return ResponseBean.success("获取顾客列表成功", pageResult);
+            return ResponseBean.success("获取顾客列表成功", HttpServletResponse.SC_OK, pageResult);
         } else {
-            return ResponseBean.error("获取顾客列表失败", null);
+            return ResponseBean.error("获取顾客列表失败", HttpServletResponse.SC_NOT_FOUND, null);
         }
     }
-
-    /*
-     *依据输入顾客名称搜索符合的顾客信息
-     */
 }

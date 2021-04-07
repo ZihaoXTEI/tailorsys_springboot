@@ -87,7 +87,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //.addFilter(new JWTAuthenticationFilter(authenticationManager()))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager()));*/
         http.cors().and().csrf().disable();
-        http
+
+        http.authorizeRequests()
+                //login请求无需验证
+                .antMatchers("/","login").permitAll()
+                //其它请务必经过登录验证成功后才能访问
+                .anyRequest().authenticated();
+
+        //授权认证
+        http.formLogin()
+                .loginProcessingUrl("/login")
+                .loginPage("/login")
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .successHandler(authenticationSuccessHandler)
+                .failureHandler(authenticationFailHander)
+                .and()
+                .addFilter(new JWTAuthorizationFilter(authenticationManager()));
+
+        http.logout().permitAll();
+
+/*        http
                 .authorizeRequests()
                 .antMatchers("/home")
                 .hasRole("ADMIN")
@@ -103,7 +123,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureHandler(authenticationFailHander)
 
                 .and()
-                .addFilter(new JWTAuthorizationFilter(authenticationManager()));
+                .addFilter(new JWTAuthorizationFilter(authenticationManager()));*/
 
     }
 }

@@ -7,13 +7,16 @@ import com.xtei.tailorsys.model.response.ResponseBean;
 import com.xtei.tailorsys.service.ClothTypeService;
 import com.xtei.tailorsys.service.ViewService;
 import com.xtei.tailorsys.util.FormatUtils;
+import com.xtei.tailorsys.util.HttpStatus;
 import com.xtei.tailorsys.util.ReflectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 /**
@@ -27,22 +30,22 @@ import java.util.*;
 @RequestMapping("view")
 public class ViewController {
 
-    @Resource
+    @Autowired
     private ViewService viewService;
 
-    @Resource
+    @Autowired
     private ClothTypeService clothTypeService;
 
     /**
      * 获取菜单数据接口
      */
-    @GetMapping("/menus/")
+    @GetMapping("/menus")
     public ResponseBean getMenus() {
         List<Permission> permissionList = viewService.findPermissionList();
         if (permissionList != null) {
-            return ResponseBean.success("获取菜单数据成功", permissionList);
+            return ResponseBean.success("获取菜单数据成功", HttpServletResponse.SC_PARTIAL_CONTENT, permissionList);
         } else {
-            return ResponseBean.error("获取菜单数据失败", null);
+            return ResponseBean.error("获取菜单数据失败", HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
@@ -53,20 +56,20 @@ public class ViewController {
     public ResponseBean getFabricInfoSelect(@PathVariable(value = "query")String query) {
         List<Map<Integer, String>> fabricInfoMap = viewService.findFabricInfoMap(query);
         if (fabricInfoMap != null) {
-            return ResponseBean.success("获取布料信息数据成功", fabricInfoMap);
+            return ResponseBean.success("获取布料信息数据成功",HttpServletResponse.SC_PARTIAL_CONTENT, fabricInfoMap);
         } else {
-            return ResponseBean.error("获取布料信息数据失败", null);
+            return ResponseBean.error("获取布料信息数据失败",HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
-    @GetMapping("/fabricinfo/")
+    @GetMapping("/fabricinfo")
     public ResponseBean getFabricInfoSelect() {
         String query = "";
         List<Map<Integer, String>> fabricInfoMap = viewService.findFabricInfoMap(query);
         if (fabricInfoMap != null) {
-            return ResponseBean.success("获取布料信息数据成功", fabricInfoMap);
+            return ResponseBean.success("获取布料信息数据成功",HttpServletResponse.SC_PARTIAL_CONTENT, fabricInfoMap);
         } else {
-            return ResponseBean.error("获取布料信息数据失败", null);
+            return ResponseBean.error("获取布料信息数据失败", HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
@@ -78,9 +81,9 @@ public class ViewController {
         List<FabricTypeVO> fabricTypeMap = viewService.findFabricTypeMap();
         if (fabricTypeMap != null) {
             System.out.println(fabricTypeMap);
-            return ResponseBean.success("获取布料类型数据成功", fabricTypeMap);
+            return ResponseBean.success("获取布料类型数据成功",HttpServletResponse.SC_PARTIAL_CONTENT, fabricTypeMap);
         } else {
-            return ResponseBean.error("获取布料类型数据失败", null);
+            return ResponseBean.error("获取布料类型数据失败", HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
@@ -91,9 +94,9 @@ public class ViewController {
     public ResponseBean getSupplierSelect() {
         List<Map<Integer, String>> supplierMap = viewService.findSupplierMap();
         if (supplierMap != null) {
-            return ResponseBean.success("获取供应商数据成功", supplierMap);
+            return ResponseBean.success("获取供应商数据成功",HttpServletResponse.SC_PARTIAL_CONTENT, supplierMap);
         } else {
-            return ResponseBean.error("获取供应商数据成功", null);
+            return ResponseBean.error("获取供应商数据失败", HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
@@ -104,9 +107,9 @@ public class ViewController {
     public ResponseBean getUserSelect() {
         List<Map<Integer, String>> userMap = viewService.findUserMap();
         if (userMap != null) {
-            return ResponseBean.success("获取用户数据成功", userMap);
+            return ResponseBean.success("获取用户数据成功",HttpServletResponse.SC_PARTIAL_CONTENT, userMap);
         } else {
-            return ResponseBean.error("获取用户数据失败", null);
+            return ResponseBean.error("获取用户数据失败", HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
@@ -117,9 +120,9 @@ public class ViewController {
     public ResponseBean getClothTypeSelect() {
         List<Map<Integer, String>> clothTypeMap = viewService.findClothTypeMap();
         if (clothTypeMap != null) {
-            return ResponseBean.success("获取服装类型数据成功", clothTypeMap);
+            return ResponseBean.success("获取服装类型数据成功",HttpServletResponse.SC_PARTIAL_CONTENT, clothTypeMap);
         } else {
-            return ResponseBean.error("获取服装类型数据失败", null);
+            return ResponseBean.error("获取服装类型数据失败", HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
@@ -130,9 +133,9 @@ public class ViewController {
     public ResponseBean getCustomerSelect(){
         List<Map<Integer,String>> customerMap = viewService.findCustomerMap();
         if(customerMap != null){
-            return ResponseBean.success("获取顾客信息成功",customerMap);
+            return ResponseBean.success("获取顾客信息成功",HttpServletResponse.SC_PARTIAL_CONTENT,customerMap);
         }else {
-            return ResponseBean.error("获取顾客信息失败");
+            return ResponseBean.error("获取顾客信息失败",HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
@@ -144,9 +147,9 @@ public class ViewController {
     public ResponseBean getAnthropometrySelect(@PathVariable("customerid") Integer customerId){
         List<Map<Integer,String>> anthropometryMap = viewService.findAnthropometryMap(customerId);
         if(anthropometryMap != null){
-            return ResponseBean.success("获取信息成功",anthropometryMap);
+            return ResponseBean.success("获取信息成功",HttpServletResponse.SC_PARTIAL_CONTENT,anthropometryMap);
         }else {
-            return ResponseBean.error("获取信息失败");
+            return ResponseBean.error("获取信息失败",HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
@@ -157,29 +160,10 @@ public class ViewController {
     public ResponseBean getClothtypeColumnInfo() {
         List<Map<String, String>> clothtypeColumnInfoList = viewService.findClothtypeColumnInfo();
         ArrayList<Map<String,String>> columnNames = FormatUtils.transforColumnName(clothtypeColumnInfoList);
-       /* ArrayList<Map<String, String>> arrayList1 = new ArrayList<Map<String, String>>();
-
-        for (Object obj : clothtypeColumnInfoList) {
-            StringBuilder sb = new StringBuilder();
-            String columnName = ((Map) obj).get("column_name").toString().toLowerCase(Locale.ROOT);
-            String columnComment = ((Map) obj).get("column_comment").toString();
-            String[] str = columnName.split("_");
-            sb.append(str[0]);
-            for (int i = 1; i < str.length; i++) {
-                str[i] = str[i].substring(0, 1).toUpperCase() + str[i].substring(1);
-                sb.append(str[i]);
-            }
-            Map<String, String> map = new HashMap();
-            map.put("column_name", sb.toString());
-            map.put("column_comment", columnComment);
-            arrayList1.add(map);
-
-            System.out.println(sb);
-        }*/
         if (columnNames != null) {
-            return ResponseBean.success("获取信息成功", columnNames);
+            return ResponseBean.success("获取信息成功",HttpServletResponse.SC_PARTIAL_CONTENT, columnNames);
         } else {
-            return ResponseBean.error("获取信息失败");
+            return ResponseBean.error("获取信息失败",HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
@@ -189,13 +173,11 @@ public class ViewController {
     @GetMapping("/clothconsumptioncolumn")
     public ResponseBean getClothConsumptionColumnInfo() {
         List<Map<String, String>> clothConsumptionColumnInfoList = viewService.findClothconsumptionColumnInfo();
-
         ArrayList<Map<String,String>> columnNames = FormatUtils.transforColumnName(clothConsumptionColumnInfoList);
-
         if (columnNames != null) {
-            return ResponseBean.success("获取信息成功", columnNames);
+            return ResponseBean.success("获取信息成功",HttpServletResponse.SC_PARTIAL_CONTENT, columnNames);
         } else {
-            return ResponseBean.error("获取信息失败");
+            return ResponseBean.error("获取信息失败",HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
@@ -204,13 +186,17 @@ public class ViewController {
      */
     @GetMapping("/anthropometric")
     public ResponseBean getAnthropometricColumnInfo(){
-        List<Map<String, String>> anthropometricColumnInfo = viewService.findAnthropometricColumnInfo();
-        ArrayList<Map<String,String>> columnNames = FormatUtils.transforColumnName(anthropometricColumnInfo);
+        try {
+            List<Map<String, String>> anthropometricColumnInfo = viewService.findAnthropometricColumnInfo();
+            ArrayList<Map<String, String>> columnNames = FormatUtils.transforColumnName(anthropometricColumnInfo);
 
-        if (columnNames != null) {
-            return ResponseBean.success("获取信息成功", columnNames);
-        } else {
-            return ResponseBean.error("获取信息失败");
+            if (columnNames != null) {
+                return ResponseBean.success("获取信息成功", HttpServletResponse.SC_PARTIAL_CONTENT, columnNames);
+            } else {
+                return ResponseBean.error("获取信息失败", HttpServletResponse.SC_NOT_FOUND);
+            }
+        }catch (Exception e){
+            return ResponseBean.error("获取数据错误",HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -219,11 +205,15 @@ public class ViewController {
      */
     @GetMapping("anthrdata/{clothtype}")
     public ResponseBean getAnthropometricDataByClothType(@PathVariable("clothtype") Integer clothtypeId){
-        ClothType clothType = clothTypeService.findClothTypeById(clothtypeId);
-        ArrayList<Map<String, String>> columnInfo = FormatUtils.transforColumnName(viewService.findClothtypeColumnInfo());
-        ArrayList<Map<String, String>> arrayList =ReflectionUtils.getAnthropometricData(clothType,columnInfo);
-        //System.out.println("XXX"+arrayList);
-        return ResponseBean.success("获取数据成功",arrayList);
+        try {
+            ClothType clothType = clothTypeService.findClothTypeById(clothtypeId);
+            ArrayList<Map<String, String>> columnInfo = FormatUtils.transforColumnName(viewService.findClothtypeColumnInfo());
+            ArrayList<Map<String, String>> arrayList = ReflectionUtils.getAnthropometricData(clothType, columnInfo);
+            //System.out.println("XXX"+arrayList);
+            return ResponseBean.success("获取数据成功", HttpServletResponse.SC_PARTIAL_CONTENT, arrayList);
+        }catch (Exception e){
+            return ResponseBean.error("获取数据错误",HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
