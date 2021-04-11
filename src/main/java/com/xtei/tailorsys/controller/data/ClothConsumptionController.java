@@ -1,10 +1,8 @@
 package com.xtei.tailorsys.controller.data;
 
-import com.github.pagehelper.dialect.ReplaceSql;
-import com.xtei.tailorsys.model.Anthropometry;
-import com.xtei.tailorsys.model.ClothConsumption;
-import com.xtei.tailorsys.model.VO.ClothConsumptionVO;
-import com.xtei.tailorsys.model.response.ResponseBean;
+import com.xtei.tailorsys.entity.Anthropometry;
+import com.xtei.tailorsys.entity.ClothConsumption;
+import com.xtei.tailorsys.entity.response.ResponseBean;
 import com.xtei.tailorsys.service.AnthropometryService;
 import com.xtei.tailorsys.service.DataService;
 import com.xtei.tailorsys.service.FabricStockService;
@@ -13,7 +11,6 @@ import com.xtei.tailorsys.util.pagehelper.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 
@@ -99,7 +96,7 @@ public class ClothConsumptionController {
             return ResponseBean.error("验证数据异常");
         } else if (clothtypeId == null || clothtypeId == 0) {
             return ResponseBean.error("验证数据异常");
-        } else if (fabrics == null || fabrics.length == 0) {
+        } else if (fabrics == null || fabrics.length == 0 || fabrics[0] == 0) {
             return ResponseBean.error("验证数据异常");
         }
 

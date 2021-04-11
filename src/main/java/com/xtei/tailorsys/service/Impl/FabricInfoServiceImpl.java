@@ -2,8 +2,8 @@ package com.xtei.tailorsys.service.Impl;
 
 import com.xtei.tailorsys.mapper.FabricInfoMapper;
 import com.xtei.tailorsys.mapper.FabricStockInfoMapper;
-import com.xtei.tailorsys.model.FabricInfo;
-import com.xtei.tailorsys.model.FabricStockInfo;
+import com.xtei.tailorsys.entity.FabricInfo;
+import com.xtei.tailorsys.entity.FabricStockInfo;
 import com.xtei.tailorsys.service.FabricInfoService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

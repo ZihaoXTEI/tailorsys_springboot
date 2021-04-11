@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xtei.tailorsys.mapper.EventMapper">
-  <resultMap id="BaseResultMap" type="com.xtei.tailorsys.model.Event">
+  <resultMap id="BaseResultMap" type="com.xtei.tailorsys.entity.Event">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="date" jdbcType="DATE" property="date" />
@@ -12,14 +12,14 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
 
-  <insert id="insert" parameterType="com.xtei.tailorsys.model.Event">
+  <insert id="insert" parameterType="com.xtei.tailorsys.entity.Event">
     insert into event_tb (id, content, date
       )
     values (#{id,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{date,jdbcType=DATE}
       )
   </insert>
 
-  <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.model.Event">
+  <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.entity.Event">
     update event_tb
     set content = #{content,jdbcType=VARCHAR},
       date = #{date,jdbcType=DATE}

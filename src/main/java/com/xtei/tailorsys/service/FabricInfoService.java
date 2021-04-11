@@ -1,7 +1,6 @@
 package com.xtei.tailorsys.service;
 
-import com.xtei.tailorsys.model.FabricInfo;
-import com.xtei.tailorsys.util.pagehelper.PageResult;
+import com.xtei.tailorsys.entity.FabricInfo;
 
 import java.util.List;
 import java.util.Map;

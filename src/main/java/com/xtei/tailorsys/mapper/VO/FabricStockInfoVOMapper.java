@@ -1,6 +1,6 @@
 package com.xtei.tailorsys.mapper.VO;
 
-import com.xtei.tailorsys.model.VO.FabricStockInfoVO;
+import com.xtei.tailorsys.entity.VO.FabricStockInfoVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

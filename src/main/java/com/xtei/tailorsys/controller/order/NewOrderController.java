@@ -1,30 +1,20 @@
 package com.xtei.tailorsys.controller.order;
 
 import com.xtei.tailorsys.converter.OrderConverter;
-import com.xtei.tailorsys.model.Anthropometry;
-import com.xtei.tailorsys.model.ClothConsumption;
-import com.xtei.tailorsys.model.Order;
-import com.xtei.tailorsys.model.OrderFabricDetail;
-import com.xtei.tailorsys.model.VO.OrderVO;
-import com.xtei.tailorsys.model.response.ResponseBean;
-import com.xtei.tailorsys.service.AnthropometryService;
-import com.xtei.tailorsys.service.DataService;
-import com.xtei.tailorsys.service.FabricStockService;
+import com.xtei.tailorsys.entity.Order;
+import com.xtei.tailorsys.entity.OrderFabricDetail;
+import com.xtei.tailorsys.entity.VO.OrderVO;
+import com.xtei.tailorsys.entity.response.ResponseBean;
 import com.xtei.tailorsys.service.OrderService;
-import com.xtei.tailorsys.util.CalculationUntils;
 import com.xtei.tailorsys.util.FormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.Time;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * FileName: NewOrderController

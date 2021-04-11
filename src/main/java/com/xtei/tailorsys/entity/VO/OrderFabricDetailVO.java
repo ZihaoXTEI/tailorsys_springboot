@@ -1,6 +1,6 @@
-package com.xtei.tailorsys.model.VO;
+package com.xtei.tailorsys.entity.VO;
 
-import com.xtei.tailorsys.model.FabricInfo;
+import com.xtei.tailorsys.entity.FabricInfo;
 import lombok.Data;
 
 /**

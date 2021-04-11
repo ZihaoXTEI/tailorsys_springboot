@@ -1,6 +1,6 @@
 package com.xtei.tailorsys.controller.statistics;
 
-import com.xtei.tailorsys.model.response.ResponseBean;
+import com.xtei.tailorsys.entity.response.ResponseBean;
 import com.xtei.tailorsys.service.StatisticsService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

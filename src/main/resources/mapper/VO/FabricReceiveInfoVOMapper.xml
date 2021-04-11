@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xtei.tailorsys.mapper.VO.FabricReceiveInfoVOMapper">
-  <resultMap id="BaseResultMap" type="com.xtei.tailorsys.model.VO.FabricReceiveInfoVO">
+  <resultMap id="BaseResultMap" type="com.xtei.tailorsys.entity.VO.FabricReceiveInfoVO">
     <result column="far_id" jdbcType="INTEGER" property="farId" />
     <result column="fabric_name" jdbcType="VARCHAR" property="fabricName" />
     <result column="sup_name" jdbcType="VARCHAR" property="supName" />

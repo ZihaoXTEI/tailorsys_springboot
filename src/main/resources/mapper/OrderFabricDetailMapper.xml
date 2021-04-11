@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xtei.tailorsys.mapper.OrderFabricDetailMapper">
-    <resultMap id="BaseResultMap" type="com.xtei.tailorsys.model.OrderFabricDetail">
+    <resultMap id="BaseResultMap" type="com.xtei.tailorsys.entity.OrderFabricDetail">
         <id column="ofd_no" jdbcType="INTEGER" property="ofdNo"/>
         <result column="order_id" jdbcType="VARCHAR" property="orderId"/>
         <result column="fabric_id" jdbcType="INTEGER" property="fabricId"/>
@@ -15,14 +15,14 @@
         where ofd_no = #{ofdNo,jdbcType=INTEGER}
     </delete>
 
-    <insert id="insert" parameterType="com.xtei.tailorsys.model.OrderFabricDetail">
+    <insert id="insert" parameterType="com.xtei.tailorsys.entity.OrderFabricDetail">
         insert into order_fabdet_tb (ofd_no, order_id, fabric_id,
                                      ofd_prede, ofd_usage)
         values (#{ofdNo,jdbcType=INTEGER}, #{orderId,jdbcType=VARCHAR}, #{fabricId,jdbcType=INTEGER},
                 #{ofdPrede,jdbcType=DOUBLE}, #{ofdUsage,jdbcType=DOUBLE})
     </insert>
 
-    <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.model.OrderFabricDetail">
+    <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.entity.OrderFabricDetail">
         update order_fabdet_tb
         set order_id  = #{orderId,jdbcType=VARCHAR},
             fabric_id = #{fabricId,jdbcType=INTEGER},
@@ -42,13 +42,13 @@
         from order_fabdet_tb
     </select>
 
-    <resultMap id="Map" type="com.xtei.tailorsys.model.VO.OrderFabricDetailVO">
+    <resultMap id="Map" type="com.xtei.tailorsys.entity.VO.OrderFabricDetailVO">
         <id column="ofd_no" jdbcType="INTEGER" property="ofdNo"/>
         <result column="order_id" jdbcType="VARCHAR" property="orderId"/>
         <result column="fabric_id" jdbcType="INTEGER" property="fabricId"/>
         <result column="ofd_prede" jdbcType="DOUBLE" property="ofdPrede"/>
         <result column="ofd_usage" jdbcType="DOUBLE" property="ofdUsage"/>
-        <association property="fabricInfo" javaType="com.xtei.tailorsys.model.FabricInfo">
+        <association property="fabricInfo" javaType="com.xtei.tailorsys.entity.FabricInfo">
             <!-- 关联条件Employee的dept_id对应着Department的id -->
             <id column="fabric_id" jdbcType="INTEGER" property="fabricId"/>
             <result column="fabric_name" jdbcType="VARCHAR" property="fabricName"/>

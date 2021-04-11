@@ -1,6 +1,6 @@
-package com.xtei.tailorsys.model.VO;
+package com.xtei.tailorsys.entity.VO;
 
-import com.xtei.tailorsys.model.OrderFabricDetail;
+import com.xtei.tailorsys.entity.OrderFabricDetail;
 import lombok.Data;
 
 import java.io.Serializable;

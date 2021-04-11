@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xtei.tailorsys.mapper.FabricTypeMapper">
-    <resultMap id="BaseResultMap" type="com.xtei.tailorsys.model.FabricType">
+    <resultMap id="BaseResultMap" type="com.xtei.tailorsys.entity.FabricType">
         <id column="fabrictype_id" jdbcType="INTEGER" property="fabrictypeId"/>
         <result column="fabrictype_name" jdbcType="VARCHAR" property="fabrictypeName"/>
         <result column="fabrictype_category" jdbcType="VARCHAR" property="fabrictypeCategory"/>
         <result column="fabrictype_note" jdbcType="VARCHAR" property="fabrictypeNote"/>
     </resultMap>
 
-    <resultMap id="VOMap" type="com.xtei.tailorsys.model.VO.FabricTypeVO">
+    <resultMap id="VOMap" type="com.xtei.tailorsys.entity.VO.FabricTypeVO">
         <id column="fabrictype_id" jdbcType="INTEGER" property="fabrictype_id"/>
         <result column="fabrictype_name" jdbcType="VARCHAR" property="fabrictype_name"/>
         <result column="fabrictype_category" jdbcType="VARCHAR" property="fabrictype_category"/>
@@ -20,13 +20,13 @@
         where fabrictype_id = #{fabrictypeId,jdbcType=INTEGER}
     </delete>
 
-    <insert id="insert" parameterType="com.xtei.tailorsys.model.FabricType">
+    <insert id="insert" parameterType="com.xtei.tailorsys.entity.FabricType">
         insert into fabrictype_datainfo (fabrictype_id, fabrictype_name, fabrictype_category, fabrictype_note)
         values (#{fabrictypeId,jdbcType=INTEGER}, #{fabrictypeName,jdbcType=VARCHAR},
                 #{fabrictypeCategory,jdbcType=VARCHAR}, #{fabrictypeNote,jdbcType=VARCHAR})
     </insert>
 
-    <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.model.FabricType">
+    <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.entity.FabricType">
         update fabrictype_datainfo
         set fabrictype_name    = #{fabrictypeName,jdbcType=VARCHAR},
             fabrictype_category=#{fabrictypeCategory,jdbcType=VARCHAR},

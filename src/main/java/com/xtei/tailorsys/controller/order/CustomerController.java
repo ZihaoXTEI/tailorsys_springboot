@@ -1,13 +1,12 @@
 package com.xtei.tailorsys.controller.order;
 
-import com.xtei.tailorsys.model.Customer;
-import com.xtei.tailorsys.model.response.ResponseBean;
+import com.xtei.tailorsys.entity.Customer;
+import com.xtei.tailorsys.entity.response.ResponseBean;
 import com.xtei.tailorsys.service.CustomerService;
 import com.xtei.tailorsys.util.pagehelper.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 /**

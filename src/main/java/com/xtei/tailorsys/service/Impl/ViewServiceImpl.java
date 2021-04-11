@@ -1,8 +1,8 @@
 package com.xtei.tailorsys.service.Impl;
 
 import com.xtei.tailorsys.mapper.*;
-import com.xtei.tailorsys.model.Permission;
-import com.xtei.tailorsys.model.VO.FabricTypeVO;
+import com.xtei.tailorsys.entity.Permission;
+import com.xtei.tailorsys.entity.VO.FabricTypeVO;
 import com.xtei.tailorsys.service.ViewService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

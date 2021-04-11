@@ -1,9 +1,8 @@
-package com.xtei.tailorsys.controller;
+package com.xtei.tailorsys.controller.system;
 
 import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.Page;
-import com.xtei.tailorsys.model.User;
-import com.xtei.tailorsys.model.response.ResponseBean;
+import com.xtei.tailorsys.entity.User;
+import com.xtei.tailorsys.entity.response.ResponseBean;
 import com.xtei.tailorsys.service.UserService;
 import com.xtei.tailorsys.util.pagehelper.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -34,7 +34,7 @@ public class UserController {
     /*/
      *增加用户
      */
-    @RequestMapping(value = "/user", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/", method = RequestMethod.POST)
     public ResponseBean addUser(@RequestBody JSONObject jsonObject) {
         String username = jsonObject.getString("username");
         String password = jsonObject.getString("password");
@@ -82,7 +82,6 @@ public class UserController {
      */
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
     public ResponseBean getUserById(@PathVariable("id") int id) {
-        System.out.println("OBA");
         if (id <= 0) {
             return ResponseBean.error("获取用户信息失败");
         }
@@ -98,12 +97,33 @@ public class UserController {
     /*
      *用户列表
      */
-    @GetMapping("/user")
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
     public ResponseBean<PageResult> getUserList(@RequestParam(value = "query", defaultValue = "") String query,
                                                 @RequestParam(value = "pagenum", defaultValue = "1") Integer pagenum,
                                                 @RequestParam(value = "pagesize", defaultValue = "5") Integer pagesize) {
         PageResult pageResult = userService.findUserList(query, pagenum, pagesize);
         return ResponseBean.success("获取用户列表成功", pageResult);
+    }
+
+    /**
+     * 修改用户密码
+     */
+    @GetMapping(value = "/user/changepassword/{username}")
+    public ResponseBean changePassword(@PathVariable("username") String username,
+                                       @RequestParam("oldpassword") String oldpassword,
+                                       @RequestParam("newpassword") String newpassword){
+        String oldPassword = bCryptPasswordEncoder.encode(oldpassword);
+        String newPassword = bCryptPasswordEncoder.encode(newpassword);
+
+        if(userService.findByUsernameAndPassword(username,oldPassword) == null){
+            return ResponseBean.error("输入的旧密码不正确，请重新输入", HttpServletResponse.SC_BAD_REQUEST);
+        }
+
+        if(userService.changePassword(username,newPassword) == 1){
+            return ResponseBean.success("修改密码成功",HttpServletResponse.SC_CREATED);
+        }else {
+            return ResponseBean.error("修改密码失败",HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
     }
 
 

@@ -1,6 +1,6 @@
 package com.xtei.tailorsys.mapper;
 
-import com.xtei.tailorsys.model.FabricReceiveInfo;
+import com.xtei.tailorsys.entity.FabricReceiveInfo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

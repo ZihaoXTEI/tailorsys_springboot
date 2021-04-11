@@ -4,7 +4,7 @@ package com.xtei.tailorsys.service.Impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xtei.tailorsys.mapper.CustomerMapper;
-import com.xtei.tailorsys.model.Customer;
+import com.xtei.tailorsys.entity.Customer;
 import com.xtei.tailorsys.service.CustomerService;
 import com.xtei.tailorsys.util.PageHelperUtils;
 import com.xtei.tailorsys.util.pagehelper.PageResult;

@@ -1,7 +1,6 @@
 package com.xtei.tailorsys.mapper;
 
-import com.xtei.tailorsys.model.User;
-import com.xtei.tailorsys.util.pagehelper.PageResult;
+import com.xtei.tailorsys.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -30,6 +29,8 @@ public interface UserMapper {
     int updateStatus(@Param("userid") int userid, @Param("userstatus") boolean userstatus);
 
     int updateUser(@Param("userid") int userid, @Param("useremail") String useremail, @Param("userphone") String userphone);
+
+    int changePassword(@Param("username") String username,@Param("password") String password);
 
     User findUserById(int userId);
 

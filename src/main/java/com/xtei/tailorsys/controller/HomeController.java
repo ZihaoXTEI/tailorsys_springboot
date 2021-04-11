@@ -1,12 +1,11 @@
 package com.xtei.tailorsys.controller;
 
-import com.xtei.tailorsys.model.response.ResponseBean;
+import com.xtei.tailorsys.entity.response.ResponseBean;
 import com.xtei.tailorsys.service.CustomerService;
 import com.xtei.tailorsys.service.FabricInfoService;
 import com.xtei.tailorsys.service.FabricStockService;
 import com.xtei.tailorsys.service.OrderService;
 import com.xtei.tailorsys.util.HttpStatus;
-import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

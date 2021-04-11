@@ -1,8 +1,6 @@
-package com.xtei.tailorsys.model.response;
+package com.xtei.tailorsys.entity.response;
 
-import com.xtei.tailorsys.util.pagehelper.PageResult;
 import lombok.Data;
-import org.springframework.http.HttpStatus;
 
 /**
  * FileName: ResponseBean

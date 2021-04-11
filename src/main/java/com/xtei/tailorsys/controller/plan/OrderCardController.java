@@ -1,7 +1,7 @@
 package com.xtei.tailorsys.controller.plan;
 
-import com.xtei.tailorsys.model.OrderProcess;
-import com.xtei.tailorsys.model.response.ResponseBean;
+import com.xtei.tailorsys.entity.OrderProcess;
+import com.xtei.tailorsys.entity.response.ResponseBean;
 import com.xtei.tailorsys.service.PlanService;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,16 +1,13 @@
 package com.xtei.tailorsys.service;
 
 
-import com.xtei.tailorsys.model.Anthropometry;
-import com.xtei.tailorsys.model.Order;
-import com.xtei.tailorsys.model.OrderFabricDetail;
-import com.xtei.tailorsys.model.OrderProcess;
-import com.xtei.tailorsys.model.VO.OrderFabricDetailVO;
-import com.xtei.tailorsys.model.VO.OrderViewVO;
+import com.xtei.tailorsys.entity.Order;
+import com.xtei.tailorsys.entity.OrderFabricDetail;
+import com.xtei.tailorsys.entity.OrderProcess;
+import com.xtei.tailorsys.entity.VO.OrderFabricDetailVO;
+import com.xtei.tailorsys.entity.VO.OrderViewVO;
 import com.xtei.tailorsys.util.pagehelper.PageResult;
 
-import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;

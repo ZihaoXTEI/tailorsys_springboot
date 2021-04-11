@@ -1,9 +1,7 @@
 package com.xtei.tailorsys.controller.file;
 
-import com.xtei.tailorsys.model.response.ResponseBean;
+import com.xtei.tailorsys.entity.response.ResponseBean;
 import com.xtei.tailorsys.util.FormatUtils;
-import org.springframework.boot.autoconfigure.web.servlet.MultipartProperties;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

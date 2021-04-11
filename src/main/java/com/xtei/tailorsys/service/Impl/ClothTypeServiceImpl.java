@@ -3,7 +3,7 @@ package com.xtei.tailorsys.service.Impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xtei.tailorsys.mapper.ClothTypeMapper;
-import com.xtei.tailorsys.model.ClothType;
+import com.xtei.tailorsys.entity.ClothType;
 import com.xtei.tailorsys.service.ClothTypeService;
 import com.xtei.tailorsys.util.PageHelperUtils;
 import com.xtei.tailorsys.util.pagehelper.PageResult;

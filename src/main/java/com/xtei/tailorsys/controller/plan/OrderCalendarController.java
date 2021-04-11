@@ -1,8 +1,8 @@
 package com.xtei.tailorsys.controller.plan;
 
-import com.xtei.tailorsys.model.Event;
-import com.xtei.tailorsys.model.Order;
-import com.xtei.tailorsys.model.response.ResponseBean;
+import com.xtei.tailorsys.entity.Event;
+import com.xtei.tailorsys.entity.Order;
+import com.xtei.tailorsys.entity.response.ResponseBean;
 import com.xtei.tailorsys.service.OrderService;
 import com.xtei.tailorsys.service.PlanService;
 import com.xtei.tailorsys.util.HttpStatus;

@@ -1,7 +1,7 @@
 package com.xtei.tailorsys.mapper;
 
-import com.xtei.tailorsys.model.OrderFabricDetail;
-import com.xtei.tailorsys.model.VO.OrderFabricDetailVO;
+import com.xtei.tailorsys.entity.OrderFabricDetail;
+import com.xtei.tailorsys.entity.VO.OrderFabricDetailVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

@@ -1,9 +1,8 @@
 package com.xtei.tailorsys.util;
 
-import com.xtei.tailorsys.model.Anthropometry;
-import com.xtei.tailorsys.model.ClothConsumption;
+import com.xtei.tailorsys.entity.Anthropometry;
+import com.xtei.tailorsys.entity.ClothConsumption;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;

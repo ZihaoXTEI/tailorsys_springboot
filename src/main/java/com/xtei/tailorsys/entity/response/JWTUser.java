@@ -1,4 +1,4 @@
-package com.xtei.tailorsys.model.response;
+package com.xtei.tailorsys.entity.response;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

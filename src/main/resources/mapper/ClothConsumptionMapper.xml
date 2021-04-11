@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xtei.tailorsys.mapper.ClothConsumptionMapper">
-    <resultMap id="BaseResultMap" type="com.xtei.tailorsys.model.ClothConsumption">
+    <resultMap id="BaseResultMap" type="com.xtei.tailorsys.entity.ClothConsumption">
         <id column="consum_id" jdbcType="INTEGER" property="consumId"/>
         <result column="clothtype_id" jdbcType="INTEGER" property="clothtypeId"/>
         <result column="consum_width" jdbcType="DOUBLE" property="consumWidth"/>
@@ -31,7 +31,7 @@
         where consum_id = #{consumId,jdbcType=INTEGER}
     </delete>
 
-    <insert id="insert" parameterType="com.xtei.tailorsys.model.ClothConsumption">
+    <insert id="insert" parameterType="com.xtei.tailorsys.entity.ClothConsumption">
         insert into cloth_consumption_datainfo (consum_id, clothtype_id, consum_width,
                                                 shirt_length, bust, shoulder_width,
                                                 sleeve_length, wrist_circum, neck_circum,
@@ -48,7 +48,7 @@
                 #{backLength,jdbcType=DOUBLE}, #{hipHeight,jdbcType=DOUBLE}, #{consumNote,jdbcType=DOUBLE})
     </insert>
 
-    <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.model.ClothConsumption">
+    <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.entity.ClothConsumption">
         update cloth_consumption_datainfo
         set clothtype_id   = #{clothtypeId,jdbcType=INTEGER},
             consum_width   = #{consumWidth,jdbcType=DOUBLE},

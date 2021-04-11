@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xtei.tailorsys.mapper.VO.FabricStockInfoVOMapper">
-    <resultMap id="BaseResultMap" type="com.xtei.tailorsys.model.VO.FabricStockInfoVO">
+    <resultMap id="BaseResultMap" type="com.xtei.tailorsys.entity.VO.FabricStockInfoVO">
         <result column="fas_id" jdbcType="INTEGER" property="fasId"/>
         <result column="fabric_id" jdbcType="INTEGER" property="fabricId"/>
         <result column="fabric_name" jdbcType="VARCHAR" property="fabricName"/>
@@ -15,7 +15,7 @@
         <result column="fabric_url" jdbcType="VARCHAR" property="fabricUrl"/>
     </resultMap>
 
-    <insert id="insert" parameterType="com.xtei.tailorsys.model.VO.FabricStockInfoVO">
+    <insert id="insert" parameterType="com.xtei.tailorsys.entity.VO.FabricStockInfoVO">
         insert into fabric_stock_view (fas_id, fabric_id, fabric_name,
                                        fas_prede, fas_position, fas_stock,
                                        unit_price, fabric_type, fabrictype_name,

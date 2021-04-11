@@ -1,6 +1,6 @@
 package com.xtei.tailorsys.service;
 
-import com.xtei.tailorsys.model.Anthropometry;
+import com.xtei.tailorsys.entity.Anthropometry;
 
 import java.util.Date;
 

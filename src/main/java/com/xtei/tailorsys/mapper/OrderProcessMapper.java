@@ -1,6 +1,6 @@
 package com.xtei.tailorsys.mapper;
 
-import com.xtei.tailorsys.model.OrderProcess;
+import com.xtei.tailorsys.entity.OrderProcess;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

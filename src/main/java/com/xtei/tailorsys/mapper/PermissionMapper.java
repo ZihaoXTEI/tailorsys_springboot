@@ -1,6 +1,6 @@
 package com.xtei.tailorsys.mapper;
 
-import com.xtei.tailorsys.model.Permission;
+import com.xtei.tailorsys.entity.Permission;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

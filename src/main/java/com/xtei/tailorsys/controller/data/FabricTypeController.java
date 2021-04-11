@@ -1,14 +1,11 @@
 package com.xtei.tailorsys.controller.data;
 
-import com.github.pagehelper.dialect.ReplaceSql;
-import com.xtei.tailorsys.model.FabricType;
-import com.xtei.tailorsys.model.response.ResponseBean;
+import com.xtei.tailorsys.entity.FabricType;
+import com.xtei.tailorsys.entity.response.ResponseBean;
 import com.xtei.tailorsys.service.DataService;
 import com.xtei.tailorsys.util.pagehelper.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
 
 /**
  * FileName: FabricTypeController

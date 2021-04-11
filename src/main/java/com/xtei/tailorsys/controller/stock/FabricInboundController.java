@@ -1,15 +1,14 @@
 package com.xtei.tailorsys.controller.stock;
 
-import com.xtei.tailorsys.model.FabricInfo;
-import com.xtei.tailorsys.model.FabricReceiveInfo;
-import com.xtei.tailorsys.model.response.ResponseBean;
+import com.xtei.tailorsys.entity.FabricInfo;
+import com.xtei.tailorsys.entity.FabricReceiveInfo;
+import com.xtei.tailorsys.entity.response.ResponseBean;
 import com.xtei.tailorsys.service.FabricInfoService;
 import com.xtei.tailorsys.service.FabricStockService;
 import com.xtei.tailorsys.util.pagehelper.PageResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 

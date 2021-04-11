@@ -1,6 +1,6 @@
 package com.xtei.tailorsys.mapper;
 
-import com.xtei.tailorsys.model.ClothConsumption;
+import com.xtei.tailorsys.entity.ClothConsumption;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

@@ -38,7 +38,7 @@ public class JwtAuthenticationFailHander extends SimpleUrlAuthenticationFailureH
         //out.write("{\"status\":400,\"message\":\"用户名或密码错误\"}");
         out.write("{" +
                 "\"message\": \"用户名或密码错误\"," +
-                " \"status\":" + HttpStatus.LOGIN_FAILED +
+                " \"status\":" + HttpServletResponse.SC_BAD_REQUEST +
                 "}"
         );
         out.flush();

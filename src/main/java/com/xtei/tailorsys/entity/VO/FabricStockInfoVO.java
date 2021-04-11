@@ -1,4 +1,4 @@
-package com.xtei.tailorsys.model.VO;
+package com.xtei.tailorsys.entity.VO;
 
 import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;

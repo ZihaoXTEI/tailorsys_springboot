@@ -1,6 +1,6 @@
 package com.xtei.tailorsys.service;
 
-import com.xtei.tailorsys.model.Customer;
+import com.xtei.tailorsys.entity.Customer;
 import com.xtei.tailorsys.util.pagehelper.PageResult;
 
 import java.util.List;

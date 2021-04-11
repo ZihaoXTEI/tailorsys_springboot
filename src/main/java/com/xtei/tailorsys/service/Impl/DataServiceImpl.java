@@ -6,10 +6,10 @@ import com.xtei.tailorsys.mapper.ClothConsumptionMapper;
 import com.xtei.tailorsys.mapper.ClothTypeMapper;
 import com.xtei.tailorsys.mapper.FabricTypeMapper;
 import com.xtei.tailorsys.mapper.VO.ClothConsumptionVOMapper;
-import com.xtei.tailorsys.model.ClothConsumption;
-import com.xtei.tailorsys.model.ClothType;
-import com.xtei.tailorsys.model.FabricType;
-import com.xtei.tailorsys.model.VO.ClothConsumptionVO;
+import com.xtei.tailorsys.entity.ClothConsumption;
+import com.xtei.tailorsys.entity.ClothType;
+import com.xtei.tailorsys.entity.FabricType;
+import com.xtei.tailorsys.entity.VO.ClothConsumptionVO;
 import com.xtei.tailorsys.service.DataService;
 import com.xtei.tailorsys.util.PageHelperUtils;
 import com.xtei.tailorsys.util.pagehelper.PageResult;
@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**

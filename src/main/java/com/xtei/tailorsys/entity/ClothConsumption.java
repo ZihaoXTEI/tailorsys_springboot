@@ -1,8 +1,6 @@
-package com.xtei.tailorsys.model;
+package com.xtei.tailorsys.entity;
 
 import lombok.Data;
-
-import javax.validation.constraints.DecimalMin;
 
 /**
  *

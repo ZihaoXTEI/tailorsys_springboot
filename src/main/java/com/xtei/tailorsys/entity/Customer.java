@@ -1,6 +1,5 @@
-package com.xtei.tailorsys.model;
+package com.xtei.tailorsys.entity;
 
-import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import lombok.Data;

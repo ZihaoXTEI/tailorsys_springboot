@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xtei.tailorsys.mapper.ClothTypeMapper">
-    <resultMap id="BaseResultMap" type="com.xtei.tailorsys.model.ClothType">
+    <resultMap id="BaseResultMap" type="com.xtei.tailorsys.entity.ClothType">
         <id column="clothtype_id" jdbcType="INTEGER" property="clothtypeId"/>
         <result column="clothtype_name" jdbcType="VARCHAR" property="clothtypeName"/>
         <result column="shirt_length" jdbcType="BIT" property="shirtLength"/>
@@ -28,7 +28,7 @@
         from clothtype_datainfo
         where clothtype_id = #{clothtypeId,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" parameterType="com.xtei.tailorsys.model.ClothType">
+    <insert id="insert" parameterType="com.xtei.tailorsys.entity.ClothType">
         insert into clothtype_datainfo (clothtype_id, clothtype_name, shirt_length,
                                         bust, shoulder_width, sleeve_length,
                                         wrist_circum, neck_circum, pants_length,
@@ -44,7 +44,7 @@
                 #{totalLength,jdbcType=BIT}, #{fwl,jdbcType=BIT}, #{backLength,jdbcType=BIT}, #{hipHeight,jdbcType=BIT},
                 #{clothtypeNote,jdbcType=VARCHAR})
     </insert>
-    <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.model.ClothType">
+    <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.entity.ClothType">
         update clothtype_datainfo
         set clothtype_name = #{clothtypeName,jdbcType=VARCHAR},
             shirt_length   = #{shirtLength,jdbcType=BIT},

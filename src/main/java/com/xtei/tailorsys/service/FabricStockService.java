@@ -1,8 +1,8 @@
 package com.xtei.tailorsys.service;
 
-import com.xtei.tailorsys.model.*;
-import com.xtei.tailorsys.model.VO.FabricReceiveInfoVO;
-import com.xtei.tailorsys.model.VO.FabricStockInfoVO;
+import com.xtei.tailorsys.entity.*;
+import com.xtei.tailorsys.entity.VO.FabricReceiveInfoVO;
+import com.xtei.tailorsys.entity.VO.FabricStockInfoVO;
 import com.xtei.tailorsys.util.pagehelper.PageResult;
 
 import java.util.List;

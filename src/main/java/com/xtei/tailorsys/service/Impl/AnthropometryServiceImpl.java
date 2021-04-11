@@ -1,7 +1,7 @@
 package com.xtei.tailorsys.service.Impl;
 
 import com.xtei.tailorsys.mapper.AnthropometryMapper;
-import com.xtei.tailorsys.model.Anthropometry;
+import com.xtei.tailorsys.entity.Anthropometry;
 import com.xtei.tailorsys.service.AnthropometryService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

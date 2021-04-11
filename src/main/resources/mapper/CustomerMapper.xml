@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xtei.tailorsys.mapper.CustomerMapper">
 
-    <resultMap id="BaseResultMap" type="com.xtei.tailorsys.model.Customer">
+    <resultMap id="BaseResultMap" type="com.xtei.tailorsys.entity.Customer">
         <id column="customer_id" jdbcType="INTEGER" property="customerId"/>
         <result column="customer_name" jdbcType="VARCHAR" property="customerName"/>
         <result column="customer_sex" jdbcType="VARCHAR" property="customerSex"/>
@@ -18,7 +18,7 @@
         where customer_id = #{customerId,jdbcType=INTEGER}
     </delete>
 
-    <insert id="insert" parameterType="com.xtei.tailorsys.model.Customer">
+    <insert id="insert" parameterType="com.xtei.tailorsys.entity.Customer">
         insert into customers_tb (customer_id, customer_name, customer_sex,
                                   customer_phone1, customer_phone2, customer_address,
                                   customer_status)
@@ -28,7 +28,7 @@
                 #{customerStatus,jdbcType=BIT})
     </insert>
 
-    <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.model.Customer">
+    <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.entity.Customer">
         update customers_tb
         set customer_name    = #{customerName,jdbcType=VARCHAR},
             customer_sex     = #{customerSex,jdbcType=VARCHAR},

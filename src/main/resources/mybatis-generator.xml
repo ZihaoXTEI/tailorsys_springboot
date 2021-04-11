@@ -30,7 +30,7 @@
         </javaTypeResolver>-->
 
         <!-- 控制生成实体类的位置 -->
-        <javaModelGenerator targetPackage="com.xtei.tailorsys.model"
+        <javaModelGenerator targetPackage="com.xtei.tailorsys.entity"
                             targetProject=".\src\main\java">
             <property name="trimStrings" value="true" />
         </javaModelGenerator>

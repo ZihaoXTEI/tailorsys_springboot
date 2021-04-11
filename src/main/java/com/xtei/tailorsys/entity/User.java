@@ -1,7 +1,6 @@
-package com.xtei.tailorsys.model;
+package com.xtei.tailorsys.entity;
 
 import lombok.Data;
-import org.apache.ibatis.annotations.Mapper;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

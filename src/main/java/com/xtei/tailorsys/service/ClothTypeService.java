@@ -1,6 +1,6 @@
 package com.xtei.tailorsys.service;
 
-import com.xtei.tailorsys.model.ClothType;
+import com.xtei.tailorsys.entity.ClothType;
 import com.xtei.tailorsys.util.pagehelper.PageResult;
 
 /**

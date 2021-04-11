@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xtei.tailorsys.mapper.SupplierMapper">
-  <resultMap id="bResultMap" type="com.xtei.tailorsys.model.Supplier">
+  <resultMap id="bResultMap" type="com.xtei.tailorsys.entity.Supplier">
     <id column="sup_id" jdbcType="INTEGER" property="supId" />
     <result column="sup_name" jdbcType="VARCHAR" property="supName" />
     <result column="sup_address" jdbcType="VARCHAR" property="supAddress" />
@@ -15,7 +15,7 @@
     where sup_id = #{supId,jdbcType=INTEGER}
   </delete>
 
-  <insert id="insert" parameterType="com.xtei.tailorsys.model.Supplier">
+  <insert id="insert" parameterType="com.xtei.tailorsys.entity.Supplier">
     insert into suppliers_tb (sup_id, sup_name, sup_address, 
       sup_phone1, sup_phone2, sup_status
       )
@@ -24,7 +24,7 @@
       )
   </insert>
 
-  <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.model.Supplier">
+  <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.entity.Supplier">
     update suppliers_tb
     set sup_name = #{supName,jdbcType=VARCHAR},
       sup_address = #{supAddress,jdbcType=VARCHAR},
@@ -54,7 +54,7 @@
     from suppliers_tb
   </select>
 
-  <update id="updateSupplierStatus" parameterType="com.xtei.tailorsys.model.Supplier">
+  <update id="updateSupplierStatus" parameterType="com.xtei.tailorsys.entity.Supplier">
     update suppliers_tb
     set
         sup_status = #{supStatus,jdbcType=BIT}

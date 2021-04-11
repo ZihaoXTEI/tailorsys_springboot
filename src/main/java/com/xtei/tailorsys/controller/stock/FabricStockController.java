@@ -1,10 +1,10 @@
 package com.xtei.tailorsys.controller.stock;
 
 import com.xtei.tailorsys.converter.FabricStockInfoConverter;
-import com.xtei.tailorsys.model.FabricInfo;
-import com.xtei.tailorsys.model.FabricStockInfo;
-import com.xtei.tailorsys.model.VO.FabricStockInfoVO;
-import com.xtei.tailorsys.model.response.ResponseBean;
+import com.xtei.tailorsys.entity.FabricInfo;
+import com.xtei.tailorsys.entity.FabricStockInfo;
+import com.xtei.tailorsys.entity.VO.FabricStockInfoVO;
+import com.xtei.tailorsys.entity.response.ResponseBean;
 import com.xtei.tailorsys.service.FabricStockService;
 import com.xtei.tailorsys.util.pagehelper.PageResult;
 import org.springframework.web.bind.annotation.*;

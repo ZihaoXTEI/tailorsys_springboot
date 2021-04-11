@@ -1,8 +1,8 @@
 package com.xtei.tailorsys.converter;
 
-import com.xtei.tailorsys.model.Order;
-import com.xtei.tailorsys.model.OrderFabricDetail;
-import com.xtei.tailorsys.model.VO.OrderVO;
+import com.xtei.tailorsys.entity.Order;
+import com.xtei.tailorsys.entity.OrderFabricDetail;
+import com.xtei.tailorsys.entity.VO.OrderVO;
 import org.springframework.beans.BeanUtils;
 
 import java.util.List;

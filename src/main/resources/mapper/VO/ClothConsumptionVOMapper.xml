@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xtei.tailorsys.mapper.VO.ClothConsumptionVOMapper">
-    <resultMap id="BaseResultMap" type="com.xtei.tailorsys.model.VO.ClothConsumptionVO">
+    <resultMap id="BaseResultMap" type="com.xtei.tailorsys.entity.VO.ClothConsumptionVO">
         <result column="consum_id" jdbcType="INTEGER" property="consumId"/>
         <result column="clothtype_name" jdbcType="VARCHAR" property="clothtypeName"/>
         <result column="consum_width" jdbcType="DOUBLE" property="consumWidth"/>
@@ -25,7 +25,7 @@
         <result column="consum_note" jdbcType="DOUBLE" property="consumNote"/>
     </resultMap>
 
-    <insert id="insert" parameterType="com.xtei.tailorsys.model.VO.ClothConsumptionVO">
+    <insert id="insert" parameterType="com.xtei.tailorsys.entity.VO.ClothConsumptionVO">
         insert into cloth_consumption_view (consum_id, clothtype_name, consum_width,
                                             shirt_length, bust, shoulder_width,
                                             sleeve_length, wrist_circum, neck_circum,

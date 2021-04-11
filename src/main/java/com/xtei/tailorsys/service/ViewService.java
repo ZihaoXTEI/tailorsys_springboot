@@ -1,7 +1,7 @@
 package com.xtei.tailorsys.service;
 
-import com.xtei.tailorsys.model.Permission;
-import com.xtei.tailorsys.model.VO.FabricTypeVO;
+import com.xtei.tailorsys.entity.Permission;
+import com.xtei.tailorsys.entity.VO.FabricTypeVO;
 
 import java.util.List;
 import java.util.Map;

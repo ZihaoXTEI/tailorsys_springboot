@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xtei.tailorsys.mapper.FabricUsedInfoMapper">
-  <resultMap id="BaseResultMap" type="com.xtei.tailorsys.model.FabricUsedInfo">
+  <resultMap id="BaseResultMap" type="com.xtei.tailorsys.entity.FabricUsedInfo">
     <id column="fau_id" jdbcType="INTEGER" property="fauId" />
     <result column="fabric_id" jdbcType="INTEGER" property="fabricId" />
     <result column="used_length" jdbcType="DOUBLE" property="usedLength" />
@@ -14,14 +14,14 @@
     where fau_id = #{fauId,jdbcType=INTEGER}
   </delete>
 
-  <insert id="insert" parameterType="com.xtei.tailorsys.model.FabricUsedInfo">
+  <insert id="insert" parameterType="com.xtei.tailorsys.entity.FabricUsedInfo">
     insert into fabric_used_tb (fau_id, fabric_id, used_length, 
       used_time, order_id)
     values (#{fauId,jdbcType=INTEGER}, #{fabricId,jdbcType=INTEGER}, #{usedLength,jdbcType=DOUBLE}, 
       #{usedTime,jdbcType=TIMESTAMP}, #{orderId,jdbcType=VARCHAR})
   </insert>
 
-  <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.model.FabricUsedInfo">
+  <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.entity.FabricUsedInfo">
     update fabric_used_tb
     set fabric_id = #{fabricId,jdbcType=INTEGER},
       used_length = #{usedLength,jdbcType=DOUBLE},

@@ -1,8 +1,8 @@
 package com.xtei.tailorsys.converter;
 
-import com.xtei.tailorsys.model.FabricInfo;
-import com.xtei.tailorsys.model.FabricStockInfo;
-import com.xtei.tailorsys.model.VO.FabricStockInfoVO;
+import com.xtei.tailorsys.entity.FabricInfo;
+import com.xtei.tailorsys.entity.FabricStockInfo;
+import com.xtei.tailorsys.entity.VO.FabricStockInfoVO;
 import org.springframework.beans.BeanUtils;
 
 /**

@@ -1,7 +1,7 @@
 package com.xtei.tailorsys.controller.stock;
 
-import com.xtei.tailorsys.model.Supplier;
-import com.xtei.tailorsys.model.response.ResponseBean;
+import com.xtei.tailorsys.entity.Supplier;
+import com.xtei.tailorsys.entity.response.ResponseBean;
 import com.xtei.tailorsys.service.SupplierService;
 import com.xtei.tailorsys.util.pagehelper.PageResult;
 import org.springframework.web.bind.annotation.*;

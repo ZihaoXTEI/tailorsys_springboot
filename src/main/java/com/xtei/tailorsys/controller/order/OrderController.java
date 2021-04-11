@@ -1,10 +1,9 @@
 package com.xtei.tailorsys.controller.order;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
-import com.xtei.tailorsys.model.Order;
-import com.xtei.tailorsys.model.OrderFabricDetail;
-import com.xtei.tailorsys.model.VO.OrderFabricDetailVO;
-import com.xtei.tailorsys.model.response.ResponseBean;
+import com.xtei.tailorsys.entity.Order;
+import com.xtei.tailorsys.entity.OrderFabricDetail;
+import com.xtei.tailorsys.entity.VO.OrderFabricDetailVO;
+import com.xtei.tailorsys.entity.response.ResponseBean;
 import com.xtei.tailorsys.service.OrderService;
 import com.xtei.tailorsys.util.pagehelper.PageResult;
 import org.springframework.web.bind.annotation.*;

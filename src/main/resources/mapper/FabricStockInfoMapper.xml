@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xtei.tailorsys.mapper.FabricStockInfoMapper">
-  <resultMap id="BaseResultMap" type="com.xtei.tailorsys.model.FabricStockInfo">
+  <resultMap id="BaseResultMap" type="com.xtei.tailorsys.entity.FabricStockInfo">
     <id column="fas_id" jdbcType="INTEGER" property="fasId" />
     <id column="fabric_id" jdbcType="INTEGER" property="fabricId" />
     <result column="fas_stock" jdbcType="DOUBLE" property="fasStock" />
@@ -16,14 +16,14 @@
       and fabric_id = #{fabricId,jdbcType=INTEGER}
   </delete>
 
-  <insert id="insert" parameterType="com.xtei.tailorsys.model.FabricStockInfo">
+  <insert id="insert" parameterType="com.xtei.tailorsys.entity.FabricStockInfo">
     insert into fabric_stock_tb (fas_id, fabric_id, fas_stock, 
       fas_position, fas_prede, unit_price)
     values (#{fasId,jdbcType=INTEGER}, #{fabricId,jdbcType=INTEGER}, #{fasStock,jdbcType=DOUBLE}, 
       #{fasPosition,jdbcType=VARCHAR}, #{fasPrede,jdbcType=DOUBLE}, #{unitPrice,jdbcType=DOUBLE})
   </insert>
 
-  <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.model.FabricStockInfo">
+  <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.entity.FabricStockInfo">
     update fabric_stock_tb
     set fas_stock = #{fasStock,jdbcType=DOUBLE},
       fas_position = #{fasPosition,jdbcType=VARCHAR},

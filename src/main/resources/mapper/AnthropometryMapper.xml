@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xtei.tailorsys.mapper.AnthropometryMapper">
-  <resultMap id="BaseResultMap" type="com.xtei.tailorsys.model.Anthropometry">
+  <resultMap id="BaseResultMap" type="com.xtei.tailorsys.entity.Anthropometry">
     <id column="anthr_id" jdbcType="INTEGER" property="anthrId" />
     <result column="customer_id" jdbcType="INTEGER" property="customerId" />
     <result column="anthr_note" jdbcType="VARCHAR" property="anthrNote" />
@@ -46,7 +46,7 @@
     where anthr_id = #{anthrId,jdbcType=INTEGER}
   </delete>
 
-  <insert id="insert" keyColumn="anthr_id" keyProperty="anthrId" parameterType="com.xtei.tailorsys.model.Anthropometry" useGeneratedKeys="true">
+  <insert id="insert" keyColumn="anthr_id" keyProperty="anthrId" parameterType="com.xtei.tailorsys.entity.Anthropometry" useGeneratedKeys="true">
     insert into anthropometry_tb (customer_id, anthr_note,
       overall_height, total_length, head_circum, 
       neck_circum, shoulder_width, chest_width, 
@@ -80,7 +80,7 @@
     values (#{customerId,jdbcType=INTEGER}, #{anthrNote,jdbcType=VARCHAR}, #{measureTime,jdbcType=DATE})
   </insert>
 
-  <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.model.Anthropometry">
+  <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.entity.Anthropometry">
     update anthropometry_tb
     set customer_id = #{customerId,jdbcType=INTEGER},
       anthr_note = #{anthrNote,jdbcType=VARCHAR},

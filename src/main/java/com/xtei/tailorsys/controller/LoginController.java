@@ -1,16 +1,11 @@
 package com.xtei.tailorsys.controller;
 
-import com.xtei.tailorsys.model.User;
+import com.xtei.tailorsys.entity.User;
 import com.xtei.tailorsys.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.sql.Timestamp;
-import java.util.Date ;
 
 @RestController
 public class LoginController {

@@ -1,13 +1,12 @@
 package com.xtei.tailorsys.controller;
 
-import com.xtei.tailorsys.model.ClothType;
-import com.xtei.tailorsys.model.Permission;
-import com.xtei.tailorsys.model.VO.FabricTypeVO;
-import com.xtei.tailorsys.model.response.ResponseBean;
+import com.xtei.tailorsys.entity.ClothType;
+import com.xtei.tailorsys.entity.Permission;
+import com.xtei.tailorsys.entity.VO.FabricTypeVO;
+import com.xtei.tailorsys.entity.response.ResponseBean;
 import com.xtei.tailorsys.service.ClothTypeService;
 import com.xtei.tailorsys.service.ViewService;
 import com.xtei.tailorsys.util.FormatUtils;
-import com.xtei.tailorsys.util.HttpStatus;
 import com.xtei.tailorsys.util.ReflectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 

@@ -1,12 +1,11 @@
 package com.xtei.tailorsys.mapper;
 
-import com.xtei.tailorsys.model.FabricType;
-import com.xtei.tailorsys.model.VO.FabricTypeVO;
+import com.xtei.tailorsys.entity.FabricType;
+import com.xtei.tailorsys.entity.VO.FabricTypeVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Map;
 
 @Mapper
 public interface FabricTypeMapper {

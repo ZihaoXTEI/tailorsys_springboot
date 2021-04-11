@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xtei.tailorsys.mapper.UserMapper">
-  <resultMap id="cResultMap" type="com.xtei.tailorsys.model.User">
+  <resultMap id="cResultMap" type="com.xtei.tailorsys.entity.User">
     <id column="userid" jdbcType="INTEGER" property="userid" />
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
@@ -17,7 +17,7 @@
     where userid = #{userid,jdbcType=INTEGER}
   </delete>
 
-  <insert id="insert" parameterType="com.xtei.tailorsys.model.User">
+  <insert id="insert" parameterType="com.xtei.tailorsys.entity.User">
     insert into users_tb (userid, username, password,
       user_email, user_phone, user_status,
       user_role, registime)
@@ -25,7 +25,7 @@
       #{userEmail,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, #{userStatus,jdbcType=BIT},
       #{userRole,jdbcType=VARCHAR}, #{registime,jdbcType=TIMESTAMP})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.model.User">
+  <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.entity.User">
     update users_tb
     set username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
@@ -64,20 +64,26 @@
     </select>
 
     <!-- 插入新用户的数据 -->
-    <insert id="insertUser" keyProperty="userid" parameterType="com.xtei.tailorsys.model.User" useGeneratedKeys="true">
+    <insert id="insertUser" keyProperty="userid" parameterType="com.xtei.tailorsys.entity.User" useGeneratedKeys="true">
         insert into users_tb(username, password, user_email, user_phone, user_status, user_role, registime)
             value (#{username},#{password},#{userEmail},#{userPhone},#{userStatus},#{userRole},#{registime})
     </insert>
 
     <!-- 更新用户的状态 -->
-    <update id="updateStatus" parameterType="com.xtei.tailorsys.model.User">
+    <update id="updateStatus" parameterType="com.xtei.tailorsys.entity.User">
         Update users_tb
         SET user_status = #{userstatus}
         WHERE userid = #{userid}
     </update>
 
+    <update id="changePassword" parameterType="com.xtei.tailorsys.entity.User">
+        Update users_tb
+        SET password = #{password}
+        WHERE username = #{username}
+    </update>
+
     <!-- 更新用户的信息 -->
-    <update id="updateUser" parameterType="com.xtei.tailorsys.model.User">
+    <update id="updateUser" parameterType="com.xtei.tailorsys.entity.User">
         Update users_tb
         SET user_email = #{useremail},
             user_phone = #{userphone}

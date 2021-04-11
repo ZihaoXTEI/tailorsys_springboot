@@ -1,9 +1,9 @@
 package com.xtei.tailorsys.service;
 
-import com.xtei.tailorsys.model.ClothConsumption;
-import com.xtei.tailorsys.model.ClothType;
-import com.xtei.tailorsys.model.FabricType;
-import com.xtei.tailorsys.model.VO.ClothConsumptionVO;
+import com.xtei.tailorsys.entity.ClothConsumption;
+import com.xtei.tailorsys.entity.ClothType;
+import com.xtei.tailorsys.entity.FabricType;
+import com.xtei.tailorsys.entity.VO.ClothConsumptionVO;
 import com.xtei.tailorsys.util.pagehelper.PageResult;
 
 /**

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xtei.tailorsys.mapper.FabricInfoMapper">
-    <resultMap id="BaseResultMap" type="com.xtei.tailorsys.model.FabricInfo">
+    <resultMap id="BaseResultMap" type="com.xtei.tailorsys.entity.FabricInfo">
         <id column="fabric_id" jdbcType="INTEGER" property="fabricId"/>
         <result column="fabric_name" jdbcType="VARCHAR" property="fabricName"/>
         <result column="fabric_type" jdbcType="INTEGER" property="fabricType"/>
@@ -15,7 +15,7 @@
         where fabric_id = #{fabricId,jdbcType=INTEGER}
     </delete>
 
-    <insert id="insert" keyColumn="fabric_id" keyProperty="fabricId" parameterType="com.xtei.tailorsys.model.FabricInfo"
+    <insert id="insert" keyColumn="fabric_id" keyProperty="fabricId" parameterType="com.xtei.tailorsys.entity.FabricInfo"
             useGeneratedKeys="true">
         insert into fabric_tb (fabric_id, fabric_name, fabric_type,
                                fabric_width, fabric_url)
@@ -23,7 +23,7 @@
                 #{fabricWidth,jdbcType=DOUBLE}, #{fabricUrl,jdbcType=VARCHAR})
     </insert>
 
-    <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.model.FabricInfo">
+    <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.entity.FabricInfo">
         update fabric_tb
         set fabric_name  = #{fabricName,jdbcType=VARCHAR},
             fabric_type  = #{fabricType,jdbcType=INTEGER},

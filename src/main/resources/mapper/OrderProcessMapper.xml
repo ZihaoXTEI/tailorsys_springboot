@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xtei.tailorsys.mapper.OrderProcessMapper">
-    <resultMap id="BaseResultMap" type="com.xtei.tailorsys.model.OrderProcess">
+    <resultMap id="BaseResultMap" type="com.xtei.tailorsys.entity.OrderProcess">
         <id column="opr_id" jdbcType="INTEGER" property="oprId"/>
         <result column="order_id" jdbcType="VARCHAR" property="orderId"/>
         <result column="tailoring" jdbcType="VARCHAR" property="tailoring"/>
@@ -20,7 +20,7 @@
         where opr_id = #{oprId,jdbcType=INTEGER}
     </delete>
 
-    <insert id="insert" parameterType="com.xtei.tailorsys.model.OrderProcess">
+    <insert id="insert" parameterType="com.xtei.tailorsys.entity.OrderProcess">
         insert into order_process_tb (opr_id, order_id, tailoring,
                                       tailoring_date, sewing, sewing_date,
                                       ironing, ironing_date, finish,
@@ -31,7 +31,7 @@
                 #{finishDate,jdbcType=TIMESTAMP})
     </insert>
 
-    <update id="updateByOrderId" parameterType="com.xtei.tailorsys.model.OrderProcess">
+    <update id="updateByOrderId" parameterType="com.xtei.tailorsys.entity.OrderProcess">
         update order_process_tb
         set order_id       = #{orderId,jdbcType=VARCHAR},
             tailoring      = #{tailoring,jdbcType=VARCHAR},

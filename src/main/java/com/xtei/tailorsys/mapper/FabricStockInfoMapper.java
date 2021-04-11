@@ -1,6 +1,6 @@
 package com.xtei.tailorsys.mapper;
 
-import com.xtei.tailorsys.model.FabricStockInfo;
+import com.xtei.tailorsys.entity.FabricStockInfo;
 
 import java.util.List;
 import java.util.Map;

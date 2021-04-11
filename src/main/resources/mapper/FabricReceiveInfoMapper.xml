@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xtei.tailorsys.mapper.FabricReceiveInfoMapper">
-  <resultMap id="BaseResultMap" type="com.xtei.tailorsys.model.FabricReceiveInfo">
+  <resultMap id="BaseResultMap" type="com.xtei.tailorsys.entity.FabricReceiveInfo">
     <id column="far_id" jdbcType="INTEGER" property="farId" />
     <result column="fabric_id" jdbcType="INTEGER" property="fabricId" />
     <result column="sup_id" jdbcType="INTEGER" property="supId" />
@@ -17,7 +17,7 @@
     where far_id = #{farId,jdbcType=INTEGER}
   </delete>
 
-  <insert id="insert" parameterType="com.xtei.tailorsys.model.FabricReceiveInfo">
+  <insert id="insert" parameterType="com.xtei.tailorsys.entity.FabricReceiveInfo">
     insert into fabric_receive_tb (far_id, fabric_id, sup_id, 
       far_length, far_weight, far_price, 
       far_date, far_storekeeper)
@@ -26,7 +26,7 @@
       #{farDate,jdbcType=DATE}, #{farStorekeeper,jdbcType=INTEGER})
   </insert>
 
-  <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.model.FabricReceiveInfo">
+  <update id="updateByPrimaryKey" parameterType="com.xtei.tailorsys.entity.FabricReceiveInfo">
     update fabric_receive_tb
     set fabric_id = #{fabricId,jdbcType=INTEGER},
       sup_id = #{supId,jdbcType=INTEGER},

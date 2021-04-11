@@ -3,7 +3,7 @@ package com.xtei.tailorsys.service.Impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xtei.tailorsys.mapper.SupplierMapper;
-import com.xtei.tailorsys.model.Supplier;
+import com.xtei.tailorsys.entity.Supplier;
 import com.xtei.tailorsys.service.SupplierService;
 import com.xtei.tailorsys.util.PageHelperUtils;
 import com.xtei.tailorsys.util.pagehelper.PageResult;

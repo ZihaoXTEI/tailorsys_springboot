@@ -1,9 +1,8 @@
 package com.xtei.tailorsys.service;
 
-import com.xtei.tailorsys.model.Event;
-import com.xtei.tailorsys.model.OrderProcess;
+import com.xtei.tailorsys.entity.Event;
+import com.xtei.tailorsys.entity.OrderProcess;
 
-import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xtei.tailorsys.mapper.VO.OrderViewVOMapper">
-  <resultMap id="BaseResultMap" type="com.xtei.tailorsys.model.VO.OrderViewVO">
+  <resultMap id="BaseResultMap" type="com.xtei.tailorsys.entity.VO.OrderViewVO">
     <result column="order_id" jdbcType="VARCHAR" property="orderId" />
     <result column="customer_id" jdbcType="INTEGER" property="customerId" />
     <result column="anthr_id" jdbcType="INTEGER" property="anthrId" />
@@ -19,7 +19,7 @@
     <result column="customer_name" jdbcType="VARCHAR" property="customerName" />
   </resultMap>
 
-  <insert id="insert" parameterType="com.xtei.tailorsys.model.VO.OrderViewVO">
+  <insert id="insert" parameterType="com.xtei.tailorsys.entity.VO.OrderViewVO">
     insert into order_view (order_id, customer_id, anthr_id, 
       clothtype_id, total_amount, order_number, 
       deadline, created_time, order_status, 

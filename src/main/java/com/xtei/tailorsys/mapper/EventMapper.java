@@ -1,6 +1,6 @@
 package com.xtei.tailorsys.mapper;
 
-import com.xtei.tailorsys.model.Event;
+import com.xtei.tailorsys.entity.Event;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
