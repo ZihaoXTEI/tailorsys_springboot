@@ -1,4 +1,4 @@
-package com.xtei.tailorsys.module.filter;
+package com.xtei.tailorsys.filter;
 
 import com.xtei.tailorsys.util.JwtTokenUtils;
 import org.springframework.security.authentication.AuthenticationManager;

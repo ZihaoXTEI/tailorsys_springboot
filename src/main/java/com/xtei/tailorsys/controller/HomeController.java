@@ -6,11 +6,12 @@ import com.xtei.tailorsys.service.FabricInfoService;
 import com.xtei.tailorsys.service.FabricStockService;
 import com.xtei.tailorsys.service.OrderService;
 import com.xtei.tailorsys.util.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,23 +20,23 @@ import java.util.Map;
  * FileName: HomeController
  * Author: Li Zihao
  * Date: 2021/3/30 14:32
- * Description:
+ * Description: 前端布局视图控制器
  */
 @RestController
 @RequestMapping("/home")
 public class HomeController {
 
-    @Resource
+    @Autowired
     private CustomerService customerService;
-    @Resource
+    @Autowired
     private FabricInfoService fabricInfoService;
-    @Resource
+    @Autowired
     private OrderService orderService;
-    @Resource
+    @Autowired
     private FabricStockService fabricStockService;
 
     /**
-     * 获取顾客总人数`BULD
+     * 获取顾客总人数
      */
     @GetMapping("/infobox")
     public ResponseBean getInfoBox(){
@@ -45,10 +46,10 @@ public class HomeController {
             dataList.add(fabricInfoService.getNumberOfFabricInfo());
             dataList.add(orderService.getNumberOfIncompleteOrder());
             dataList.add(orderService.getNumberOfOrder());
-            return ResponseBean.success("获取数据成功", HttpStatus.GET_VIEW_DATA,dataList);
+            return ResponseBean.success("获取顾客总人数成功", HttpServletResponse.SC_PARTIAL_CONTENT,dataList);
         }catch (Exception e){
             e.printStackTrace();
-            return ResponseBean.error("获取数据错误",HttpStatus.SERIOUS_ERROR);
+            return ResponseBean.error("获取顾客总人数错误",HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -57,11 +58,12 @@ public class HomeController {
      */
     @GetMapping("/orderinfo")
     public ResponseBean getIncompleteOrderInfo(){
-        List<Map> dataList = orderService.getInfoOfIncompleteOrder();
-        if(dataList != null){
-            return ResponseBean.success("获取数据成功",HttpStatus.GET_VIEW_DATA,dataList);
-        }else {
-            return ResponseBean.error("获取数据失败",HttpStatus.SERIOUS_ERROR);
+
+        try {
+            List<Map> dataList = orderService.getInfoOfIncompleteOrder();
+            return ResponseBean.success("获取订单数据成功",HttpServletResponse.SC_PARTIAL_CONTENT,dataList);
+        }catch (Exception e){
+            return ResponseBean.error("获取订单数据失败",HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -70,11 +72,12 @@ public class HomeController {
      */
     @GetMapping("/fabricstock")
     public ResponseBean getFabricStock(){
-        List<Map> dataList = fabricStockService.getFabricInfoLower();
-        if(dataList != null){
-            return ResponseBean.success("获取数据成功",HttpStatus.GET_VIEW_DATA,dataList);
-        }else {
-            return ResponseBean.error("获取数据失败",HttpStatus.SERIOUS_ERROR);
+        try {
+            List<Map> dataList = fabricStockService.getFabricInfoLower();
+            return ResponseBean.success("获取库存数据成功",HttpServletResponse.SC_PARTIAL_CONTENT,dataList);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseBean.error("获取库存数据失败",HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -83,15 +86,19 @@ public class HomeController {
      */
     @GetMapping("/customersexratio")
     public ResponseBean getCustomerSexRatio(){
-        List<Map> dataList = customerService.getCustomerSexRatio();
-        if(dataList != null){
-            return ResponseBean.success("获取数据成功",HttpStatus.GET_VIEW_DATA,dataList);
-        }else {
-            return ResponseBean.error("获取数据失败",HttpStatus.SERIOUS_ERROR);
+        try {
+            List<Map> dataList = customerService.getCustomerSexRatio();
+            if(dataList != null){
+                return ResponseBean.success("获取顾客数据成功",HttpServletResponse.SC_PARTIAL_CONTENT,dataList);
+            }else {
+                return ResponseBean.error("获取顾客数据为空",HttpServletResponse.SC_NOT_FOUND);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseBean.error("获取顾客数据失败",HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
+
+
     }
 
-    /**
-     * 单周营业额
-     */
 }

@@ -5,10 +5,10 @@ import com.xtei.tailorsys.entity.Order;
 import com.xtei.tailorsys.entity.response.ResponseBean;
 import com.xtei.tailorsys.service.OrderService;
 import com.xtei.tailorsys.service.PlanService;
-import com.xtei.tailorsys.util.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 
@@ -22,68 +22,70 @@ import java.util.List;
 @RequestMapping("plan/ordercalendar")
 public class OrderCalendarController {
 
-    @Resource
+    @Autowired
     private PlanService planService;
-    @Resource
+    @Autowired
     private OrderService orderService;
 
+    /**
+     * 获取所有事件信息
+     */
     @GetMapping("/event")
-    public ResponseBean getEventList(){
-        try{
+    public ResponseBean getEventList() {
+        try {
             List<Event> eventList = planService.getAllEvent();
-            return ResponseBean.success("获取数据成功",eventList);
-        }catch (Exception e){
-            return ResponseBean.error("获取数据错误",HttpStatus.SERIOUS_ERROR);
+            return ResponseBean.success("获取事件信息成功", HttpServletResponse.SC_OK, eventList);
+        } catch (Exception e) {
+            return ResponseBean.error("获取事件信息错误", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     * 获取所有订单信息
+     */
     @GetMapping("/order")
-    public ResponseBean getOrderList(){
+    public ResponseBean getOrderList() {
         try {
             List<Order> orderList = orderService.getAllOrderList();
-            return ResponseBean.success("获取数据成功",orderList);
-        }catch (Exception e){
-            return ResponseBean.error("获取数据错误");
+            return ResponseBean.success("获取订单数据成功", HttpServletResponse.SC_OK, orderList);
+        } catch (Exception e) {
+            return ResponseBean.error("获取订单数据错误", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
     @PostMapping("/")
-    public ResponseBean addEvent(@RequestBody Event event){
+    public ResponseBean addEvent(@RequestBody Event event) {
         try {
-            if(planService.addEvent(event) == 1){
-                return ResponseBean.success("添加事件成功");
-            }else {
-                return ResponseBean.error("添加事件失败");
-            }
-        }catch (Exception e){
-            return ResponseBean.error("添加事件错误",HttpStatus.SERIOUS_ERROR);
+            planService.addEvent(event);
+            return ResponseBean.success("添加事件信息成功", HttpServletResponse.SC_CREATED);
+        } catch (Exception e) {
+            return ResponseBean.error("添加事件信息错误", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseBean updateEvent(@PathVariable("id")Integer id,@RequestBody Event event){
-        Event eventV =event;
+    public ResponseBean updateEvent(@PathVariable("id") Integer id, @RequestBody Event event) {
+        Event eventV = event;
         eventV.setId(id);
-        if(planService.updateEvent(eventV) == 1){
-            return ResponseBean.success("修改事件成功");
-        } else {
-            return ResponseBean.error("修改事件失败");
+        try {
+            planService.updateEvent(eventV);
+            return ResponseBean.success("修改事件信息成功", HttpServletResponse.SC_CREATED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseBean.error("修改事件信息失败", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
     @DeleteMapping("/{id}")
     //RequestMapping(value = "/",method = RequestMethod.DELETE)
-    public ResponseBean deleteEvent(@PathVariable("id")Integer id){
-        try{
-            if(planService.deleteEvent(id) == 1){
-                return ResponseBean.success("删除事件成功");
-            }else {
-                return ResponseBean.error("删除事件失败");
-            }
-        }catch (Exception e){
-            return ResponseBean.error("删除事件错误",HttpStatus.SERIOUS_ERROR);
+    public ResponseBean deleteEvent(@PathVariable("id") Integer id) {
+        try {
+            planService.deleteEvent(id);
+            return ResponseBean.success("删除事件信息成功", HttpServletResponse.SC_CREATED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseBean.error("删除事件信息错误", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
-
 
 }

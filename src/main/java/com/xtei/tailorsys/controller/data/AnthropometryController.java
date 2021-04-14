@@ -12,8 +12,8 @@ import java.util.Date;
 /**
  * FileName: AnthropometryController
  * Author: Li Zihao
- * Date: 2021/4/7 21:38
- * Description: Anthropometry控制器
+ * Date: 2021/3/7 21:38
+ * Description: 量体数据视图控制器
  */
 @RestController
 @RequestMapping("anthr")
@@ -27,11 +27,16 @@ public class AnthropometryController {
      */
     @GetMapping(value = "/{anthrid}")
     public ResponseBean getAnthropometryById(@PathVariable("anthrid") Integer anthrId) {
-        Anthropometry anthropometry = anthropometryService.findAnthropometryById(anthrId);
-        if (anthropometry != null) {
-            return ResponseBean.success("获取顾客量体信息成功", HttpServletResponse.SC_OK, anthropometry);
-        } else {
-            return ResponseBean.error("获取顾客量体信息失败", HttpServletResponse.SC_NOT_FOUND);
+        try {
+            Anthropometry anthropometry = anthropometryService.findAnthropometryById(anthrId);
+            if(anthropometry != null){
+                return ResponseBean.success("获取顾客量体信息成功", HttpServletResponse.SC_OK, anthropometry);
+            }else {
+                return ResponseBean.error("获取顾客量体信息为空", HttpServletResponse.SC_NOT_FOUND);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseBean.error("获取顾客量体信息错误", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -40,13 +45,13 @@ public class AnthropometryController {
      */
     @PostMapping(value = "/{cusid}/{anthrnote}")
     public ResponseBean addAnthropometry(@PathVariable("cusid") Integer customerId, @PathVariable("anthrnote") String anthrNote) {
-        Date currentTime = new Date();
-
-        int res = anthropometryService.addAnthropometry(customerId, anthrNote, currentTime);
-
-        if (res != 0) {
+        try {
+            Date currentTime = new Date();
+            int res = anthropometryService.addAnthropometry(customerId, anthrNote, currentTime);
             return ResponseBean.success("新建顾客量体信息成功", HttpServletResponse.SC_CREATED, res);
-        } else {
+
+        }catch (Exception e){
+            e.printStackTrace();
             return ResponseBean.error("新建顾客量体信息错误", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
@@ -58,13 +63,13 @@ public class AnthropometryController {
     public ResponseBean updateAnthropometry(@PathVariable("anthrid") Integer anthrId, @RequestBody Anthropometry anthropometry) {
         Anthropometry anthropometryV = anthropometry;
         anthropometryV.setAnthrId(anthrId);
-        Date currentTime = new Date();
-        anthropometryV.setMeasureTime(currentTime);
-        if (anthropometryService.updateAnthropometry(anthropometryV) == 1) {
+        try {
+            Date currentTime = new Date();
+            anthropometryV.setMeasureTime(currentTime);
+            anthropometryService.updateAnthropometry(anthropometryV);
             return ResponseBean.success("保存顾客量体信息成功", HttpServletResponse.SC_CREATED);
-        } else {
+        }catch (Exception e){
             return ResponseBean.error("保存顾客量体信息失败", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
-
 }

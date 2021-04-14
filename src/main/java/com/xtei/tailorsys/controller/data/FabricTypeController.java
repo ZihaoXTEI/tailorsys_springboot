@@ -7,11 +7,13 @@ import com.xtei.tailorsys.util.pagehelper.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * FileName: FabricTypeController
  * Author: Li Zihao
  * Date: 2021/2/25 11:17
- * Description:
+ * Description: 布料类型视图控制器
  */
 
 @RestController
@@ -27,13 +29,13 @@ public class FabricTypeController {
     @PostMapping(value = "/")
     public ResponseBean addFabricType(@RequestBody FabricType fabricType) {
         if (fabricType.getFabrictypeName() == null || fabricType.getFabrictypeName().trim() == "") {
-            return ResponseBean.error("布料类型名称不能为空");
+            return ResponseBean.error("布料类型名称不能为空", HttpServletResponse.SC_BAD_REQUEST);
         }
-
-        if (dataService.addFabricType(fabricType) == 1) {
-            return ResponseBean.success("新增布料类型信息成功");
-        } else {
-            return ResponseBean.error("新增布料类型信息失败");
+        try {
+            dataService.addFabricType(fabricType);
+            return ResponseBean.success("新增布料类型信息成功", HttpServletResponse.SC_CREATED);
+        } catch (Exception e) {
+            return ResponseBean.error("新增布料类型信息失败", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -44,10 +46,11 @@ public class FabricTypeController {
     public ResponseBean updateFabricType(@PathVariable("fabrictypeid") Integer fabrictypeId, @RequestBody FabricType fabricType) {
         FabricType fabricTypeV = fabricType;
         fabricTypeV.setFabrictypeId(fabrictypeId);
-        if (dataService.updateFabricType(fabricTypeV) == 1) {
-            return ResponseBean.success("修改布料类型信息成功");
-        } else {
-            return ResponseBean.error("修改布料类型信息失败");
+        try {
+            dataService.updateFabricType(fabricTypeV);
+            return ResponseBean.success("修改布料类型信息成功", HttpServletResponse.SC_CREATED);
+        } catch (Exception e) {
+            return ResponseBean.error("修改布料类型信息失败", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -56,11 +59,15 @@ public class FabricTypeController {
      */
     @GetMapping(value = "/{fabrictypeid}")
     public ResponseBean getFabricTypeById(@PathVariable("fabrictypeid") Integer fabrictypeId) {
-        FabricType fabricType = dataService.findFabricTypeById(fabrictypeId);
-        if (fabricType != null) {
-            return ResponseBean.success("获取布料类型信息成功", fabricType);
-        } else {
-            return ResponseBean.error("获取布料类型信息失败");
+        try {
+            FabricType fabricType = dataService.findFabricTypeById(fabrictypeId);
+            if(fabricType != null) {
+                return ResponseBean.success("获取布料类型信息成功", HttpServletResponse.SC_OK, fabricType);
+            }else {
+                return ResponseBean.success("获取布料类型信息为空", HttpServletResponse.SC_NOT_FOUND, fabricType);
+            }
+        } catch (Exception e) {
+            return ResponseBean.error("获取布料类型信息错误", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -72,11 +79,15 @@ public class FabricTypeController {
                                                       @RequestParam(value = "fabrictypecategory", defaultValue = "") String fabrictypeCategory,
                                                       @RequestParam(value = "pagenum", defaultValue = "1") Integer pagenum,
                                                       @RequestParam(value = "pagesize", defaultValue = "10") Integer pagesize) {
-        PageResult pageResult = dataService.findFabricTypeList(fabrictypeName, fabrictypeCategory, pagenum, pagesize);
-        if (pageResult != null) {
-            return ResponseBean.success("获取布料类型信息成功", pageResult);
-        } else {
-            return ResponseBean.error("获取布料类型信息失败", null);
+        try {
+            PageResult pageResult = dataService.findFabricTypeList(fabrictypeName, fabrictypeCategory, pagenum, pagesize);
+            if(pageResult != null) {
+                return ResponseBean.success("获取布料类型信息成功", HttpServletResponse.SC_OK, pageResult);
+            }else {
+                return ResponseBean.success("获取布料类型信息为空", HttpServletResponse.SC_NOT_FOUND, pageResult);
+            }
+        } catch (Exception e) {
+            return ResponseBean.error("获取布料类型信息错误", HttpServletResponse.SC_INTERNAL_SERVER_ERROR, null);
         }
     }
 }

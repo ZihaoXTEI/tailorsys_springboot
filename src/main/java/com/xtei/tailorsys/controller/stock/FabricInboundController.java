@@ -6,9 +6,10 @@ import com.xtei.tailorsys.entity.response.ResponseBean;
 import com.xtei.tailorsys.service.FabricInfoService;
 import com.xtei.tailorsys.service.FabricStockService;
 import com.xtei.tailorsys.util.pagehelper.PageResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -16,24 +17,24 @@ import java.util.Map;
  * FileName: FabricController
  * Author: Li Zihao
  * Date: 2021/2/20 20:36
- * Description:布料入库管理页面
+ * Description: 布料入库管理页面视图控制器
  */
+
 @RestController
 @RequestMapping("fabricinbound")
 public class FabricInboundController {
 
-    @Resource
+    @Autowired
     private FabricInfoService fabricInfoService;
 
-    @Resource
+    @Autowired
     private FabricStockService fabricStockService;
 
     /**
-     *新增布料信息
+     * 新增布料信息
      */
     @PostMapping(value = "/fabricinfo/")
     public ResponseBean addFabricInfo(@RequestBody FabricInfo fabricInfo) {
-        System.out.println(fabricInfo);
         if (fabricInfo.getFabricName() == null || fabricInfo.getFabricName().trim() == "") {
             return ResponseBean.error("布料名称不能为空");
         } else if (fabricInfo.getFabricType() == null || fabricInfo.getFabricType() == 0) {
@@ -43,124 +44,135 @@ public class FabricInboundController {
         }
 
         try {
-            if (fabricInfoService.addFabricInfo(fabricInfo) == 2) {
-                return ResponseBean.success("新增布料信息成功");
-            } else {
-                return ResponseBean.error("新增布料信息失败");
-            }
-        }catch (Exception e){
+            fabricInfoService.addFabricInfo(fabricInfo);
+            return ResponseBean.success("新增布料信息成功", HttpServletResponse.SC_CREATED);
+        } catch (Exception e) {
             e.printStackTrace();
-            return ResponseBean.error("新增布料信息错误");
+            return ResponseBean.error("新增布料信息错误", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
     /**
-     *修改布料信息
+     * 修改布料信息
      */
     @PutMapping(value = "/fabricinfo/{fabid}")
     public ResponseBean updateFabricInfo(@PathVariable("fabid") Integer fadId, @RequestBody FabricInfo fabricInfo) {
         FabricInfo fabricInfoV = fabricInfo;
         fabricInfoV.setFabricId(fadId);
-        if (fabricInfoService.updateFabricInfo(fabricInfoV) == 1) {
-            return ResponseBean.success("修改布料信息成功");
-        } else {
-            return ResponseBean.error("修改布料信息失败");
+        try {
+            fabricInfoService.updateFabricInfo(fabricInfoV);
+            return ResponseBean.success("修改布料信息成功", HttpServletResponse.SC_CREATED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseBean.error("修改布料信息失败", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
     /**
-     *根据编号获取布料信息
+     * 根据编号获取布料信息
      */
     @GetMapping("/fabricinfo/{fabid}")
     public ResponseBean getFabricInfoById(@PathVariable("fabid") Integer fabId) {
-        FabricInfo fabricInfo = fabricInfoService.findFabricInfoById(fabId);
-        if (fabricInfo != null) {
-            return ResponseBean.success("获取布料信息成功", fabricInfo);
-        } else {
-            return ResponseBean.error("获取布料信息失败");
+        try {
+            FabricInfo fabricInfo = fabricInfoService.findFabricInfoById(fabId);
+            if (fabricInfo != null) {
+                return ResponseBean.success("获取布料信息成功", HttpServletResponse.SC_PARTIAL_CONTENT, fabricInfo);
+            } else {
+                return ResponseBean.error("获取布料信息为空", HttpServletResponse.SC_NOT_FOUND);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseBean.error("获取布料信息失败", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
     /**
-     *依据输入布料名称搜索符合的布料信息
+     * 依据输入布料名称搜索符合的布料信息
      */
     @GetMapping("/fabricinfo/{name}")
     public ResponseBean getFabricInfoByName(@PathVariable("name") String name) {
         if (name == null || name.trim() == "") {
             return ResponseBean.error("搜索信息不能为空");
         }
-        List<Map<Integer, String>> dropdownList = fabricInfoService.findByName(name.trim());
-        return ResponseBean.success("OK", dropdownList);
+        try {
+            List<Map<Integer, String>> dropdownList = fabricInfoService.findByName(name.trim());
+            return ResponseBean.success("OK", HttpServletResponse.SC_PARTIAL_CONTENT, dropdownList);
+        } catch (Exception e) {
+            return ResponseBean.error("ERROR", HttpServletResponse.SC_INTERNAL_SERVER_ERROR, null);
+        }
     }
 
     /**
-     *新增入库信息
+     * 新增入库信息
      */
     @PostMapping(value = "/fabricrece/")
     public ResponseBean addFabricReceiveInfo(@RequestBody FabricReceiveInfo fabricReceiveInfo) {
-        System.out.println(fabricReceiveInfo);
+
         FabricReceiveInfo fabricReceiveInfoV = fabricReceiveInfo;
 
         if (fabricReceiveInfoV == null) {
-            return ResponseBean.error("新增布料入库信息错误");
+            return ResponseBean.error("传入的数据为空", HttpServletResponse.SC_BAD_REQUEST);
         }
 
         try {
-            if (fabricStockService.addFabricReceiveInfo(fabricReceiveInfoV) == 2) {
-                return ResponseBean.success("新增布料入库信息成功");
-            }
+            fabricStockService.addFabricReceiveInfo(fabricReceiveInfoV);
+            return ResponseBean.success("新增布料入库信息成功", HttpServletResponse.SC_CREATED);
         } catch (Exception e) {
-            return ResponseBean.error("新增布料入库信息错误");
+            return ResponseBean.error("新增布料入库信息错误", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
-
-        return ResponseBean.error("新增布料入库信息失败");
-
     }
 
     /**
-     *修改入库信息
+     * 修改入库信息
      */
     @PutMapping("/fabricrece/{farid}")
     public ResponseBean updateFabricReceiveInfo(@PathVariable("farid") Integer farId, @RequestBody FabricReceiveInfo fabricReceiveInfo) {
         FabricReceiveInfo fabricReceiveInfoV = fabricReceiveInfo;
         fabricReceiveInfoV.setFarId(farId);
         try {
-            if (fabricStockService.updateFabricReceiveInfo(fabricReceiveInfoV) == 2) {
-                return ResponseBean.success("修改布料入库信息成功");
-            }
+            fabricStockService.updateFabricReceiveInfo(fabricReceiveInfoV);
+            return ResponseBean.success("修改布料入库信息成功", HttpServletResponse.SC_CREATED);
         } catch (Exception e) {
-            return ResponseBean.error("修改布料入库信息错误");
+            return ResponseBean.error("修改布料入库信息错误", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
-        return ResponseBean.error("修改布料入库信息失败");
     }
 
     /**
      * 根据编号获取布料入库信息
      */
     @GetMapping("/fabricrece/{farid}")
-    public ResponseBean getFabricReceiveById(@PathVariable("farid")Integer farId){
-        FabricReceiveInfo fabricReceiveInfo = fabricStockService.findFabricReceiveInfoById(farId);
-        if(fabricReceiveInfo != null){
-            return ResponseBean.success("获取布料入库信息成功",fabricReceiveInfo);
-        }else {
-            return ResponseBean.error("获取布料入库信息失败",null);
+    public ResponseBean getFabricReceiveById(@PathVariable("farid") Integer farId) {
+        try {
+            FabricReceiveInfo fabricReceiveInfo = fabricStockService.findFabricReceiveInfoById(farId);
+            if (fabricReceiveInfo != null) {
+                return ResponseBean.success("获取布料入库信息成功", HttpServletResponse.SC_PARTIAL_CONTENT, fabricReceiveInfo);
+            } else {
+                return ResponseBean.error("获取布料入库信息为空", HttpServletResponse.SC_NOT_FOUND);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseBean.error("获取布料入库信息失败", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
 
-
     /**
-     *获取布料入库信息列表
+     * 获取布料入库信息列表
      */
     @GetMapping("/fabricrece/")
     public ResponseBean<PageResult> getFabricReceiveInfoList(@RequestParam(value = "query", defaultValue = "") String query,
                                                              @RequestParam(value = "pagenum", defaultValue = "1") Integer pagenum,
                                                              @RequestParam(value = "pagesize", defaultValue = "15") Integer pagesize) {
-        PageResult pageResult = fabricStockService.findFabricReceiveInfoList(query, pagenum, pagesize);
-        if (pageResult != null) {
-            return ResponseBean.success("获取布料入库信息列表成功", pageResult);
-        } else {
-            return ResponseBean.error("获取布料入库信息列表失败");
+        try {
+            PageResult pageResult = fabricStockService.findFabricReceiveInfoList(query, pagenum, pagesize);
+            if (pageResult != null) {
+                return ResponseBean.success("获取布料入库信息列表成功", HttpServletResponse.SC_OK, pageResult);
+            } else {
+                return ResponseBean.error("获取布料入库信息列表为空", HttpServletResponse.SC_NOT_FOUND);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseBean.error("获取布料入库信息列表错误", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 }

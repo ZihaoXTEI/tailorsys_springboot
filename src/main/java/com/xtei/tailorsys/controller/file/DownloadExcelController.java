@@ -12,7 +12,7 @@ import com.xtei.tailorsys.service.CustomerService;
 import com.xtei.tailorsys.service.FabricStockService;
 import com.xtei.tailorsys.service.OrderService;
 import com.xtei.tailorsys.service.SupplierService;
-import com.xtei.tailorsys.util.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,19 +29,19 @@ import java.util.Map;
  * FileName: DownloadExcelController
  * Author: Li Zihao
  * Date: 2021/3/30 19:20
- * Description:
+ * Description: 数据下载（Excel文件）控制器
  */
 @RestController
 @RequestMapping("system/excel")
 public class DownloadExcelController {
 
-    @Resource
+    @Autowired
     private CustomerService customerService;
-    @Resource
+    @Autowired
     private OrderService orderService;
-    @Resource
+    @Autowired
     private FabricStockService fabricStockService;
-    @Resource
+    @Autowired
     private SupplierService supplierService;
 
     @GetMapping("/customer")
@@ -60,7 +60,7 @@ public class DownloadExcelController {
             response.setContentType("application/json");
             response.setCharacterEncoding("utf-8");
             Map map = new HashMap();
-            map.put("status", HttpStatus.SERIOUS_ERROR);
+            map.put("status", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             map.put("message", "下载文件失败");
             response.getWriter().println(JSON.toJSONString(map));
         }
@@ -82,7 +82,7 @@ public class DownloadExcelController {
             response.setContentType("application/json");
             response.setCharacterEncoding("utf-8");
             Map map = new HashMap();
-            map.put("status", HttpStatus.SERIOUS_ERROR);
+            map.put("status", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             map.put("message", "下载文件失败");
             response.getWriter().println(JSON.toJSONString(map));
         }
@@ -104,7 +104,7 @@ public class DownloadExcelController {
             response.setContentType("application/json");
             response.setCharacterEncoding("utf-8");
             Map map = new HashMap();
-            map.put("status", HttpStatus.SERIOUS_ERROR);
+            map.put("status", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             map.put("message", "下载文件失败");
             response.getWriter().println(JSON.toJSON(map));
         }
@@ -126,7 +126,7 @@ public class DownloadExcelController {
             response.setContentType("application/json");
             response.setCharacterEncoding("utf-8");
             Map map = new HashMap();
-            map.put("status", HttpStatus.SERIOUS_ERROR);
+            map.put("status", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             map.put("message", "下载文件失败");
             response.getWriter().println(JSON.toJSON(map));
 /*            PrintWriter out = response.getWriter();
@@ -153,7 +153,7 @@ public class DownloadExcelController {
             response.setContentType("application/json");
             response.setCharacterEncoding("utf-8");
             Map map = new HashMap();
-            map.put("status", HttpStatus.SERIOUS_ERROR);
+            map.put("status", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             map.put("message", "下载文件失败");
             response.getWriter().println(JSON.toJSON(map));
         }
@@ -175,7 +175,7 @@ public class DownloadExcelController {
             response.setContentType("application/json");
             response.setCharacterEncoding("utf-8");
             Map map = new HashMap();
-            map.put("status", HttpStatus.SERIOUS_ERROR);
+            map.put("status", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             map.put("message", "下载文件失败");
             response.getWriter().println(JSON.toJSON(map));
         }

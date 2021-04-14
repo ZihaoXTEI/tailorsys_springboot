@@ -18,7 +18,7 @@ import java.util.Date;
  * FileName: UserController
  * Author: Li Zihao
  * Date: 2021/3/4 9:53
- * Description:
+ * Description: 用户管理页面与修改密码页面视图控制器
  */
 
 @RestController
@@ -44,10 +44,14 @@ public class UserController {
         Timestamp timeStamp = new Timestamp(date.getTime());     //   讲日期时间转换为数据库中的timestamp类型
         User user = new User(username, password, email, phone, true, "ADMIN", timeStamp);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        if (userService.insertUser(user) == 1) {
-            return ResponseBean.success("新增用户信息成功");
+
+        try {
+            userService.insertUser(user);
+            return ResponseBean.success("新增用户信息成功", HttpServletResponse.SC_CREATED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseBean.error("新增用户信息失败", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
-        return ResponseBean.error("新增用户信息失败");
     }
 
     /*
@@ -55,10 +59,14 @@ public class UserController {
      */
     @RequestMapping(value = "/user/{id}/{status}", method = RequestMethod.PUT)
     public ResponseBean changeUserStatus(@PathVariable("id") int id, @PathVariable("status") boolean status) {
-        if (userService.updateUserStatus(id, status) == 1) {
-            return ResponseBean.success("更新用户状态成功");
+        try {
+            userService.updateUserStatus(id, status);
+            return ResponseBean.success("更新用户状态成功", HttpServletResponse.SC_CREATED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseBean.error("更新用户状态失败", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
-        return ResponseBean.error("更新用户状态失败", null);
+
     }
 
     /*
@@ -70,11 +78,13 @@ public class UserController {
         int id = jsonObject.getInteger("userid");
         String userPhone = jsonObject.getString("userPhone");
         String userEmail = jsonObject.getString("userEmail");
-        if (userService.updateUser(id, userEmail,userPhone) == 1) {
-            return ResponseBean.success("修改用户信息成功");
+        try {
+            userService.updateUser(id, userEmail, userPhone);
+            return ResponseBean.success("修改用户信息成功", HttpServletResponse.SC_CREATED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseBean.error("修改用户信息失败", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
-        return ResponseBean.error("修改用户信息失败");
-
     }
 
     /*
@@ -82,16 +92,18 @@ public class UserController {
      */
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
     public ResponseBean getUserById(@PathVariable("id") int id) {
-        if (id <= 0) {
-            return ResponseBean.error("获取用户信息失败");
-        }
-        User user = userService.findUserById(id);
-        if (user != null) {
-            return ResponseBean.success("获取用户信息成功", user);
-        } else {
-            return ResponseBean.error("获取用户信息失败");
-        }
 
+        try {
+            User user = userService.findUserById(id);
+            if (user != null) {
+                return ResponseBean.success("获取用户信息成功", HttpServletResponse.SC_PARTIAL_CONTENT, user);
+            } else {
+                return ResponseBean.error("获取用户信息为空", HttpServletResponse.SC_NOT_FOUND);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseBean.error("获取用户信息失败", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
     }
 
     /*
@@ -101,8 +113,13 @@ public class UserController {
     public ResponseBean<PageResult> getUserList(@RequestParam(value = "query", defaultValue = "") String query,
                                                 @RequestParam(value = "pagenum", defaultValue = "1") Integer pagenum,
                                                 @RequestParam(value = "pagesize", defaultValue = "5") Integer pagesize) {
-        PageResult pageResult = userService.findUserList(query, pagenum, pagesize);
-        return ResponseBean.success("获取用户列表成功", pageResult);
+        try {
+            PageResult pageResult = userService.findUserList(query, pagenum, pagesize);
+            return ResponseBean.success("获取用户列表成功", HttpServletResponse.SC_OK, pageResult);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseBean.error("获取用户列表失败", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
@@ -111,18 +128,20 @@ public class UserController {
     @GetMapping(value = "/user/changepassword/{username}")
     public ResponseBean changePassword(@PathVariable("username") String username,
                                        @RequestParam("oldpassword") String oldpassword,
-                                       @RequestParam("newpassword") String newpassword){
+                                       @RequestParam("newpassword") String newpassword) {
         String oldPassword = bCryptPasswordEncoder.encode(oldpassword);
         String newPassword = bCryptPasswordEncoder.encode(newpassword);
 
-        if(userService.findByUsernameAndPassword(username,oldPassword) == null){
-            return ResponseBean.error("输入的旧密码不正确，请重新输入", HttpServletResponse.SC_BAD_REQUEST);
-        }
+        try {
+            if (userService.findByUsernameAndPassword(username, oldPassword) == null) {
+                return ResponseBean.error("输入的旧密码不正确，请重新输入", HttpServletResponse.SC_BAD_REQUEST);
+            }
 
-        if(userService.changePassword(username,newPassword) == 1){
-            return ResponseBean.success("修改密码成功",HttpServletResponse.SC_CREATED);
-        }else {
-            return ResponseBean.error("修改密码失败",HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            userService.changePassword(username, newPassword);
+            return ResponseBean.success("修改密码成功", HttpServletResponse.SC_CREATED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseBean.error("修改密码失败", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 

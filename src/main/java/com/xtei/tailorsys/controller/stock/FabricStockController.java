@@ -7,21 +7,23 @@ import com.xtei.tailorsys.entity.VO.FabricStockInfoVO;
 import com.xtei.tailorsys.entity.response.ResponseBean;
 import com.xtei.tailorsys.service.FabricStockService;
 import com.xtei.tailorsys.util.pagehelper.PageResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * FileName: FabricStockController
  * Author: Li Zihao
  * Date: 2021/2/21 14:03
- * Description:布料库存管理页面
+ * Description: 布料库存管理页面视图控制器
  */
+
 @RestController
 @RequestMapping("fabricstock")
 public class FabricStockController {
 
-    @Resource
+    @Autowired
     private FabricStockService fabricStockService;
 
 
@@ -43,12 +45,17 @@ public class FabricStockController {
                                                            @RequestParam(value = "max", defaultValue = "") Double max,
                                                            @RequestParam(value = "pagenum", defaultValue = "1") Integer pagenum,
                                                            @RequestParam(value = "pagesize", defaultValue = "15") Integer pagesize) {
-        PageResult pageResult = fabricStockService.findFabricStockInfoVOList(fabricname,fabrictype,ordertype,orderfield,min,max, pagenum, pagesize);
-        if (pageResult != null) {
-            return ResponseBean.success("获取布料库存信息成功", pageResult);
-        } else {
-            return ResponseBean.error("获取布料库存信息失败");
+        try {
+            PageResult pageResult = fabricStockService.findFabricStockInfoVOList(fabricname, fabrictype, ordertype, orderfield, min, max, pagenum, pagesize);
+            if (pageResult != null) {
+                return ResponseBean.success("获取布料库存信息成功", HttpServletResponse.SC_OK, pageResult);
+            } else {
+                return ResponseBean.error("获取布料库存信息为空", HttpServletResponse.SC_NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return ResponseBean.error("获取布料库存信息错误", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
+
 
     }
 
@@ -57,12 +64,18 @@ public class FabricStockController {
      */
     @GetMapping("/{fasid}")
     public ResponseBean getFabricStockInfo(@PathVariable("fasid") Integer fasId) {
-        FabricStockInfoVO fabricStockInfoVO = fabricStockService.findFabricStockInfoVOByFasId(fasId);
-        if (fabricStockInfoVO != null) {
-            return ResponseBean.success("获取布料库存信息成功", fabricStockInfoVO);
-        } else {
-            return ResponseBean.error("获取布料库存信息失败");
+        try {
+            FabricStockInfoVO fabricStockInfoVO = fabricStockService.findFabricStockInfoVOByFasId(fasId);
+            if (fabricStockInfoVO != null) {
+                return ResponseBean.success("获取布料库存信息成功", HttpServletResponse.SC_PARTIAL_CONTENT, fabricStockInfoVO);
+            } else {
+                return ResponseBean.error("获取布料库存信息为空", HttpServletResponse.SC_NOT_FOUND);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseBean.error("获取布料库存信息错误", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
+
     }
 
     /**
@@ -70,21 +83,17 @@ public class FabricStockController {
      */
     @PutMapping("/{fasid}")
     public ResponseBean updateFabricStockInfo(@PathVariable("fasid") Integer fasId, @RequestBody FabricStockInfoVO fabricStockInfoVO) {
-        FabricStockInfo fabricStockInfo = FabricStockInfoConverter.converterToFabricStockInfo(fabricStockInfoVO);
-        FabricInfo fabricInfo = FabricStockInfoConverter.converterToFabricInfo(fabricStockInfoVO);
-        System.out.println(fabricStockInfo);
-        System.out.println(fabricInfo);
 
         try {
-            int res = fabricStockService.updateFabricStockInfo(fabricStockInfo, fabricInfo);
-            if (res == 2) {
-                return ResponseBean.success("修改布料库存信息成功");
-            }
+            FabricStockInfo fabricStockInfo = FabricStockInfoConverter.converterToFabricStockInfo(fabricStockInfoVO);
+            FabricInfo fabricInfo = FabricStockInfoConverter.converterToFabricInfo(fabricStockInfoVO);
+            fabricStockService.updateFabricStockInfo(fabricStockInfo, fabricInfo);
+            return ResponseBean.success("修改布料库存信息成功", HttpServletResponse.SC_CREATED);
+
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseBean.error("修改布料库存信息错误,请联系系统管理员");
+            return ResponseBean.error("修改布料库存信息错误", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
-        return ResponseBean.error("修改布料库存信息失败");
     }
 
 }

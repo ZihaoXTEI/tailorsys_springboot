@@ -21,7 +21,7 @@ import java.util.*;
  * FileName: ViewController
  * Author: Li Zihao
  * Date: 2021/2/10 20:32
- * Description: 视图控制器
+ * Description: 前端控件数据控制器
  */
 
 @RestController
@@ -39,12 +39,18 @@ public class ViewController {
      */
     @GetMapping("/menus")
     public ResponseBean getMenus() {
-        List<Permission> permissionList = viewService.findPermissionList();
-        if (permissionList != null) {
-            return ResponseBean.success("获取菜单数据成功", HttpServletResponse.SC_PARTIAL_CONTENT, permissionList);
-        } else {
-            return ResponseBean.error("获取菜单数据失败", HttpServletResponse.SC_NOT_FOUND);
+        try {
+            List<Permission> permissionList = viewService.findPermissionList();
+            if (permissionList != null) {
+                return ResponseBean.success("获取菜单数据成功", HttpServletResponse.SC_PARTIAL_CONTENT, permissionList);
+            } else {
+                return ResponseBean.error("获取菜单数据为空", HttpServletResponse.SC_NOT_FOUND);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseBean.error("获取菜单数据错误", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
+
     }
 
     /**
@@ -78,7 +84,7 @@ public class ViewController {
     public ResponseBean getFabricTypeSelect() {
         List<FabricTypeVO> fabricTypeMap = viewService.findFabricTypeMap();
         if (fabricTypeMap != null) {
-            System.out.println(fabricTypeMap);
+            //System.out.println(fabricTypeMap);
             return ResponseBean.success("获取布料类型数据成功",HttpServletResponse.SC_PARTIAL_CONTENT, fabricTypeMap);
         } else {
             return ResponseBean.error("获取布料类型数据失败", HttpServletResponse.SC_NOT_FOUND);
@@ -207,7 +213,6 @@ public class ViewController {
             ClothType clothType = clothTypeService.findClothTypeById(clothtypeId);
             ArrayList<Map<String, String>> columnInfo = FormatUtils.transforColumnName(viewService.findClothtypeColumnInfo());
             ArrayList<Map<String, String>> arrayList = ReflectionUtils.getAnthropometricData(clothType, columnInfo);
-            //System.out.println("XXX"+arrayList);
             return ResponseBean.success("获取数据成功", HttpServletResponse.SC_PARTIAL_CONTENT, arrayList);
         }catch (Exception e){
             return ResponseBean.error("获取数据错误",HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

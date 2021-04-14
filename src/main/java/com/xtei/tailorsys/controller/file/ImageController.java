@@ -8,13 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 
 /**
  * FileName: FileController
  * Author: Li Zihao
  * Date: 2021/3/23 15:34
- * Description:
+ * Description: 图片上传、移除控制器
  */
 @RestController
 @RequestMapping("file")
@@ -32,7 +33,7 @@ public class ImageController {
             file.transferTo(dest);
         }catch (Exception e){
             e.printStackTrace();
-            return ResponseBean.error("图片上传失败");
+            return ResponseBean.error("图片上传失败", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         return ResponseBean.success("图片上传成功",fileName);
     }

@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * FileName: ClothQuantityController
  * Author: Li Zihao
  * Date: 2021/3/12 11:19
- * Description:
+ * Description: 服装用量视图控制器
  */
 @RestController
 @RequestMapping("data/clothconsumption")
@@ -38,9 +38,11 @@ public class ClothConsumptionController {
     public ResponseBean updateClothConsumption(@PathVariable("consumid") Integer consumId, @RequestBody ClothConsumption clothConsumption) {
         ClothConsumption clothConsumptionV = clothConsumption;
         clothConsumptionV.setConsumId(consumId);
-        if (dataService.updateClothConsumption(clothConsumptionV) == 1) {
+        try {
+            dataService.updateClothConsumption(clothConsumptionV);
             return ResponseBean.success("修改服装用料信息成功",HttpServletResponse.SC_CREATED);
-        } else {
+        }catch (Exception e){
+            e.printStackTrace();
             return ResponseBean.error("修改服装用料信息失败",HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
@@ -50,11 +52,10 @@ public class ClothConsumptionController {
      */
     @PostMapping(value = "/")
     public ResponseBean addClothConsumption(@RequestBody ClothConsumption clothConsumption){
-        System.out.println(clothConsumption);
-
-        if(dataService.addClothConsumption(clothConsumption) == 1){
+        try {
+            dataService.addClothConsumption(clothConsumption);
             return ResponseBean.success("新增服装用料信息成功",HttpServletResponse.SC_CREATED);
-        }else {
+        }catch (Exception e){
             return ResponseBean.error("新增服装用料信息失败",HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
@@ -64,12 +65,19 @@ public class ClothConsumptionController {
      */
     @GetMapping(value = "/{consumid}")
     public ResponseBean getClothConsumptionById(@PathVariable("consumid") Integer consumId) {
-        ClothConsumption clothConsumption = dataService.findClothConsumptionById(consumId);
-        if (clothConsumption != null) {
-            return ResponseBean.success("获取服装用料信息成功",HttpServletResponse.SC_PARTIAL_CONTENT, clothConsumption);
-        } else {
-            return ResponseBean.error("获取服装用料信息失败",HttpServletResponse.SC_NOT_FOUND);
+
+        try {
+            ClothConsumption clothConsumption = dataService.findClothConsumptionById(consumId);
+            if (clothConsumption != null) {
+                return ResponseBean.success("获取服装用料信息成功",HttpServletResponse.SC_PARTIAL_CONTENT, clothConsumption);
+            } else {
+                return ResponseBean.error("获取服装用料信息为空",HttpServletResponse.SC_NOT_FOUND);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseBean.error("获取服装用料信息错误",HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
+
     }
 
     /**
@@ -79,12 +87,18 @@ public class ClothConsumptionController {
     public ResponseBean<PageResult> getClothConsumptionList(@RequestParam(value = "query", defaultValue = "") String query,
                                                             @RequestParam(value = "pagenum", defaultValue = "1") Integer pagenum,
                                                             @RequestParam(value = "pagesize", defaultValue = "10") Integer pagesize) {
-        PageResult pageResult = dataService.findClothConsumptionList(query, pagenum, pagesize);
-        if(pageResult !=null){
-            return ResponseBean.success("获取服装用料信息成功",HttpServletResponse.SC_PARTIAL_CONTENT,pageResult);
-        }else {
-            return ResponseBean.error("获取服装用料信息失败",HttpServletResponse.SC_NOT_FOUND,null);
+        try {
+            PageResult pageResult = dataService.findClothConsumptionList(query, pagenum, pagesize);
+            if(pageResult !=null){
+                return ResponseBean.success("获取服装用料信息成功",HttpServletResponse.SC_PARTIAL_CONTENT,pageResult);
+            }else {
+                return ResponseBean.error("获取服装用料信息为空",HttpServletResponse.SC_NOT_FOUND,null);
+            }
+        }catch (Exception e){
+            return ResponseBean.error("获取服装用料信息错误",HttpServletResponse.SC_INTERNAL_SERVER_ERROR,null);
         }
+
+
     }
 
     /**
