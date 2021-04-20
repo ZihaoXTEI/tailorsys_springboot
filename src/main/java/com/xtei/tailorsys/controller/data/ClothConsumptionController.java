@@ -148,6 +148,8 @@ public class ClothConsumptionController {
                 }
                 messageList.add(consumptionData);
 
+
+
                 System.out.print("布料编号：" + fabricId);
                 System.out.print("\t用料量：" + consumption);
                 System.out.print("\t库存量：" + fasStock);
