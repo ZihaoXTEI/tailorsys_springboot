@@ -87,8 +87,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 //login请求无需验证
-                .antMatchers("/","login").permitAll()
+                .antMatchers("/","login","/image/**").permitAll()
                 //其它请务必经过登录验证成功后才能访问
+                //.anyRequest().permitAll();
                 .anyRequest().authenticated();
 
         //授权认证

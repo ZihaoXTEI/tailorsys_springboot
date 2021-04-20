@@ -36,6 +36,8 @@ public interface DataService {
 
     ClothConsumptionVO findClothConsumptionVOById(Integer consumId);
 
+    ClothConsumption findClothConsumptionByClothtypeIdAndConsumWidth(Integer clothtypeId, Double consumWidth);
+
     PageResult findClothConsumptionList(String query, Integer pageNum, Integer pageSize);
 
     int updateClothConsumption(ClothConsumption clothConsumption);

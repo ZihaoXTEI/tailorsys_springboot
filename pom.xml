@@ -141,4 +141,7 @@
         </plugins>
     </build>
 
+    <!-- 打包成jar包 -->
+    <packaging>jar</packaging>
+
 </project>

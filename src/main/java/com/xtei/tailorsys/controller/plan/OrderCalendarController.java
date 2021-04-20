@@ -5,6 +5,7 @@ import com.xtei.tailorsys.entity.Order;
 import com.xtei.tailorsys.entity.response.ResponseBean;
 import com.xtei.tailorsys.service.OrderService;
 import com.xtei.tailorsys.service.PlanService;
+import com.xtei.tailorsys.util.SystemUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +33,7 @@ public class OrderCalendarController {
      */
     @GetMapping("/event")
     public ResponseBean getEventList() {
+
         try {
             List<Event> eventList = planService.getAllEvent();
             return ResponseBean.success("获取事件信息成功", HttpServletResponse.SC_OK, eventList);

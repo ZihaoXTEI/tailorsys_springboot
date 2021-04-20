@@ -2,12 +2,15 @@ package com.xtei.tailorsys.controller.data;
 
 import com.xtei.tailorsys.entity.Anthropometry;
 import com.xtei.tailorsys.entity.ClothConsumption;
+import com.xtei.tailorsys.entity.FabricInfo;
 import com.xtei.tailorsys.entity.response.ResponseBean;
 import com.xtei.tailorsys.service.AnthropometryService;
 import com.xtei.tailorsys.service.DataService;
+import com.xtei.tailorsys.service.FabricInfoService;
 import com.xtei.tailorsys.service.FabricStockService;
 import com.xtei.tailorsys.util.CalculationUntils;
 import com.xtei.tailorsys.util.pagehelper.PageResult;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +33,8 @@ public class ClothConsumptionController {
     private FabricStockService fabricStockService;
     @Autowired
     private AnthropometryService anthropometryService;
+    @Autowired
+    private FabricInfoService fabricInfoService;
 
     /**
      * 修改服装用料信息
@@ -40,10 +45,10 @@ public class ClothConsumptionController {
         clothConsumptionV.setConsumId(consumId);
         try {
             dataService.updateClothConsumption(clothConsumptionV);
-            return ResponseBean.success("修改服装用料信息成功",HttpServletResponse.SC_CREATED);
-        }catch (Exception e){
+            return ResponseBean.success("修改服装用料信息成功", HttpServletResponse.SC_CREATED);
+        } catch (Exception e) {
             e.printStackTrace();
-            return ResponseBean.error("修改服装用料信息失败",HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return ResponseBean.error("修改服装用料信息失败", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -51,12 +56,12 @@ public class ClothConsumptionController {
      * 新增服装用料信息
      */
     @PostMapping(value = "/")
-    public ResponseBean addClothConsumption(@RequestBody ClothConsumption clothConsumption){
+    public ResponseBean addClothConsumption(@RequestBody ClothConsumption clothConsumption) {
         try {
             dataService.addClothConsumption(clothConsumption);
-            return ResponseBean.success("新增服装用料信息成功",HttpServletResponse.SC_CREATED);
-        }catch (Exception e){
-            return ResponseBean.error("新增服装用料信息失败",HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return ResponseBean.success("新增服装用料信息成功", HttpServletResponse.SC_CREATED);
+        } catch (Exception e) {
+            return ResponseBean.error("新增服装用料信息失败", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -69,13 +74,13 @@ public class ClothConsumptionController {
         try {
             ClothConsumption clothConsumption = dataService.findClothConsumptionById(consumId);
             if (clothConsumption != null) {
-                return ResponseBean.success("获取服装用料信息成功",HttpServletResponse.SC_PARTIAL_CONTENT, clothConsumption);
+                return ResponseBean.success("获取服装用料信息成功", HttpServletResponse.SC_PARTIAL_CONTENT, clothConsumption);
             } else {
-                return ResponseBean.error("获取服装用料信息为空",HttpServletResponse.SC_NOT_FOUND);
+                return ResponseBean.error("获取服装用料信息为空", HttpServletResponse.SC_NOT_FOUND);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            return ResponseBean.error("获取服装用料信息错误",HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return ResponseBean.error("获取服装用料信息错误", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
 
     }
@@ -89,13 +94,13 @@ public class ClothConsumptionController {
                                                             @RequestParam(value = "pagesize", defaultValue = "10") Integer pagesize) {
         try {
             PageResult pageResult = dataService.findClothConsumptionList(query, pagenum, pagesize);
-            if(pageResult !=null){
-                return ResponseBean.success("获取服装用料信息成功",HttpServletResponse.SC_PARTIAL_CONTENT,pageResult);
-            }else {
-                return ResponseBean.error("获取服装用料信息为空",HttpServletResponse.SC_NOT_FOUND,null);
+            if (pageResult != null) {
+                return ResponseBean.success("获取服装用料信息成功", HttpServletResponse.SC_PARTIAL_CONTENT, pageResult);
+            } else {
+                return ResponseBean.error("获取服装用料信息为空", HttpServletResponse.SC_NOT_FOUND, null);
             }
-        }catch (Exception e){
-            return ResponseBean.error("获取服装用料信息错误",HttpServletResponse.SC_INTERNAL_SERVER_ERROR,null);
+        } catch (Exception e) {
+            return ResponseBean.error("获取服装用料信息错误", HttpServletResponse.SC_INTERNAL_SERVER_ERROR, null);
         }
 
 
@@ -114,33 +119,54 @@ public class ClothConsumptionController {
             return ResponseBean.error("验证数据异常");
         }
 
-        System.out.println(fabrics);
-
-        double requirement = 0.0;
-        ArrayList<String> messageList = new ArrayList<>();
-        Anthropometry anthropometry = anthropometryService.findAnthropometryById(anthrId);
-        ClothConsumption clothConsumption = dataService.findClothConsumptionById(clothtypeId);
+        ArrayList<ConsumptionData> messageList = new ArrayList<>();
+        Double fabricWidth = 0.0;
+        Double fasStock = 0.0;
+        Double consumption = 0.0;
 
         try {
-            requirement = CalculationUntils.calculaClothConsumption(anthropometry, clothConsumption);
-            System.out.println("RES" +requirement);
+            // 获取顾客的量体信息
+            Anthropometry anthropometry = anthropometryService.findAnthropometryById(anthrId);
+
+            for (Integer fabricId : fabrics) {
+                fabricWidth = fabricInfoService.findFabricInfoById(fabricId).getFabricWidth();
+                ClothConsumption clothConsumption = dataService.findClothConsumptionByClothtypeIdAndConsumWidth(clothtypeId, fabricWidth);
+                consumption = CalculationUntils.calculaClothConsumption(anthropometry, clothConsumption);
+
+                //messageList.add(String.valueOf(consumption));
+                ConsumptionData consumptionData = new ConsumptionData();
+                consumptionData.setFabricId(fabricId);
+                consumptionData.setConsumption(consumption);
+
+                // 获取此布料的库存量
+                fasStock = fabricStockService.getReallyFasStock(fabricId);
+                if (fasStock < consumption) {
+                    //messageList.add(String.valueOf(fabricId));
+                    consumptionData.setEnough(false);
+                }else {
+                    consumptionData.setEnough(true);
+                }
+                messageList.add(consumptionData);
+
+                System.out.print("布料编号：" + fabricId);
+                System.out.print("\t用料量：" + consumption);
+                System.out.print("\t库存量：" + fasStock);
+                System.out.println("\tisEnough：" + consumptionData.isEnough());
+            }
+
+            return ResponseBean.success("布料库存量计算完成",HttpServletResponse.SC_PARTIAL_CONTENT, messageList);
+
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseBean.error("验证数据异常,算法错误", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
-        messageList.add(String.valueOf(requirement));
 
-        for (Integer fabricId : fabrics) {
-            double v = fabricStockService.getReallyFasStock(fabricId);
-            if (v < requirement) {
-                messageList.add(String.valueOf(fabricId));
-            }
-        }
-
-        if (messageList.size() == 1) {
-            return ResponseBean.success("所需布料库存充足",messageList);
-        } else {
-            return ResponseBean.error("所需布料存在不足", messageList);
-        }
     }
+}
+
+@Data
+class ConsumptionData{
+    private Integer fabricId;
+    private Double consumption;
+    private boolean enough;
 }

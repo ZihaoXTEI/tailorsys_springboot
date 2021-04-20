@@ -45,6 +45,6 @@ public class CalculationUntils {
         //预留用量
         totalValue += clothConsumptionMap.get("consumNote");
 
-        return totalValue;
+        return FormatUtils.MyDecimalFormat(totalValue);
     }
 }

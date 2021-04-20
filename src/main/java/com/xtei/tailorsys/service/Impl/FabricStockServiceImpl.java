@@ -155,7 +155,7 @@ public class FabricStockServiceImpl implements FabricStockService {
             unitPrice = FormatUtils.MyDecimalFormat(unitPrice);
         }
 
-        if (fasStock < 0.0 || unitPrice <= 0.0) {
+        if (fasStock < 0.0 || unitPrice < 0.0) {
             return -1;
         }
         System.out.println("x6");

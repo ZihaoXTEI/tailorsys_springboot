@@ -99,6 +99,33 @@
         where consum_id = #{consumId,jdbcType=INTEGER}
     </select>
 
+    <select id="selectByClothtypeIdAndConsumWidth" resultMap="BaseResultMap">
+        select consum_id,
+               clothtype_id,
+               consum_width,
+               shirt_length,
+               bust,
+               shoulder_width,
+               sleeve_length,
+               wrist_circum,
+               neck_circum,
+               pants_length,
+               chest_height,
+               skirt_length,
+               waist_circum,
+               hipline,
+               knee_circum,
+               ankle_circum,
+               total_length,
+               FWL,
+               back_length,
+               hip_height,
+               consum_note
+        from cloth_consumption_datainfo
+        where clothtype_id = #{clothtypeId,jdbcType=INTEGER}
+        and consum_width = #{consumWidth,jdbcType=DOUBLE}
+    </select>
+
     <select id="selectAll" parameterType="java.lang.String" resultMap="BaseResultMap">
         select consum_id, clothtype_id, consum_width, shirt_length, bust, shoulder_width,
         sleeve_length, wrist_circum, neck_circum, pants_length, chest_height, skirt_length,

@@ -111,6 +111,12 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
+    public ClothConsumption findClothConsumptionByClothtypeIdAndConsumWidth(Integer clothtypeId,Double consumWidth){
+        ClothConsumption clothConsumption = clothConsumptionMapper.selectByClothtypeIdAndConsumWidth(clothtypeId,consumWidth);
+        return clothConsumption;
+    }
+
+    @Override
     public PageResult findClothConsumptionList(String query, Integer pageNum, Integer pageSize){
         PageHelper.startPage(pageNum,pageSize);
         List<ClothConsumptionVO> clothConsumptionVOList = clothConsumptionVOMapper.selectAll(query);

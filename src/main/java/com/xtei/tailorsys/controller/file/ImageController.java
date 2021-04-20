@@ -35,7 +35,7 @@ public class ImageController {
             e.printStackTrace();
             return ResponseBean.error("图片上传失败", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
-        return ResponseBean.success("图片上传成功",fileName);
+        return ResponseBean.success("图片上传成功",HttpServletResponse.SC_CREATED,fileName);
     }
 
     @RequestMapping("/removeimage/{imagename}")
