@@ -2,6 +2,7 @@ package com.xtei.tailorsys.controller.file;
 
 import com.xtei.tailorsys.entity.response.ResponseBean;
 import com.xtei.tailorsys.util.FormatUtils;
+import com.xtei.tailorsys.util.SystemUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,7 +41,7 @@ public class ImageController {
 
     @RequestMapping("/removeimage/{imagename}")
     public ResponseBean removeImage(@PathVariable("imagename")String imageName){
-        String realPath = "d:/image/";
+        String realPath = SystemUtils.filePath();
         System.out.println(imageName);
         File file = new File(realPath + imageName);
         //判断文件是否存在

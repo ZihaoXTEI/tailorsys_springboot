@@ -52,7 +52,6 @@ public class JwtAuthenticationSuccessHandler extends SavedRequestAwareAuthentica
             //out.write("{\"status\":400,\"message\":\"用户名或密码错误\"}");
             out.write("{\"" +
                     "data\": {" +
-                    "\"id\": 1, " +
                     "\"username\": \"" + user.getUsername() + "\"," +
                     " \"token\": \"" + JwtTokenUtils.TOKEN_PREFIX + token  +
                     "\"}," +

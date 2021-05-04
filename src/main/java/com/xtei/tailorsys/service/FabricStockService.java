@@ -18,6 +18,11 @@ public interface FabricStockService {
 
     //int deleteFabricReceiveInfo(Integer farId);
 
+    /*
+     *删除布料入库信息
+     */
+    int deleteFabricReceiveInfo(Integer farId);
+
     int addFabricReceiveInfo(FabricReceiveInfo fabricReceiveInfo);
 
     int updateFabricReceiveInfo(FabricReceiveInfo fabricReceiveInfo);

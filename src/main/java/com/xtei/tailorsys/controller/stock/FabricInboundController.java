@@ -71,7 +71,7 @@ public class FabricInboundController {
     /**
      * 根据编号获取布料信息
      */
-    @GetMapping("/fabricinfo/{fabid}")
+    @GetMapping(value = "/fabricinfo/{fabid}")
     public ResponseBean getFabricInfoById(@PathVariable("fabid") Integer fabId) {
         try {
             FabricInfo fabricInfo = fabricInfoService.findFabricInfoById(fabId);
@@ -89,7 +89,7 @@ public class FabricInboundController {
     /**
      * 依据输入布料名称搜索符合的布料信息
      */
-    @GetMapping("/fabricinfo/{name}")
+    @GetMapping(value = "/fabricinfo/{name}")
     public ResponseBean getFabricInfoByName(@PathVariable("name") String name) {
         if (name == null || name.trim() == "") {
             return ResponseBean.error("搜索信息不能为空");
@@ -125,7 +125,7 @@ public class FabricInboundController {
     /**
      * 修改入库信息
      */
-    @PutMapping("/fabricrece/{farid}")
+    @PutMapping(value = "/fabricrece/{farid}")
     public ResponseBean updateFabricReceiveInfo(@PathVariable("farid") Integer farId, @RequestBody FabricReceiveInfo fabricReceiveInfo) {
         FabricReceiveInfo fabricReceiveInfoV = fabricReceiveInfo;
         fabricReceiveInfoV.setFarId(farId);
@@ -134,6 +134,20 @@ public class FabricInboundController {
             return ResponseBean.success("修改布料入库信息成功", HttpServletResponse.SC_CREATED);
         } catch (Exception e) {
             return ResponseBean.error("修改布料入库信息错误", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 删除布料入库信息
+     */
+    @DeleteMapping(value = "/fabricrece/{farid}")
+    public ResponseBean deleteFabricReceiveInfo(@PathVariable("farid") Integer farId){
+        try{
+            fabricStockService.deleteFabricReceiveInfo(farId);
+            return ResponseBean.success("删除布料入库信息成功",HttpServletResponse.SC_CREATED);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseBean.error("删除布料入库信息错误", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 

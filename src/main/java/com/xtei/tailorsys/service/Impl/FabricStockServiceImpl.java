@@ -55,10 +55,36 @@ public class FabricStockServiceImpl implements FabricStockService {
     /*
      *删除布料入库信息
      */
-/*    @Override
-    public int deleteFabricReceiveInfo(Integer farId){
+    @Override
+    public int deleteFabricReceiveInfo(Integer farId) {
+        double fasStock = 0.0;
+        double unitPrice = 0.0;
+        FabricReceiveInfo fabricReceiveInfo = fabricReceiveInfoMapper.selectByPrimaryKey(farId);
 
-    }*/
+        FabricStockInfo fabricStockInfo = fabricStockInfoMapper.selectByFaricId(fabricReceiveInfo.getFabricId());
+
+        //库存数据减去入库数据
+        fasStock = fabricStockInfo.getFasStock() - fabricReceiveInfo.getFarLength();
+        unitPrice = fabricStockInfo.getUnitPrice() * 2 - (fabricReceiveInfo.getFarPrice() / (fabricReceiveInfo.getFarLength() / 100));
+
+        System.out.println(unitPrice);
+
+        //保留两位小数
+        fasStock = FormatUtils.MyDecimalFormat(fasStock);
+        unitPrice = FormatUtils.MyDecimalFormat(unitPrice);
+
+        if(unitPrice == fabricStockInfo.getUnitPrice()){
+            unitPrice = 0.0;
+        }
+
+        fabricStockInfo.setFasStock(fasStock);
+        fabricStockInfo.setUnitPrice(unitPrice);
+
+        int res1 = fabricStockInfoMapper.updateByPrimaryKey(fabricStockInfo);
+        int res2 = fabricReceiveInfoMapper.deleteByPrimaryKey(farId);
+        return res1 + res2;
+
+    }
 
     /*
      *新增布料入库信息
@@ -75,7 +101,6 @@ public class FabricStockServiceImpl implements FabricStockService {
 
         if (fabricStockInfoMapper.selectByFaricId(fabricId) == null) {
             //这步可能永远不会执行。。。。。。
-            System.out.println("x1");
             FabricStockInfo fabricStockInfo = new FabricStockInfo();
             fabricStockInfo.setFabricId(fabricId);
             fabricStockInfo.setFasStock(fabricReceiveInfo.getFarLength());
@@ -84,7 +109,6 @@ public class FabricStockServiceImpl implements FabricStockService {
             fabricStockInfo.setUnitPrice(FormatUtils.MyDecimalFormat(farPrice / farLength));
             System.out.println(fabricStockInfo);
             res1 = fabricStockInfoMapper.insert(fabricStockInfo);
-            System.out.println("x2");
         } else {
             System.out.println("x3");
             //获取布料库存中现有库存和单位价格信息
@@ -130,29 +154,31 @@ public class FabricStockServiceImpl implements FabricStockService {
         double far_price = fabricReceiveInfo.getFarPrice() - fabricReceiveInfoO.getFarPrice();
 
         if (far_price + far_length == 0.0) {
-            System.out.println("x1");
             int res = fabricReceiveInfoMapper.updateByPrimaryKey(fabricReceiveInfo);
             return res + 1;
         }
 
         if (far_length != 0.0) {
-            System.out.println("x2");
             fasStock = fabricStockInfoMapper.getFasStockByFabricId(fabricReceiveInfoO.getFabricId());
             fasStock += far_length;
             System.out.println("x3");
         }
 
         if (far_price != 0.0) {
-            System.out.println("x4");
             unitPrice = fabricStockInfoMapper.getUnitPriceByFabricId(fabricReceiveInfoO.getFabricId());
             System.out.println("up:" + unitPrice);
             double original = 2 * unitPrice - (fabricReceiveInfoO.getFarPrice() / (fabricReceiveInfoO.getFarLength() / 100));
+            original = FormatUtils.MyDecimalFormat(original);
 
-            unitPrice = ((fabricReceiveInfo.getFarPrice() / (fabricReceiveInfo.getFarLength() / 100)) + original) / 2;
+            if(original == unitPrice){
+                unitPrice = 0.0;
+            }else {
+                unitPrice = ((fabricReceiveInfo.getFarPrice() / (fabricReceiveInfo.getFarLength() / 100)) + original) / 2;
+                //四舍五入，保留两位小数
+                unitPrice = FormatUtils.MyDecimalFormat(unitPrice);
+            }
+
             System.out.println("x5");
-
-            //四舍五入，保留两位小数
-            unitPrice = FormatUtils.MyDecimalFormat(unitPrice);
         }
 
         if (fasStock < 0.0 || unitPrice < 0.0) {
@@ -314,7 +340,7 @@ public class FabricStockServiceImpl implements FabricStockService {
     }
 
     @Override
-    public List<FabricReceiveInfoVO> getAllFabricReceive(){
+    public List<FabricReceiveInfoVO> getAllFabricReceive() {
         List<FabricReceiveInfoVO> fabricReceiveInfoVOList = fabricReceiveInfoVOMapper.selectAll(null);
         return fabricReceiveInfoVOList;
     }

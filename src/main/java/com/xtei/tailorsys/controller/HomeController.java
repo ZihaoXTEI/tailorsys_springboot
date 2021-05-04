@@ -54,7 +54,7 @@ public class HomeController {
     }
 
     /**
-     * 订单信息（低于10天）
+     * 订单信息（低于5天）
      */
     @GetMapping("/orderinfo")
     public ResponseBean getIncompleteOrderInfo(){

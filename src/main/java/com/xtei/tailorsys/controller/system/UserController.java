@@ -125,15 +125,18 @@ public class UserController {
     /**
      * 修改用户密码
      */
-    @GetMapping(value = "/user/changepassword/{username}")
+    @PutMapping(value = "/changepassword/{username}")
     public ResponseBean changePassword(@PathVariable("username") String username,
-                                       @RequestParam("oldpassword") String oldpassword,
-                                       @RequestParam("newpassword") String newpassword) {
-        String oldPassword = bCryptPasswordEncoder.encode(oldpassword);
+                                       @RequestParam(value = "oldpassword",defaultValue = "") String oldpassword,
+                                       @RequestParam(value = "newpassword",defaultValue = "") String newpassword,
+                                       @RequestParam(value = "confirmationpassword",defaultValue = "")String confirpassword) {
+
         String newPassword = bCryptPasswordEncoder.encode(newpassword);
 
         try {
-            if (userService.findByUsernameAndPassword(username, oldPassword) == null) {
+            User user = userService.findByUsername(username);
+            boolean matches = bCryptPasswordEncoder.matches(oldpassword, user.getPassword());
+            if (!matches) {
                 return ResponseBean.error("输入的旧密码不正确，请重新输入", HttpServletResponse.SC_BAD_REQUEST);
             }
 
@@ -143,6 +146,7 @@ public class UserController {
             e.printStackTrace();
             return ResponseBean.error("修改密码失败", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
+
     }
 
 

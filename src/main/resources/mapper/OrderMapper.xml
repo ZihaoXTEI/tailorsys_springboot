@@ -108,6 +108,6 @@
 
     <select id="getInfoOfIncompleteOrder" resultType="java.util.LinkedHashMap">
         SELECT order_id ,DATEDIFF(deadline,CURDATE()) AS days FROM
-        order_tb WHERE DATEDIFF(deadline,CURDATE()) &lt;= 10
+        order_tb WHERE DATEDIFF(deadline,CURDATE()) &lt;= 5
     </select>
 </mapper>

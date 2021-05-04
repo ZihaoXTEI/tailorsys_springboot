@@ -43,7 +43,8 @@ public class PlanServiceImpl implements PlanService {
      * 2：完成裁剪
      * 3：完成缝纫
      * 4：完成整烫
-     * 5：完成
+     * 5：成衣
+     * 6：完成交付
      */
     @Override
     public int updateOrderStatus(String orderId, String userName, Date dateTime){

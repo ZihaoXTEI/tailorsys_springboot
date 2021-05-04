@@ -143,6 +143,25 @@ public class OrderController {
     }
 
     /**
+     * 更新订单状态
+     */
+    @PutMapping(value = "/orderstatus/{orderid}/{username}/{datetime}/{orderstatus}")
+    public ResponseBean updateOrderStatus(@PathVariable("orderid") String orderId,
+                                          @PathVariable("username") String userName,
+                                          @PathVariable("datetime") Date dateTime,
+                                          @PathVariable("orderstatus") Integer orderStatus) {
+        try {
+            orderService.updateOrderStatus(orderId, userName, dateTime, orderStatus);
+            return ResponseBean.error("更新订单状态成功");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseBean.error("更新订单状态错误");
+        }
+
+    }
+
+    /**
      * 新增订单详情信息
      */
     @PostMapping("/orderdetail")

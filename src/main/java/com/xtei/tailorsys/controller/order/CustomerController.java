@@ -53,6 +53,20 @@ public class CustomerController {
         }
     }
 
+    /**
+     * 删除顾客信息
+     */
+    @DeleteMapping(value = "/{cusid}")
+    public ResponseBean deleteCustomer(@PathVariable("cusid")Integer cusId){
+        try{
+            customerService.deleteCustomer(cusId);
+            return ResponseBean.success("删除顾客信息成功", HttpServletResponse.SC_CREATED);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseBean.error("删除顾客信息失败，请检查是否存在关联", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+    }
+
     /*
      *根据编号获取顾客信息
      */

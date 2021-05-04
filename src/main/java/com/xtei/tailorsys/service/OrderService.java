@@ -48,6 +48,8 @@ public interface OrderService {
 
     List<OrderFabricDetailVO> findOrderDetailAndFabricInfoList(String orderId);
 
+    int updateOrderStatus(String orderId, String userName, Date dateTime, Integer orderStatus);
+
     int getNumberOfOrder();
 
     int getNumberOfIncompleteOrder();

@@ -74,6 +74,20 @@ public class SupplierController {
     }
 
     /**
+     * 删除供应商信息
+     */
+    @DeleteMapping(value = "/{supid}")
+    public ResponseBean deleteSupplier(@PathVariable("supid")Integer supId){
+        try{
+            supplierService.deleteSupplier(supId);
+            return ResponseBean.success("删除供应商信息成功",HttpServletResponse.SC_CREATED);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseBean.error("删除供应商信息失败，请检查是否存在关联",HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
      * 根据编号获取供应商信息
      */
     @GetMapping(value = "/{supid}")

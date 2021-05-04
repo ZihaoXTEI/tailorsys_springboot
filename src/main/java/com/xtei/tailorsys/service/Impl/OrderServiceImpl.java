@@ -96,7 +96,6 @@ public class OrderServiceImpl implements OrderService {
         return orderFabricDetailVOList;
     }
 
-
     /**
      * 提交订单
      */
@@ -179,6 +178,28 @@ public class OrderServiceImpl implements OrderService {
 
         return res1 + res2;
 
+    }
+
+    @Override
+    public int updateOrderStatus(String orderId,String userName,Date dateTime,Integer orderStatus){
+        OrderProcess orderProcess = orderProcessMapper.selectByOrderId(orderId);
+        if(orderStatus == 2){
+            orderProcess.setTailoring(userName);
+            orderProcess.setTailoringDate(dateTime);
+        }else if(orderStatus == 3){
+            orderProcess.setSewing(userName);
+            orderProcess.setSewingDate(dateTime);
+        }else if(orderStatus == 4){
+            orderProcess.setIroning(userName);
+            orderProcess.setIroningDate(dateTime);
+        }else if(orderStatus == 5){
+            orderProcess.setFinish(userName);
+            orderProcess.setFinishDate(dateTime);
+        }
+
+        int res1 = orderProcessMapper.updateByOrderId(orderProcess);
+        int res2 = orderMapper.updateOrderStatus(orderId,orderStatus);
+        return res1 +res2;
     }
 
     @Override

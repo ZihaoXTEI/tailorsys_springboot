@@ -18,7 +18,7 @@
     from fabric_receive_view
     <where>
       <if test="query != null and query !=''">
-         sup_name = #{query}
+        fabric_name LIKE concat('%',#{query},'%')
       </if>
     </where>
   </select>
