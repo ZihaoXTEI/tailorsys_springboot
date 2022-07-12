@@ -56,6 +56,7 @@ public class LoginController {
 
             return null;
         }
+
         System.out.println(user.toString());
 
         return "HAHAHA";

@@ -37,7 +37,7 @@ public class OrderController {
                                                      @RequestParam(value = "orderstatus", defaultValue = "") Integer orderstatus,
                                                      @RequestParam(value = "screenfield", defaultValue = "") String screenfield,
                                                      @RequestParam(value = "date", defaultValue = "") Date[] date,
-                                                     @RequestParam(value = "ordertype", defaultValue = "ASC") String ordertype,
+                                                    @RequestParam(value = "ordertype", defaultValue = "ASC") String ordertype,
                                                      @RequestParam(value = "pagenum", defaultValue = "1") Integer pagenum,
                                                      @RequestParam(value = "pagesize", defaultValue = "10") Integer pagesize) {
 

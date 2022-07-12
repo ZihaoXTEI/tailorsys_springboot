@@ -7,7 +7,7 @@ import com.xtei.tailorsys.util.pagehelper.PageResult;
  * FileName: PageUtils
  * Author: Li Zihao
  * Date: 2021/3/4 14:06
- * Description:
+ * Description: MyBatis分页插件
  */
 public class PageHelperUtils {
     /**

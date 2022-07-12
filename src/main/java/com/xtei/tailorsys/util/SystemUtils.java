@@ -19,7 +19,7 @@ public class SystemUtils {
         if(os.startsWith("win")){
             return "d:/image/";
         }else if(os.startsWith("lin")){
-            return "/usr/local/tailorsys/static/image";
+            return "/usr/local/tailorsys/static/image/";
         }else {
             return null;
         }

@@ -36,7 +36,9 @@ public class NewOrderController {
     @PostMapping(value = "/")
     public ResponseBean newOrder(@RequestBody OrderVO orderVO){
         String orderId = FormatUtils.generatedOrderId();
+
         Order order = OrderConverter.converterToOrder(orderVO);
+
         order.setOrderId(orderId);
 
         List<OrderFabricDetail> orderFabricDetails = orderVO.getOrderFabricDetailList();

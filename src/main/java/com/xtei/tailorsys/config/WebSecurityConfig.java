@@ -56,41 +56,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-/*        http.antMatcher("/**").//指定登录认证的Controller
-                formLogin().usernameParameter("username").passwordParameter("password").loginPage("/login").successHandler(
-                authenticationSuccessHandler).failureHandler(authenticationFailHander)
-                .and()
-                .authorizeRequests()
-                //登录相关
-                //.antMatchers("/bupi/**").permitAll()
-                //.antMatchers("/article/**").authenticated()
-                .antMatchers("/tasks/**").hasRole("ADMIN")
-                //.antMatchers(HttpMethod.POST, "/jwt/tasks/**").hasRole("USER")
-                .and()//.addFilter(new JWTAuthenticationFilter(authenticationManager()))
-                .addFilter(new JWTAuthorizationFilter(authenticationManager()));
-        http.logout().permitAll();
-        http.cors().and().csrf().ignoringAntMatchers("/**");*/
 
-/*        http.cors().and().csrf().disable()
-                .authorizeRequests()
-                // 测试用资源，需要验证了的用户才能访问
-                .antMatchers("/tasks/**")
-                .authenticated()
-                .antMatchers(HttpMethod.DELETE, "/tasks/**")
-                .hasRole("ADMIN")
-                // 其他都放行了
-                .anyRequest().permitAll()
-                .and()
-                //.addFilter(new JWTAuthenticationFilter(authenticationManager()))
-                .addFilter(new JWTAuthorizationFilter(authenticationManager()));*/
         http.cors().and().csrf().disable();
 
         http.authorizeRequests()
                 //login请求无需验证
                 .antMatchers("/","login","/image/**").permitAll()
                 //其它请务必经过登录验证成功后才能访问
-                //.anyRequest().permitAll();
-                .anyRequest().authenticated();
+                .anyRequest().permitAll();
+//                .anyRequest().authenticated();
 
         //授权认证
         http.formLogin()
@@ -104,24 +78,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(new JWTAuthorizationFilter(authenticationManager()));
 
         http.logout().permitAll();
-
-/*        http
-                .authorizeRequests()
-                .antMatchers("/home")
-                .hasRole("ADMIN")
-
-                .anyRequest().permitAll()
-
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .successHandler(authenticationSuccessHandler)
-                .failureHandler(authenticationFailHander)
-
-                .and()
-                .addFilter(new JWTAuthorizationFilter(authenticationManager()));*/
 
     }
 }

@@ -42,7 +42,6 @@ public class ImageController {
     @RequestMapping("/removeimage/{imagename}")
     public ResponseBean removeImage(@PathVariable("imagename")String imageName){
         String realPath = SystemUtils.filePath();
-        System.out.println(imageName);
         File file = new File(realPath + imageName);
         //判断文件是否存在
         if(file.exists()){
@@ -54,6 +53,4 @@ public class ImageController {
         return ResponseBean.success("图片删除成功");
     }
 
-    //@RequestMapping("/{imagename}")
-    //public
 }

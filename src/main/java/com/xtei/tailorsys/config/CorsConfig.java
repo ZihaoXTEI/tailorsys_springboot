@@ -18,7 +18,6 @@ import org.springframework.web.filter.CorsFilter;
 @Configuration
 public class CorsConfig {
 
-
     private CorsConfiguration corsConfig() {
         CorsConfiguration corsConfiguration=new CorsConfiguration();
         //解决Vue与SpringBoot通信跨域问题

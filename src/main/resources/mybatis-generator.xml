@@ -68,7 +68,7 @@
        <!-- <table tableName="fabric_stock_view" domainObjectName="FabricStockInfoVO"/>-->
         <!--<table tableName="order_process_tb" domainObjectName="OrderProcess"/>-->
        <!-- <table tableName="order_view" domainObjectName="OrderViewVO"/>-->
-      <!--  <table tableName="event_tb" domainObjectName="Event"/>-->
+<!--        <table tableName="event_tb" domainObjectName="Event"/>-->
 
 
     </context>

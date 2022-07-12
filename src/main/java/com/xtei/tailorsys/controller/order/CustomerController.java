@@ -45,7 +45,7 @@ public class CustomerController {
         Customer customerV = customer;
         customerV.setCustomerId(cusId);
         try{
-            customerService.updateCustomerInfo(customerV);
+            int i = customerService.updateCustomerInfo(customerV);
             return ResponseBean.success("修改顾客信息成功", HttpServletResponse.SC_CREATED);
         }catch (Exception e){
             e.printStackTrace();
@@ -74,6 +74,7 @@ public class CustomerController {
     public ResponseBean getCustomerById(@PathVariable("cusid") Integer cusId) {
         try {
             Customer customer = customerService.findCustomerById(cusId);
+
             if(customer != null){
                 return ResponseBean.success("获取顾客信息成功", HttpServletResponse.SC_OK, customer);
             }else {
